@@ -1,5 +1,7 @@
 # Article Continuous Integration
 
+A useful CLI tool for managing article content integrated with a project.
+
 ## Usage
 
 ```
