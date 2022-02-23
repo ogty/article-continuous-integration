@@ -9,3 +9,7 @@
 ```python:main.py
 3
 ```
+
+```lua:main.lua
+1
+```

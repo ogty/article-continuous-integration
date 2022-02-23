@@ -12,3 +12,7 @@ print("Hello, wrorld!")
 def inc(x):
     return x + 1
 ```
+
+```lua:main.lua
+print("Hello, world!")
+```

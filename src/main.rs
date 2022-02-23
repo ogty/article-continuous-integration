@@ -6,9 +6,42 @@ use regex::Regex;
 mod modules;
 
 fn main() {
-    let mut language_comment_map = HashMap::new();
-    language_comment_map.insert("python", "#");
-    language_comment_map.insert("rust", "//");
+    let languages = vec![
+        "python", 
+        "rust",
+        "julia",
+        "c",
+        "c++",
+        "java",
+        "javascript",
+        "typeScript",
+        "go",
+        "swift",
+        "php",
+        "c#",
+        "haskell",
+        "scala",
+        "lua",
+    ];
+    let single_line_comment_out_prefix = vec![
+        "#", 
+        "//",
+        "#",
+        "//",
+        "//",
+        "//",
+        "//",
+        "//",
+        "//",
+        "//",
+        "//",
+        "//",
+        "--",
+        "//",
+        "--",
+    ];
+
+    let language_comment_map: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefix.iter()).collect();
 
     let args: Vec<String> = env::args().collect();
     let path: &str = &args[1];
@@ -39,10 +72,10 @@ fn main() {
 
             let mut source_code_count: usize = 0;
             for line in &source_data {
-                if line == &format!("{} {}", language_comment_map[lang], source_code_number) {
+                if line == &format!("{} {}", language_comment_map[&lang], source_code_number) {
                     source_code_count += 1;
                     for mached_line in &source_data[source_code_count..] {
-                        if mached_line == &format!("{} -{}", language_comment_map[lang], source_code_number) {
+                        if mached_line == &format!("{} -{}", language_comment_map[&lang], source_code_number) {
                             break
                         }
                         result.push(mached_line.clone());
