@@ -15,12 +15,14 @@ $ aci <path>   # windows
 $ ./aci <path> # macos and linux
 ```
 
-````md:content.md
+````md:content.txt
 ```rust:main.rs
 1
 ```
 ````
-↓
+
+<div align="center">↓</div>
+
 ```
 // 1
 fn main() {
@@ -28,7 +30,9 @@ fn main() {
 }
 // -1
 ```
-↓
+
+<div align="center">↓</div>
+
 ````md:content.md
 ```rust:main.rs
 fn main() {
