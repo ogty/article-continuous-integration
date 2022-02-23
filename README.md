@@ -14,3 +14,25 @@ The `/target/debug/aci.exe` created by the `cargo build` command should be place
 $ aci <path>   # windows
 $ ./aci <path> # macos and linux
 ```
+
+````md:content.md
+```rust:main.rs
+1
+```
+````
+↓
+```
+// 1
+fn main() {
+  println!("Hello, world!");
+}
+// -1
+```
+↓
+````md:content.md
+```rust:main.rs
+fn main() {
+  println!("Hello, world!");
+}
+```
+````
