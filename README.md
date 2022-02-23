@@ -15,13 +15,19 @@ $ aci <path>   # windows
 $ ./aci <path> # macos and linux
 ```
 
-````md:content.txt
-```rust:main.rs
+***
+
+**`xxxxx.txt`**
+
+````txt:xxxxx.txt
+```rust:src/main.rs
 1
 ```
 ````
 
 <div align="center">↓</div>
+
+**`xxxxx/src/main.rs`**
 
 ```
 // 1
@@ -33,7 +39,9 @@ fn main() {
 
 <div align="center">↓</div>
 
-````md:content.md
+**`xxxxx.md`**
+
+````md:xxxxx.md
 ```rust:main.rs
 fn main() {
   println!("Hello, world!");
