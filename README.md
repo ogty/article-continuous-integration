@@ -17,7 +17,7 @@ $ ./aci <path> # macos and linux
 
 ***
 
-**`xxxxx.txt`**
+**`articles/xxxxx.txt`**
 
 ````txt:xxxxx.txt
 ```rust:src/main.rs
@@ -27,7 +27,7 @@ $ ./aci <path> # macos and linux
 
 <div align="center">↓</div>
 
-**`xxxxx/src/main.rs`**
+**`projects/xxxxx/src/main.rs`**
 
 ```
 // 1
@@ -39,7 +39,7 @@ fn main() {
 
 <div align="center">↓</div>
 
-**`xxxxx.md`**
+**`articles/xxxxx.md`**
 
 ````md:xxxxx.md
 ```rust:main.rs
