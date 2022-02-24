@@ -15,7 +15,7 @@ $ aci <path>   # windows
 $ ./aci <path> # macos and linux
 ```
 
-***
+---
 
 **`articles/xxxxx.txt`**
 
