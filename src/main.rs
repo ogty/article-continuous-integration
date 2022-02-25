@@ -19,7 +19,7 @@ fn main() {
         let mut initializer: ArticleInitializer = ArticleInitializer{ ..Default::default() };
         
         if args.contains(&String::from("-p")) {
-            initializer.title = args[2].to_string();
+            initializer.title = args[3].to_string();
             initializer.topics = (&args[4..]).to_vec();
             initializer.write(&article_script_path);
             modules::initializer::mkdir(&id.to_string());
