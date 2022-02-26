@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{prelude::*, self};
+use std::io::{prelude::*, self, Lines, BufReader};
 use std::path::{Path, Display};
 use std::collections::HashMap;
 
@@ -26,7 +26,7 @@ fn write(path: &str, content: String) {
 fn read_lines(path: &str) -> Vec<String> {
     let mut result: Vec<String> = Vec::new();
     let file: File = File::open(path).unwrap();
-    let tmp = io::BufReader::new(file).lines();
+    let tmp: Lines<BufReader<File>> = io::BufReader::new(file).lines();
     for line in tmp {
         result.push(line.unwrap());
     }
@@ -35,7 +35,7 @@ fn read_lines(path: &str) -> Vec<String> {
 
 
 pub fn ci(path: &str) {
-    let languages = vec![
+    let languages: Vec<&str> = vec![
         "python", 
         "julia",
         "rust",
@@ -53,7 +53,7 @@ pub fn ci(path: &str) {
         "lua",
     ];
 
-    let single_line_comment_out_prefix = vec![
+    let single_line_comment_out_prefix: Vec<&str> = vec![
         "#", 
         "#",
         "//",
