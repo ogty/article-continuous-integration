@@ -4,9 +4,8 @@ extern crate uuid;
 use uuid::Uuid;
 
 mod modules;
+use crate::modules::initializer::{ Initializer, ArticleInitializer };
 
-use crate::modules::initializer::Initializer;
-use crate::modules::initializer::ArticleInitializer;
 
 fn main() {
     let mut args: Vec<String> = env::args().collect();
