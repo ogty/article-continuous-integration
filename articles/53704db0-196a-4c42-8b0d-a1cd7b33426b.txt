@@ -1,0 +1,36 @@
+---
+title: title
+emoji: 🐒
+type: tech
+topics: [one, two, three]
+published: false
+---
+asdf
+asdf: [one, two, threeasdf
+
+asdfasdf: [one, two]]
+
+
+```rust:src/main.rs:サンプルコード
+1
+```
+
+```rust:src/main.rs:サンプルコード
+2
+```
+
+```rust:src/main.rs:サンプルコード
+3
+```
+
+```typescript:src/main.ts
+1
+```
+
+**`main.rs`**
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
