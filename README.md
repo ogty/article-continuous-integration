@@ -55,13 +55,13 @@ $ cargo build
 The `/target/debug/aci.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
 
 ```bash
-$ aci init [option] <title> <topics>
+$ cai init [option] <title> <topics>
 ```
 
 If `-p` is specified for `[option]`, a folder with the same name as the file name will be created directly under `projects`.
 
 ```bash
-$ aci init -p "This is the title" Topic1 Topic2
+$ cai init -p "This is the title" Topic1 Topic2
 ```
 
 For example, the above command will create `articles/<uuid>.txt` and `projects/<uuid>`.
@@ -93,7 +93,7 @@ The reason it is a `.txt` file is to prevent it from being recognized as an arti
 If you run the following command with or without a project, it will create a `<uuid>.md` file. Copying the file name is a pain, but...
 
 ```bash
-$ aci <path>
+$ cai <path>
 ```
 
 ```
@@ -119,7 +119,7 @@ published: false
 It is also possible to run the command to create a new article with just `init` or just `title`.
 
 ```bash
-$ aci init This is the title
+$ cai init This is the title
 ```
 
 ## Example
@@ -127,7 +127,7 @@ $ aci init This is the title
 Let's say you want to write an article called "Hello, world in Rust!"
 
 ```bash
-$ aci init -p "Hello, world! in Rust"
+$ cai init -p "Hello, world! in Rust"
 ```
 
 The folder structure when the above command is executed is as follows.
@@ -191,7 +191,7 @@ published: false
 Execute the following command.
 
 ```bash
-$ aci <uuid>
+$ cai <uuid>
 ```
 
 Then `articles/<uuid>.md` will be created, and it will have the following contents.
