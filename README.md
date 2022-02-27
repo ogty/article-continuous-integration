@@ -9,7 +9,7 @@ If you want to publish a folder or repository where you are managing articles, i
 
 - [x] Create new articles and projects
 - [x] Specifying files in code blocks
-- [ ] Add PlayGround URL to code block
+- [ ] Add PlayGround URL to code block(Rust only)
 
 ## Usage
 
