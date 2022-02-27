@@ -52,7 +52,7 @@ int main(){
 $ cargo build
 ```
 
-The `/target/debug/aci.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
+The `/target/debug/cai.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
 
 ```bash
 $ cai init [option] <title> <topics>
