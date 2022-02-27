@@ -11,6 +11,39 @@ If you want to publish a folder or repository where you are managing articles, i
 - [x] Specifying files in code blocks
 - [ ] Add PlayGround URL to code block(Rust only)
 
+## Languages supported
+
+- Python
+- Julia
+- Rust
+- C
+- C++(cpp)
+- C#(cs)
+- Java
+- Javascript
+- TypeScript
+- Go
+- Swift
+- PHP
+- Scala
+- Haskell
+- Lua
+
+The `()` is the language of the snippet, all in lowercase.
+
+````md
+```cpp:main.cpp
+#include <iostream>
+
+using namespace std;
+
+int main(){
+  cout << "Hello world." << endl;
+  return 0;
+}
+```
+````
+
 ## Usage
 
 ```
@@ -86,39 +119,6 @@ It is also possible to run the command to create a new article with just `init` 
 ```bash
 $ aci init This is the title
 ```
-
-## Languages supported
-
-- Python
-- Julia
-- Rust
-- C
-- C++(cpp)
-- C#(cs)
-- Java
-- Javascript
-- TypeScript
-- Go
-- Swift
-- PHP
-- Scala
-- Haskell
-- Lua
-
-The `()` is the language of the snippet, all in lowercase.
-
-````md
-```cpp:main.cpp
-#include <iostream>
-
-using namespace std;
-
-int main(){
-  cout << "Hello world." << endl;
-  return 0;
-}
-```
-````
 
 ## Example
 
