@@ -13,21 +13,21 @@ If you want to publish a folder or repository where you are managing articles, i
 
 ## Languages supported
 
-- Python
-- Julia
-- Rust
 - C
-- C++(cpp)
 - C#(cs)
+- C++(cpp)
+- Go
+- Haskell
 - Java
 - Javascript
-- TypeScript
-- Go
-- Swift
-- PHP
-- Scala
-- Haskell
+- Julia
 - Lua
+- PHP
+- Python
+- Rust
+- Scala
+- Swift
+- TypeScript
 
 The `()` is the language of the snippet, all in lowercase.
 
