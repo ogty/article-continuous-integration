@@ -44,7 +44,7 @@ int main(){
 ```
 ````
 
-##### INFO: To add a language, you just need to rewrite the program a little.
+##### Info : To add a language, you just need to rewrite the program a little.
 
 ## Usage
 
