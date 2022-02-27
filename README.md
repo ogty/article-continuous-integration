@@ -1,8 +1,8 @@
-<h1 align="center">Continuous Article Integration for Zenn</h1>
+# Continuous Article Integration for Zenn
 
-<p align="center">A useful CLI tool for managing article content integrated with a project.</p>
+A useful CLI tool for managing article content integrated with a project.
 
-<p align="center">We want to provide a sense of unity as content that users can get by managing it as a project, rather than just a function that allows file specification in a simple code block.If you want to publish a folder or repository where you are managing articles, it is a fact that there is more for users to get if it exists as a single file included in a project, rather than just one file to refer to. I want to provide that.</p>
+We want to provide a sense of unity as content that users can get by managing it as a project, rather than just a function that allows file specification in a simple code block.If you want to publish a folder or repository where you are managing articles, it is a fact that there is more for users to get if it exists as a single file included in a project, rather than just one file to refer to. I want to provide that.
 
 ---
 
