@@ -1,4 +1,4 @@
-# Article Continuous Integration
+# Continuous Article Integration for Zenn
 
 A useful CLI tool for managing article content integrated with a project.
 
