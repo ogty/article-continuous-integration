@@ -10,7 +10,7 @@ We want to provide a sense of unity as content that users can get by managing it
 
 - [x] Create new articles and projects
 - [x] Specifying files in code blocks
-- [] Add PlayGround URL to code block(Rust only)
+- [x] Add PlayGround URL to code block(Rust only)
 
 ## Suppoted Languages
 
