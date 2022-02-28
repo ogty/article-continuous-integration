@@ -1,5 +1,5 @@
 use std::env;
-use std::fs::File;
+use std::fs::{File, ReadDir};
 use std::io::prelude::*;
 use std::path::{Path, Display};
 use std::path;
@@ -29,27 +29,29 @@ fn write_only(path: &str) {
 }
 
 
+// 1
 fn read_dir() -> Result<Vec<path::PathBuf>, Box<dyn Error>> {
-    let dir = fs::read_dir("./articles")?;
+    let dir: ReadDir = fs::read_dir("./articles")?;
     let mut files: Vec<path::PathBuf> = Vec::new();
     for item in dir.into_iter() {
         files.push(item?.path());
     }
     Ok(files)
 }
+// -1
 
 
 fn main() {
     let mut args: Vec<String> = env::args().collect();
 
     if args[1] == "init" {
-        let mut article_script_path = String::new();
-        let mut id = String::new();
+        let mut article_script_path: String = String::new();
+        let mut id: String = String::new();
 
         if args.contains(&String::from("--name")) {
-            let tmp = args.iter().position(|r| r == &String::from("--name")).unwrap();
+            let tmp: usize = args.iter().position(|r| r == &String::from("--name")).unwrap();
             id = args[tmp + 1].clone();
-            article_script_path = format!("./articles/{}.txt", &id);
+            article_script_path = format!("{}.txt", &id);
         } else {
             id = Uuid::new_v4().to_string();
             article_script_path = format!("./articles/{}.txt", &id);
@@ -74,16 +76,16 @@ fn main() {
         }
     } else if args[1] == "show" {
         read_dir().unwrap().iter().for_each(|path| {
-            let tmp = format!("{}", path.display());
+            let tmp: String = format!("{}", path.display());
             if tmp.ends_with(".txt") {
-                let content = modules::ci::read_lines(&tmp);
+                let content: Vec<String> = modules::ci::read_lines(&tmp);
                 if content.len() > 1 {
                     println!("{} | {}", path.display(), content[1]);
                 }
             }
         });
     } else {
-        if Path::new("/etc/hosts").exists() {
+        if Path::new(&format!("./articles/{}.txt", &args[1])).exists() {
             modules::ci::ci(&args[1], false);
         } else {
             modules::ci::ci(&args[1], true);
