@@ -120,7 +120,7 @@ published: false
 また、`init`だけ、あるいは`title`だけで新しい記事を作成することもできます。
 
 ```bash
-$ cai init This is the title
+$ cai init "This is the title"
 ```
 
 ## 例
