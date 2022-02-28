@@ -1,18 +1,12 @@
 <h1 align="center">Continuous Article Integration</h1>
 
-記事コンテンツをプロジェクトと統合して管理するための便利な CLI ツールです。
-
-単純なコードブロックでファイル指定ができる機能ではなく、プロジェクトとして管理することでユーザーが得られるコンテンツとしての一体感を提供したいと思って作りました。記事を管理しているフォルダやリポジトリを公開する場合、参照するファイルが 1 つであるよりも、プロジェクトに含まれる 1 つのファイルとして存在していた方がユーザーが得るものが多いと思います。この CLI ツールはそれを提供します。
-
----
-
 ## 目次
 
 - [機能](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [対応言語](https://github.com/ogty/continuous-article-integration#%E5%AF%BE%E5%BF%9C%E8%A8%80%E8%AA%9E)
 - [使い方](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [例](https://github.com/ogty/continuous-article-integration#%E4%BE%8B)
-- [Playground URL を追記する(Rust のみ)](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
+- [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
 
 ---
 
@@ -126,7 +120,7 @@ published: false
 また、`init`だけ、あるいは`title`だけで新しい記事を作成することもできます。
 
 ```bash
-$ cai init This is the title
+$ cai init "This is the title"
 ```
 
 ## 例
