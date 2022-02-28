@@ -29,6 +29,6 @@ fn main() {
         }
 
     } else {
-        modules::ci::ci(&args[1]);
+        modules::ci::tmpci(&args[1]);
     }
 }
