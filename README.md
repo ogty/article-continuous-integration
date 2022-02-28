@@ -7,6 +7,7 @@
 - [使い方](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [例](https://github.com/ogty/continuous-article-integration#%E4%BE%8B)
 - [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
+- [コードブロック同士を足し算する]()
 
 ---
 
@@ -237,3 +238,5 @@ fn main() {
 }
 ```
 ````
+
+## コードブロック同士を足し算する
