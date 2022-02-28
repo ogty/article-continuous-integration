@@ -221,7 +221,7 @@ fn main() {
 
 これで`published: true`にすれば Github に Push して記事をデプロイできます。
 
-## Playground URL を追記する
+## Playground URL を追記する(Rust のみ)
 
 Rust 限定ですが、Playground の URL を追記できます。
 

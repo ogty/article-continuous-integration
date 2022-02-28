@@ -6,6 +6,16 @@ We want to provide a sense of unity as content that users can get by managing it
 
 ---
 
+## Contents
+
+- [Features](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#features)
+- [Suppoted Languages](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#supported-languages)
+- [Usage](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#usage)
+- [Example](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example)
+- [Adding the Playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-the-playground-url)
+
+---
+
 ## Features
 
 - [x] Create new articles and projects
@@ -115,7 +125,7 @@ type: tech
 topics: [topic1, topic2]
 published: false
 ---
-````
+```
 
 It is also possible to run the command to create a new article with just `init` or just `title`.
 
@@ -215,7 +225,7 @@ fn main() {
 
 Now you can push to Github and deploy the article by setting `published: true`.
 
-## Adding the Playground URL
+## Adding the Playground URL(Rust only)
 
 You can add a Playground URL, which is only available in Rust.
 
