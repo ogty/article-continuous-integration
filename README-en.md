@@ -173,7 +173,7 @@ Folder structure so far ↓
       └─Cargo.toml
 ```
 
-Add a comment to `main.rs`.
+Add a comment to `main.rs`. The `1` part of this comment can be anything, as long as it is the same as in the code block.
 
 ```rust:src/main.rs
 // 1
