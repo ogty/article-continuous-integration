@@ -10,7 +10,7 @@
 
 - [機能](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [対応言語](https://github.com/ogty/continuous-article-integration#%E5%AF%BE%E5%BF%9C%E8%A8%80%E8%AA%9E)
-- [使い方]](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
+- [使い方](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [例](https://github.com/ogty/continuous-article-integration#%E4%BE%8B)
 - [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8B)
 
