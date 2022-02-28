@@ -9,10 +9,10 @@ We want to provide a sense of unity as content that users can get by managing it
 ## Contents
 
 - [Features](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#features)
-- [Suppoted Languages](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#supported-languages)
+- [Suppoted Languages](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#suppoted-languages)
 - [Usage](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#usage)
 - [Example](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example)
-- [Adding the Playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-the-playground-url)
+- [Adding the Playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-the-playground-urlrust-only)
 
 ---
 
