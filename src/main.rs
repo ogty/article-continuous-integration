@@ -29,7 +29,6 @@ fn write_only(path: &str) {
 }
 
 
-// 1
 fn read_dir() -> Result<Vec<path::PathBuf>, Box<dyn Error>> {
     let dir: ReadDir = fs::read_dir("./articles")?;
     let mut files: Vec<path::PathBuf> = Vec::new();
@@ -38,7 +37,6 @@ fn read_dir() -> Result<Vec<path::PathBuf>, Box<dyn Error>> {
     }
     Ok(files)
 }
-// -1
 
 
 fn main() {
