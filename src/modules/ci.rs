@@ -7,6 +7,7 @@ extern crate regex;
 use regex::Regex;
 extern crate urlencoding;
 use urlencoding::encode;
+extern crate itertools;
 use itertools::izip;
 
 
