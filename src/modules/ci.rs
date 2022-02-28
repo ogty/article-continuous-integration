@@ -89,7 +89,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
         article_path = format!("./articles/{}.md", path);
         project_path = format!("./projects/{}", path);
     }
-    
+
     // Getting the regular expression and matching index of a code block
     let re_code_snippet: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*)").unwrap();
     let mut article_line_count: usize = 0;
@@ -135,8 +135,9 @@ pub fn ci(path: &str, is_relative_path: bool) {
             }
             count += 1;
         }
+
         let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
-        
+
         // If you specify a playground URL
         if splited_code_block_start_line.len() == 3 {
             let cloned_source: String = source.clone();

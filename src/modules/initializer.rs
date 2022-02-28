@@ -4,7 +4,7 @@ use std::path::{Path, Display};
 
 
 pub fn mkdir(id: &str) {
-    std::fs::create_dir(format!("./projects/{}", &id));
+    let _result = std::fs::create_dir(format!("./projects/{}", &id));
 }
 
 
@@ -57,12 +57,12 @@ impl Initializer for ArticleInitializer {
         } else {
             template = String::from("---\ntitle: \nemoji: 🐒\ntype: tech\ntopics: []\npublished: false\n---");
         }
-    
+
         let mut file: File = match File::create(&path) {
             Err(why) => panic!("couldn't create {}: {}", display, why),
             Ok(file) => file,
         };
-    
+
         match file.write_all(template.as_bytes()) {
             Err(why) => panic!("couldn't write to {}: {}", display, why),
             Ok(_) => (),
