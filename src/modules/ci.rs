@@ -80,6 +80,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
     let mut article_script_path: String = String::from("");
     let mut article_path: String = String::from("");
     let mut project_path: String = String::from("");
+
     if is_relative_path {
         article_script_path = format!("{}.txt", path);
         article_path = format!("{}.md", path);
@@ -89,11 +90,10 @@ pub fn ci(path: &str, is_relative_path: bool) {
         project_path = format!("./projects/{}", path);
     }
     
+    // Getting the regular expression and matching index of a code block
     let re_code_snippet: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*)").unwrap();
     let mut article_line_count: usize = 0;
-
     let mut article_data: Vec<String> = read_lines(&article_script_path);
-
     let mut matched_indexes: Vec<usize> = Vec::new();
     for article_line in &article_data {
         if re_code_snippet.is_match(article_line) {
@@ -101,12 +101,13 @@ pub fn ci(path: &str, is_relative_path: bool) {
         }
         article_line_count += 1;
     }
+
     let code_block_start_indexes: Vec<usize> = matched_indexes.clone();
 
-    
     let mut result: Vec<String> = Vec::new();
     let mut for_playground: Vec<String> = Vec::new();
 
+    // Get the source code of the file specified by the code block.
     for matched_index in matched_indexes {
         let code_block_start_line: String = article_data[matched_index].to_string();
 
@@ -120,50 +121,40 @@ pub fn ci(path: &str, is_relative_path: bool) {
             format!("{}/{}", project_path, splited_code_block_start_line[1])
         };
 
-        if splited_code_block_start_line.len() == 3 {
-            let source_code_data: Vec<String> = read_lines(&source_code_path);
-            let code_block_number = &article_data[matched_index + 1];
-            let mut count: usize = 0;
-            let mut comment_out_start_end: Vec<usize> = Vec::new();
-            for source_code_line in &source_code_data {
-                if source_code_line == &format!("{} {}", comment_out_prefix, code_block_number) {
-                    comment_out_start_end.push(count);
-                } else if source_code_line == &format!("{} -{}", comment_out_prefix, code_block_number) {
-                    comment_out_start_end.push(count);
-                }
-                count += 1;
+        let source_code_data: Vec<String> = read_lines(&source_code_path);
+        let code_block_number = &article_data[matched_index + 1];
+        let mut count: usize = 0;
+        let mut comment_out_start_end: Vec<usize> = Vec::new();
+
+        // Get the first and last indices of a comment-out
+        for source_code_line in &source_code_data {
+            if source_code_line == &format!("{} {}", comment_out_prefix, code_block_number) {
+                comment_out_start_end.push(count);
+            } else if source_code_line == &format!("{} -{}", comment_out_prefix, code_block_number) {
+                comment_out_start_end.push(count);
             }
-            let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+            count += 1;
+        }
+        let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+        
+        // If you specify a playground URL
+        if splited_code_block_start_line.len() == 3 {
             let cloned_source: String = source.clone();
-            
             if lang == "rust" {
                 for_playground.push(format!("[{}](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code={})\n", splited_code_block_start_line[2], encode(&cloned_source)));
             } 
-
-            result.push(source);
-        } else {
-            let source_code_data: Vec<String> = read_lines(&source_code_path);
-            let code_block_number: &str = &article_data[matched_index + 1];
-            let mut count: usize = 0;
-            let mut comment_out_start_end: Vec<usize> = Vec::new();
-            for source_code_line in &source_code_data {
-                if source_code_line == &format!("{} {}", comment_out_prefix, code_block_number) {
-                    comment_out_start_end.push(count);
-                } else if source_code_line == &format!("{} -{}", comment_out_prefix, code_block_number) {
-                    comment_out_start_end.push(count);
-                }
-                count += 1;
-            }
-            let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
-            result.push(source);
         }
+
+        result.push(source);
     }
 
+    // Delete the numbers in the code block and insert the corresponding source code
     for (code_block_start_index, source_code) in izip!(code_block_start_indexes, result) {
         article_data.remove(code_block_start_index + 1);
         article_data.insert(code_block_start_index + 1, source_code);
     }
 
+    // Get an index to insert the playground URL
     let mut index: usize = 0;
     let mut indexes_to_add_url: Vec<usize> = Vec::new();
     let re_for_playground: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*):(?P<message>.*)").unwrap();
@@ -174,6 +165,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
         index += 1;
     }
 
+    // Insert the playground URL
     let mut index_adjustment: usize = 0;
     for (index_to_add_url, playground_url) in izip!(indexes_to_add_url, for_playground) {
         article_data.insert(index_to_add_url + index_adjustment , playground_url);
