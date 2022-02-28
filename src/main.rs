@@ -56,7 +56,11 @@ fn main() {
             article_script_path = format!("{}.txt", &id);
         } else {
             id = Uuid::new_v4().to_string();
-            article_script_path = format!("./articles/{}.txt", &id);
+            if Path::new("./articles/").exists() {
+                article_script_path = format!("./articles/{}.txt", &id);
+            } else {
+                article_script_path = format!("{}.txt", &id);
+            }
         }
 
         args.push(String::from(""));
