@@ -164,7 +164,7 @@ $ cargo init --name project
       └─Cargo.toml
 ```
 
-`main.rs`にコメントを追記します。
+`main.rs`にコメントを追記します。このコメントの`1`の部分はコードブロック内と同じであればどんなものでも可能です。
 
 ```rust:src/main.rs
 // 1
