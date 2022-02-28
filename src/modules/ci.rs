@@ -172,8 +172,5 @@ pub fn tmpci(path: &str) {
         article_data.insert(j + t , k);
         t += 1;
     }
-
-
-    println!("{}", article_data.join("\n"));
     write(&article_path, article_data.join("\n"));
 }
