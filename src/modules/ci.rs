@@ -27,7 +27,7 @@ fn write(path: &str, content: String) {
 }
 
 
-fn read_lines(path: &str) -> Vec<String> {
+pub fn read_lines(path: &str) -> Vec<String> {
     let mut result: Vec<String> = Vec::new();
     let file: File = File::open(path).unwrap();
     let tmp: Lines<BufReader<File>> = io::BufReader::new(file).lines();
@@ -42,9 +42,10 @@ fn read_lines(path: &str) -> Vec<String> {
 //
 // TODO: Change the variable name
 //
-//
+// ||||||||||||||||||||||||||||||
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-pub fn tmpci(path: &str) {
+pub fn ci(path: &str, is_relative_path: bool) {
     let languages: Vec<&str> = vec![
         "python", 
         "julia",
@@ -82,9 +83,21 @@ pub fn tmpci(path: &str) {
     ];
 
     let language_comment_map: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefix.iter()).collect();
-    let article_script_path: &String = &format!("./articles/{}.txt", path);
-    let article_path: &String = &format!("./articles/{}.md", path);
-    let project_path: String = format!("./projects/{}", path);
+
+    
+    let mut article_script_path = String::from("");
+    let mut article_path = String::from("");
+    let mut project_path = String::from("");
+
+
+    if is_relative_path {
+        article_script_path = format!("{}.txt", path);
+        article_path = format!("{}.md", path);
+    } else {
+        article_script_path = format!("./articles/{}.txt", path);
+        article_path = format!("./articles/{}.md", path);
+        project_path = format!("./projects/{}", path);
+    }
     
     let re_code_snippet: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*)").unwrap();
     let xxx: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*):(?P<message>.*)").unwrap();
@@ -112,8 +125,14 @@ pub fn tmpci(path: &str) {
         let lang = splited_tmp[0].replace("```", "");
         let comment_out_prefix = language_comment_map.get(&lang.as_str()).unwrap();
 
+        // let source_code_path: String = format!("{}/{}", project_path, splited_tmp[1]);
+        let source_code_path: String = if is_relative_path {
+            splited_tmp[1].to_string()
+        } else {
+            format!("{}/{}", project_path, splited_tmp[1])
+        };
+
         if splited_tmp.len() == 3 {
-            let source_code_path: String = format!("{}/{}", project_path, splited_tmp[1]);
             let source_code_data: Vec<String> = read_lines(&source_code_path);
             let code_block_number = &article_data[matched_index + 1];
             let mut count: usize = 0;
@@ -135,7 +154,7 @@ pub fn tmpci(path: &str) {
 
             result.push(source);
         } else {
-            let source_code_path: String = format!("{}/{}", project_path, splited_tmp[1]);
+            // let source_code_path: String = format!("{}/{}", project_path, splited_tmp[1]);
             let source_code_data: Vec<String> = read_lines(&source_code_path);
             let code_block_number = &article_data[matched_index + 1];
             let mut count: usize = 0;

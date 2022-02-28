@@ -2,6 +2,9 @@ use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::{Path, Display};
+use std::path;
+use std::error::Error;
+use std::fs;
 
 extern crate uuid;
 use uuid::Uuid;
@@ -25,6 +28,17 @@ fn write_only(path: &str) {
     }
 }
 
+
+fn read_dir() -> Result<Vec<path::PathBuf>, Box<dyn Error>> {
+    let dir = fs::read_dir("./articles")?;
+    let mut files: Vec<path::PathBuf> = Vec::new();
+    for item in dir.into_iter() {
+        files.push(item?.path());
+    }
+    Ok(files)
+}
+
+
 fn main() {
     let mut args: Vec<String> = env::args().collect();
 
@@ -41,11 +55,8 @@ fn main() {
             article_script_path = format!("./articles/{}.txt", &id);
         }
 
-
         args.push(String::from(""));
         let mut initializer: ArticleInitializer = ArticleInitializer{ ..Default::default() };
-
-        
 
         if args.contains(&String::from("-n")) {
             write_only(&article_script_path);
@@ -61,9 +72,21 @@ fn main() {
                 initializer.write(&article_script_path);
             }
         }
-
-
+    } else if args[1] == "show" {
+        read_dir().unwrap().iter().for_each(|path| {
+            let tmp = format!("{}", path.display());
+            if tmp.ends_with(".txt") {
+                let content = modules::ci::read_lines(&tmp);
+                if content.len() > 1 {
+                    println!("{} | {}", path.display(), content[1]);
+                }
+            }
+        });
     } else {
-        modules::ci::tmpci(&args[1]);
+        if Path::new("/etc/hosts").exists() {
+            modules::ci::ci(&args[1], false);
+        } else {
+            modules::ci::ci(&args[1], true);
+        }
     }
 }
