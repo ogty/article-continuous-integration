@@ -1,18 +1,18 @@
 <h1 align="center">Continuous Article Integration</h1>
 
-A useful CLI tool for managing article content integrated with a project.
+記事コンテンツをプロジェクトと統合して管理するための便利な CLI ツールです。
 
-We want to provide a sense of unity as content that users can get by managing it as a project, rather than just a function that allows file specification in a simple code block.If you want to publish a folder or repository where you are managing articles, it is a fact that there is more for users to get if it exists as a single file included in a project, rather than just one file to refer to. I want to provide that.
+単純なコードブロックでファイル指定ができる機能ではなく、プロジェクトとして管理することでユーザーが得られるコンテンツとしての一体感を提供したいと思って作りました。記事を管理しているフォルダやリポジトリを公開する場合、参照するファイルが 1 つであるよりも、プロジェクトに含まれる 1 つのファイルとして存在していた方がユーザーが得るものが多いと思います。この CLI ツールはそれを提供します。
 
 ---
 
-## Features
+## 機能
 
-- [x] Create new articles and projects
-- [x] Specifying files in code blocks
-- [x] Add PlayGround URL to code block(Rust only)
+- [x] 新しい記事とプロジェクトの作成
+- [x] コードブロックでのファイル指定
+- [x] Playground URL 追加(Rust のみ)
 
-## Suppoted Languages
+## 対応言語
 
 - C
 - C#(cs)
@@ -30,8 +30,6 @@ We want to provide a sense of unity as content that users can get by managing it
 - Swift
 - TypeScript
 
-The `()` is the language of the snippet, all in lowercase.
-
 ````md
 ```cpp:main.cpp
 #include <iostream>
@@ -45,27 +43,27 @@ int main(){
 ```
 ````
 
-##### To add a language, you just need to rewrite the program a little.
+##### 言語を追加する場合は、言語とそれに対応するコメントアウトの形式を配列に追加するだけです。
 
-## Usage
+## 使い方
 
 ```
 $ cargo build
 ```
 
-The `/target/debug/cai.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
+`Cargo build` コマンドで作成した `/target/debug/cai.exe` は、Zenn の記事を管理しているフォルダの直下に置いてください。
 
 ```bash
 $ cai init [option] <title> <topics>
 ```
 
-If `-p` is specified for `[option]`, a folder with the same name as the file name will be created directly under `projects`.
+オプションとして `-p` を指定すると、`projects` の直下にファイル名と同じ名前のフォルダが作成されます。
 
 ```bash
 $ cai init -p "This is the title" Topic1 Topic2
 ```
 
-For example, the above command will create `articles/<uuid>.txt` and `projects/<uuid>`.
+例えば、上記のコマンドを実行すると、`articles/<uuid>.txt`と`projects/<uuid>`が作成されます。
 
 ```
 ├─images
@@ -86,12 +84,10 @@ published: false
 ---
 ```
 
-If you remove the `-p` option
+オプションを指定しない場合は、`articles/<uuid>.txt`だけが作成されます。
+`.txt` ファイルである理由は、記事として認識されないようにするためです。
 
-If you remove the option (`-p`), only `articles/<uuid>.txt` will be created.
-The reason it is a `.txt` file is to prevent it from being recognized as an article.
-
-If you run the following command with or without a project, it will create a `<uuid>.md` file. Copying the file name is a pain, but...
+プロジェクトの有無に関わらず、以下のコマンドを実行すると、`<uuid>.md` ファイルが作成されます。ファイル名をコピーするのは面倒ですが...。
 
 ```bash
 $ cai <path>
@@ -115,23 +111,23 @@ type: tech
 topics: [topic1, topic2]
 published: false
 ---
-````
+```
 
-It is also possible to run the command to create a new article with just `init` or just `title`.
+また、`init`だけ、あるいは`title`だけで新しい記事を作成することもできます。
 
 ```bash
 $ cai init This is the title
 ```
 
-## Example
+## 例
 
-Let's say you want to write an article called "Hello, world in Rust!"
+「Rust で Hello, world!」という記事を書く場合をベースにしてみます。
 
 ```bash
-$ cai init -p "Hello, world! in Rust"
+$ cai init -p "RustでHello, world!" Rust
 ```
 
-The folder structure when the above command is executed is as follows.
+上記のコマンドを実行したときのフォルダ構成は以下のようになっています。
 
 ```
 ├─images
@@ -142,14 +138,14 @@ The folder structure when the above command is executed is as follows.
    └─<uuid>
 ```
 
-Go to `projects/<uuid>` and run the following.
+`projects/<uuid>`に移動して以下を実行します。
 
 ```bash
 $ cd projects/<uuid>
 $ cargo init --name project
 ```
 
-Folder structure so far ↓
+ここまでのフォルダ構成 ↓
 
 ```
 ├─images
@@ -163,7 +159,7 @@ Folder structure so far ↓
       └─Cargo.toml
 ```
 
-Add a comment to `main.rs`.
+`main.rs`にコメントを追記します。
 
 ```rust:src/main.rs
 // 1
@@ -173,14 +169,14 @@ fn main() {
 // -1
 ```
 
-Add a code snippet to `articles/<uuid>.txt` with the number of the code range you want to display in `main.rs`.
+`articles/<uuid>.txt`に`main.rs`で表示させたいコードの範囲の番号を書いたコードスニペットを追記します。
 
 ````txt:articles/<uuid>.txt
 ---
-title: Hello, world! in Rust
+title: RustでHello, world!
 emoji: 🐒
 type: tech
-topic: [Rust]
+topics: [Rust]
 published: false
 ---
 
@@ -189,20 +185,20 @@ published: false
 ```
 ````
 
-Execute the following command.
+以下のコマンドを実行します。
 
 ```bash
 $ cai <uuid>
 ```
 
-Then `articles/<uuid>.md` will be created, and it will have the following contents.
+そうすると`articles/<uuid>.md`が作成され、以下のような内容になっています。
 
 ````md:<uuid>.md
 ---
-title: Hello, world! in Rust
+title: RustでHello, world!
 emoji: 🐒
 type: tech
-topic: [Rust]
+topics: [Rust]
 published: false
 ---
 
@@ -213,24 +209,24 @@ fn main() {
 ```
 ````
 
-Now you can push to Github and deploy the article by setting `published: true`.
+これで`published: true`にすれば Github に Push して記事をデプロイできます。
 
-## Adding the Playground URL
+## Playground URL を追記する
 
-You can add a Playground URL, which is only available in Rust.
+Rust 限定ですが、Playground の URL を追記できます。
 
 ````txt:<uuid>.txt
-```rust:src/main.rs:sample code
+```rust:src/main.rs:サンプルコード
 1
 ```
 ````
 
-You can add the Playground URL of the program in the code block by using `<language>:<path>:<string for link>` as above.
+上記のように`<言語>:<パス>:<リンク用文字列>`とすることで、そのコードブロック内のプログラムの Playground URL を追記できます。
 
 ````md:<uuid>.md
-[sample code](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
+[サンプルコード](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
 
-```rust:src/main.rs:sample code
+```rust:src/main.rs:サンプルコード
 fn main() {
     println!("Hello, world!");
 }
