@@ -228,9 +228,9 @@ You can add a Playground URL, which is only available in Rust.
 You can add the Playground URL of the program in the code block by using `<language>:<path>:<string for link>` as above.
 
 ````md:<uuid>.md
-[サンプルコード](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
+[sample code](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
 
-```rust:src/main.rs:サンプルコード
+```rust:src/main.rs:sample code
 fn main() {
     println!("Hello, world!");
 }
