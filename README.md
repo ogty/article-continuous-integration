@@ -62,7 +62,7 @@ int main(){
 $ cargo build
 ```
 
-`Cargo build` コマンドで作成した `/target/debug/cai.exe` は、Zenn の記事を管理しているフォルダの直下に置いてください。
+`Cargo build` コマンドで作成した `/target/debug/cai.exe` は、記事を管理しているフォルダの直下に置いてください。
 
 ### ベースファイルの作成
 
