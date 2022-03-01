@@ -1,10 +1,8 @@
 use std::env;
-use std::fs::{File, ReadDir};
-use std::io::prelude::*;
-use std::path::{Path, Display};
-use std::path;
 use std::error::Error;
-use std::fs;
+use std::fs::{ File, ReadDir, read_dir };
+use std::io::prelude::*;
+use std::path::{ Path, Display, PathBuf };
 
 extern crate uuid;
 use uuid::Uuid;
@@ -31,9 +29,9 @@ fn write_only(path: &str) {
 
 
 // TODO: I don't like something about it.
-fn read_dir() -> Result<Vec<path::PathBuf>, Box<dyn Error>> {
-    let dir: ReadDir = fs::read_dir("./articles")?;
-    let mut files: Vec<path::PathBuf> = Vec::new();
+fn get_article_base_files() -> Result<Vec<PathBuf>, Box<dyn Error>> {
+    let dir: ReadDir = read_dir("./articles")?;
+    let mut files: Vec<PathBuf> = Vec::new();
     for item in dir.into_iter() {
         files.push(item?.path());
     }
@@ -84,7 +82,7 @@ fn main() {
 
     // Show txt files and titles directly under articles
     } else if args[1] == "show" {
-        read_dir().unwrap().iter().for_each(|path| {
+        get_article_base_files().unwrap().iter().for_each(|path| {
             let tmp: String = format!("{}", path.display());
             if tmp.ends_with(".txt") {
                 let content: Vec<String> = modules::ci::read_lines(&tmp);

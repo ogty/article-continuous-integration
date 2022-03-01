@@ -1,7 +1,7 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{prelude::*, self, Lines, BufReader};
 use std::path::{Path, Display};
-use std::collections::HashMap;
 
 extern crate itertools;
 use itertools::izip;
