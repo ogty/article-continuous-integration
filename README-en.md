@@ -323,7 +323,7 @@ $ cai README
 **`README.md`**
 
 ````md
-```python:. /main.py
+```python:./main.py
 print("Hello, world!")
 ```
 ````
@@ -387,8 +387,8 @@ To combine the comment-out ranges of the two files above, write the following
 
 **`*.txt`**
 
-````
-```rust``` src/main.rs:1 + src/hello.rs:1
+````txt
+```rust```src/main.rs:1 + src/hello.rs:1
 ````
 
 The codes are merged together in the order in which they are written, starting from the top.
@@ -401,7 +401,7 @@ fn main() {
    hello();
 }
 fn hello() {
-   println!
+   println!("Hello, world!");
 }
 ```
 ````
