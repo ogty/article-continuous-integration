@@ -139,7 +139,7 @@ published: false
 It is also possible to run the command to create a new article with just `init` or just `title`.
 
 ```bash
-$ cai init This is the title
+$ cai init "This is the title"
 ```
 
 ### Display file name and title
