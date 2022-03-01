@@ -10,7 +10,8 @@
   - [ファイル名とタイトルを表示させる](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%A8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%82%8B)
 - [コマンド一覧](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E8%A6%A7)
   - [オプション](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3)
-- [例](https://github.com/ogty/continuous-article-integration#%E4%BE%8B)
+- [例1](https://github.com/ogty/continuous-article-integration#%E4%BE%8B1)
+- [例2](https://github.com/ogty/continuous-article-integration#%E4%BE%8B2)
 - [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
 - [コードブロック同士を足し算する](https://github.com/ogty/continuous-article-integration#%E3%82%B3%E3%83%BC%E3%83%89%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%90%8C%E5%A3%AB%E3%82%92%E8%B6%B3%E3%81%97%E7%AE%97%E3%81%99%E3%82%8B)
 
@@ -158,7 +159,7 @@ $ cai show
 - `-n` : 空のベースファイルを作成
 - `--name <file name>` : 任意のファイル名を指定
   
-## 例
+## 例1
 
 「Rust で Hello, world!」という記事を書く場合をベースにしてみます。
 
@@ -264,6 +265,7 @@ fn main() {
 
 ```bash
 $ cai init --name README -n
+$ # touch README.txt
 ```
 
 フォルダ構成 ↓
