@@ -6,7 +6,7 @@ use std::collections::HashMap;
 extern crate itertools;
 use itertools::izip;
 extern crate regex;
-use regex::Regex;
+use regex::{Regex, Captures};
 extern crate urlencoding;
 use urlencoding::encode;
 
@@ -126,7 +126,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
         };
 
         let source_code_data: Vec<String> = read_lines(&source_code_path);
-        let code_block_number = &article_data[matched_index + 1];
+        let code_block_number: &String = &article_data[matched_index + 1];
         let mut count: usize = 0;
         let mut comment_out_start_end: Vec<usize> = Vec::new();
 
@@ -157,17 +157,17 @@ pub fn ci(path: &str, is_relative_path: bool) {
     // Source code operations
     let mut calculated_result: Vec<String> = Vec::new();
     for matched_code_block_index in matched_code_block_indexes {
-        let mut tmp_result = vec![String::from("```rust")];
+        let mut tmp_result: Vec<String> = vec![String::from("```rust")];
         let matched_line: String = article_data[matched_code_block_index].to_string();
-        let tmp = re_code_block_operation.captures(&matched_line).unwrap();
-        let lang = tmp.name("lang").unwrap().as_str();
-        let path = tmp.name("path").unwrap().as_str();
+        let tmp: Captures = re_code_block_operation.captures(&matched_line).unwrap();
+        let lang: &str = tmp.name("lang").unwrap().as_str();
+        let path: &str = tmp.name("path").unwrap().as_str();
         let file_path_and_code_block_number = path.split("+").collect::<Vec<&str>>();
 
         for i in file_path_and_code_block_number.iter().map(|x| x.replace(" ", "")) {
-            let tmp = i.split(":").collect::<Vec<&str>>();
-            let program_file_path = tmp[0];
-            let code_block_number = tmp[1];
+            let tmp: Vec<&str> = i.split(":").collect::<Vec<&str>>();
+            let program_file_path: &str = tmp[0];
+            let code_block_number: &str = tmp[1];
 
             let source_code_path: String = if is_relative_path {
                 program_file_path.to_string()
