@@ -140,6 +140,20 @@ $ cai init "This is the title"
 $ cai show
 ```
 
+## コマンド一覧
+
+- `init [option] <title> <topics>` : ベースファイルの作成
+- `show` : `articles` 直下にあるファイル名とタイトルを表示
+- `<file name>` : 記事(`.md`)の作成
+
+##### `articles`直下に`<file name>.txt`が無い場合は、相対パスとみなされます。
+
+**オプション**
+
+- `-p` : プロジェクトを同時に作成
+- `-n` : 空のベースファイルを作成
+- `--name <file name>` : 任意のファイル名を指定
+  
 ## 例
 
 「Rust で Hello, world!」という記事を書く場合をベースにしてみます。
