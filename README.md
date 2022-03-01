@@ -67,7 +67,7 @@ $ cargo build
 ### ベースファイルの作成
 
 ```bash
-$ cai init [option] <title> <topics>
+$ cai init <title> <topics> [option]
 ```
 
 オプションとして `-p` を指定すると、`projects` の直下にファイル名と同じ名前のフォルダが作成されます。
@@ -146,7 +146,7 @@ $ cai show
 
 コマンドやオプションで拡張子を含める必要はありません。
 
-- `init [option] <title> <topics>` : ベースファイルの作成
+- `init <title> <topics> [option]` : ベースファイルの作成
 - `show` : `articles` 直下にあるファイル名とタイトルを表示
 - `<file name>` : 記事(`.md`)の作成
 
