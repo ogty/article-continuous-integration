@@ -144,6 +144,8 @@ $ cai show
 
 ## コマンド一覧
 
+コマンドやオプションで拡張子を含める必要はありません。
+
 - `init [option] <title> <topics>` : ベースファイルの作成
 - `show` : `articles` 直下にあるファイル名とタイトルを表示
 - `<file name>` : 記事(`.md`)の作成
