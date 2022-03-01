@@ -92,12 +92,16 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
     // Getting the regular expression and matching index of a code block
     let re_code_snippet: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*)").unwrap();
+    let re_code_block_operation: Regex = Regex::new(r"```(?P<lang>\w+)```(?P<path>.*)").unwrap();
     let mut article_line_count: usize = 0;
     let mut article_data: Vec<String> = read_lines(&article_script_path);
     let mut matched_indexes: Vec<usize> = Vec::new();
+    let mut matched_code_block_indexes: Vec<usize> = Vec::new();
     for article_line in &article_data {
         if re_code_snippet.is_match(article_line) {
             matched_indexes.push(article_line_count);
+        } else if re_code_block_operation.is_match(article_line) {
+            matched_code_block_indexes.push(article_line_count);
         }
         article_line_count += 1;
     }
@@ -136,17 +140,62 @@ pub fn ci(path: &str, is_relative_path: bool) {
             count += 1;
         }
 
-        let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+        if comment_out_start_end.len() > 0 {
+            let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+            // If you specify a playground URL
+            if splited_code_block_start_line.len() == 3 {
+                let cloned_source: String = source.clone();
+                if lang == "rust" {
+                    for_playground.push(format!("[{}](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code={})\n", splited_code_block_start_line[2], encode(&cloned_source)));
+                } 
+            }
 
-        // If you specify a playground URL
-        if splited_code_block_start_line.len() == 3 {
-            let cloned_source: String = source.clone();
-            if lang == "rust" {
-                for_playground.push(format!("[{}](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code={})\n", splited_code_block_start_line[2], encode(&cloned_source)));
-            } 
+            result.push(source);
         }
+    }
 
-        result.push(source);
+    // Source code operations
+    let mut calculated_result: Vec<String> = Vec::new();
+    for matched_code_block_index in matched_code_block_indexes {
+        let mut tmp_result = vec![String::from("```rust")];
+        let matched_line: String = article_data[matched_code_block_index].to_string();
+        let tmp = re_code_block_operation.captures(&matched_line).unwrap();
+        let lang = tmp.name("lang").unwrap().as_str();
+        let path = tmp.name("path").unwrap().as_str();
+        let file_path_and_code_block_number = path.split("+").collect::<Vec<&str>>();
+
+        for i in file_path_and_code_block_number.iter().map(|x| x.replace(" ", "")) {
+            let tmp = i.split(":").collect::<Vec<&str>>();
+            let program_file_path = tmp[0];
+            let code_block_number = tmp[1];
+
+            let source_code_path: String = if is_relative_path {
+                program_file_path.to_string()
+            } else {
+                format!("{}/{}", project_path, program_file_path)
+            };
+
+            let source_code_data: Vec<String> = read_lines(&source_code_path);
+            let mut count: usize = 0;
+            let mut comment_out_start_end: Vec<usize> = Vec::new();
+
+            // Get the first and last indices of a comment-out
+            for source_code_line in &source_code_data {
+                if source_code_line == &format!("{} {}", language_comment_map.get(&lang).unwrap(), code_block_number) {
+                    comment_out_start_end.push(count);
+                } else if source_code_line == &format!("{} -{}", language_comment_map.get(&lang).unwrap(), code_block_number) {
+                    comment_out_start_end.push(count);
+                }
+                count += 1;
+            }
+
+            if comment_out_start_end.len() > 0 {
+                let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+                tmp_result.push(source);
+            }
+        }
+        tmp_result.push(String::from("```"));
+        calculated_result.push(tmp_result.join("\n"));
     }
 
     // Delete the numbers in the code block and insert the corresponding source code
@@ -164,6 +213,23 @@ pub fn ci(path: &str, is_relative_path: bool) {
             indexes_to_add_url.push(index);
         }
         index += 1;
+    }
+
+    // Get line index for source code operations
+    let mut code_block_operations_indexes: Vec<usize> = Vec::new();
+    let mut code_block_operation_count: usize = 0;
+    let cloned_article = article_data.clone();
+    for article_line in cloned_article {
+        if re_code_block_operation.is_match(&article_line) {
+            code_block_operations_indexes.push(code_block_operation_count);
+        }
+        code_block_operation_count += 1;
+    }
+
+    // Delete lines for source code operations and insert calculation results
+    for (code_block_operations_index, source_code) in izip!(code_block_operations_indexes, calculated_result) {
+        article_data.remove(code_block_operations_index);
+        article_data.insert(code_block_operations_index, source_code);
     }
 
     // Insert the playground URL
