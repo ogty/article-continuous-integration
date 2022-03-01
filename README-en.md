@@ -76,7 +76,7 @@ The `/target/debug/cai.exe` created by the `cargo build` command should be place
 ### Create base file
 
 ```bash
-$ cai init [option] <title> <topics>
+$ cai init <title> <topics> [option]
 ```
 
 If `-p` is specified for `[option]`, a folder with the same name as the file name will be created directly under `projects`.
