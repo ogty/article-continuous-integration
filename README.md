@@ -276,7 +276,7 @@ fn hello() {
 fn main() {
    hello();
 }
-fn world() {
+fn hello() {
    println!("Hello, world!");
 }
 ```
