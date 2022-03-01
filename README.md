@@ -352,7 +352,7 @@ fn main() {
 
 **`src/main.rs`**
 
-```rust:src/main.rs
+```rust
 // 1
 fn main() {
    hello();
