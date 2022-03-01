@@ -250,6 +250,78 @@ fn main() {
 
 これで`published: true`にすれば Github に Push して記事をデプロイできます。
 
+## 例2
+
+プロジェクト内のソースコードをREADMEで使用するケース
+
+フォルダ構成 ↓
+
+```
+└─cai.exe
+```
+
+ベースファイルの作成ですが、これは`touch`コマンドを使った方が早いです。
+
+```bash
+$ cai init --name README -n
+```
+
+フォルダ構成 ↓
+
+```
+├─README.txt
+└─cai.exe
+```
+
+`Hello, world!`と表示するPythonプログラムを作成し、コメントを記述しておきます。
+
+**`main.py`**
+
+```python
+# 1
+print("Hello, world!")
+# -1
+```
+
+**`README.txt`**
+
+````txt
+```python:./main.py
+1
+```
+````
+
+フォルダ構成 ↓
+
+```
+├─main.py
+├─README.txt
+└─cai.exe
+```
+
+記事を作成します。
+
+```bash
+$ cai README
+```
+
+**`README.md`**
+
+````md
+```python:./main.py
+print("Hello, world!")
+```
+````
+
+フォルダ構成 ↓
+
+```
+├─main.py
+├─README.md
+├─README.txt
+└─cai.exe
+```
+
 ## Playground URL を追記する(Rust のみ)
 
 Rust 限定ですが、Playground の URL を追記できます。
