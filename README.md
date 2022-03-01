@@ -268,6 +268,12 @@ $ cai init --name README -n
 $ # touch README.txt
 ```
 
+もし`cai.exe`をデスクトップに配置して他のプロジェクトで使用する場合は`--name`オプションに相対パスを入力することで解決できます。
+
+```bash
+$ cai init --name ./<folder name>/README -n
+```
+
 フォルダ構成 ↓
 
 ```
