@@ -243,6 +243,8 @@ fn main() {
 
 ファイルの特定のコメントアウトの範囲同士を結合することができます。
 
+**`src/main.rs`**
+
 ```rust:src/main.rs
 // 1
 fn main() {
@@ -251,7 +253,9 @@ fn main() {
 // -1
 ```
 
-```rust:src/hello.rs
+**`src/hello.rs`**
+
+```rust
 // 1
 fn hello() {
    println!("Hello, world!");
