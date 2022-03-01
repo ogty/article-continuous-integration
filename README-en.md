@@ -11,8 +11,15 @@ We want to provide a sense of unity as content that users can get by managing it
 - [Features](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#features)
 - [Suppoted Languages](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#suppoted-languages)
 - [Usage](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#usage)
-- [Example](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example)
-- [Adding the Playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-the-playground-urlrust-only)
+  - [Create base file](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#create-base-file)
+  - [Create article](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#create-article)
+  - [Display file name and title](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#display-file-name-and-title)
+- [Commands](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#commands)
+  - [Options](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#options)
+- [Example 1](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-1)
+- [Example 2](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-2)
+- [Adding playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-playground-urlrust-only)
+- [Add code blocks together](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#add-code-blocks-together)
 
 ---
 
@@ -21,6 +28,7 @@ We want to provide a sense of unity as content that users can get by managing it
 - [x] Create new articles and projects
 - [x] Specifying files in code blocks
 - [x] Add PlayGround URL to code block(Rust only)
+- [x] Code Block Operation
 
 ## Suppoted Languages
 
@@ -65,6 +73,8 @@ $ cargo build
 
 The `/target/debug/cai.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
 
+### Create base file
+
 ```bash
 $ cai init [option] <title> <topics>
 ```
@@ -96,10 +106,9 @@ published: false
 ---
 ```
 
-If you remove the `-p` option
+If you don't specify any options, only `articles/<uuid>.txt` will be created. The reason it is a `.txt` file is to prevent it from being recognized as an article and to allow updates to the content; Github gives priority to the `README.md` file over the `README.txt` file.
 
-If you remove the option (`-p`), only `articles/<uuid>.txt` will be created.
-The reason it is a `.txt` file is to prevent it from being recognized as an article.
+### Create article
 
 If you run the following command with or without a project, it will create a `<uuid>.md` file. Copying the file name is a pain, but...
 
@@ -133,7 +142,31 @@ It is also possible to run the command to create a new article with just `init` 
 $ cai init This is the title
 ```
 
-## Example
+### Display file name and title
+
+To display the file name and title, execute the following command.
+
+```bash
+$ cai show
+```
+
+## Commands
+
+It is not necessary to include the extension in the commands or options.
+
+- `init <title> <topics> [option]` : Create a base file
+- `show` : Show the file name and title directly under articles
+- `<file name>` : Create articles (`.md`)
+
+##### If there is no `<file name>.txt` directly under articles, it will be considered as a relative path.
+
+### Options
+
+- `-p` : Create projects at the same time
+- `-n` : Create an empty base file
+- `--name <file name>` : Specify any file name
+  
+## Example 1
 
 Let's say you want to write an article called "Hello, world in Rust!"
 
@@ -225,7 +258,86 @@ fn main() {
 
 Now you can push to Github and deploy the article by setting `published: true`.
 
-## Adding the Playground URL(Rust only)
+## Example 2
+
+Case where source code in the project is used in README
+
+Folder Configuration ↓
+
+```
+└─cai.exe
+```
+
+Create the base file, but it is faster to use the `touch` command for this.
+
+```bash
+$ cai init --name README -n
+$ # touch README.txt
+```
+
+If you want to place `cai.exe` on the desktop or some other location for use in other projects, you can solve this by entering a relative path in the `--name` option. In this case, the path specified in the code block in the base file must also be relative to `cai.exe`.
+
+```bash
+$ cai init --name ./<folder name>/README -n
+```
+
+Folder configuration ↓
+
+```
+├─README.txt
+└─cai.exe
+```
+
+Create a Python program to display "Hello, world!" and comment it.
+
+**`main.py`**
+
+```python
+# 1
+print("Hello, world!")
+# -1
+```
+
+**`README.txt`**
+
+````txt
+```python:./main.py
+1
+```
+````
+
+Folder structure ↓
+
+```
+├─main.py
+├─README.txt
+└─cai.exe
+```
+
+Create an article.
+
+```bash
+$ cai README
+```
+
+**`README.md`**
+
+````md
+```python:. /main.py
+print("Hello, world!")
+```
+````
+
+Folder structure ↓
+
+```
+├─main.py
+├─README.md
+├─README.txt
+└─cai.exe
+```
+
+## Adding playground URL(Rust only)
 
 You can add a Playground URL, which is only available in Rust.
 
@@ -243,6 +355,53 @@ You can add the Playground URL of the program in the code block by using `<langu
 ```rust:src/main.rs:sample code
 fn main() {
     println!("Hello, world!");
+}
+```
+````
+
+## Add code blocks together
+
+It is possible to combine specific comment-out ranges of files together.
+
+**`src/main.rs`**
+
+```rust
+// 1
+fn main() {
+   hello();
+}
+// -1
+```
+
+**`src/hello.rs`**
+
+```rust
+// 1
+fn hello() {
+   println!("Hello, world!");
+}
+// -1
+```
+
+To combine the comment-out ranges of the two files above, write the following
+
+**`*.txt`**
+
+````
+```rust``` src/main.rs:1 + src/hello.rs:1
+````
+
+The codes are merged together in the order in which they are written, starting from the top.
+
+**`*.md`**
+
+````md
+```rust
+fn main() {
+   hello();
+}
+fn hello() {
+   println!
 }
 ```
 ````
