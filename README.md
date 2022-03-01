@@ -5,6 +5,9 @@
 - [機能](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
 - [対応言語](https://github.com/ogty/continuous-article-integration#%E5%AF%BE%E5%BF%9C%E8%A8%80%E8%AA%9E)
 - [使い方](https://github.com/ogty/continuous-article-integration#%E4%BD%BF%E3%81%84%E6%96%B9)
+  - [ベースファイルの作成](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E3%83%99%E3%83%BC%E3%82%B9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90)  
+  - [記事の作成](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E8%A8%98%E4%BA%8B%E3%81%AE%E4%BD%9C%E6%88%90)
+  - [ファイル名とタイトルを表示させる](https://github.com/ogty/continuous-article-integration/blob/main/README.md#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%90%8D%E3%81%A8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%82%8B)
 - [例](https://github.com/ogty/continuous-article-integration#%E4%BE%8B)
 - [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
 - [コードブロック同士を足し算する](https://github.com/ogty/continuous-article-integration#%E3%82%B3%E3%83%BC%E3%83%89%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%90%8C%E5%A3%AB%E3%82%92%E8%B6%B3%E3%81%97%E7%AE%97%E3%81%99%E3%82%8B)
@@ -95,7 +98,7 @@ published: false
 オプションを指定しない場合は、`articles/<uuid>.txt`だけが作成されます。
 `.txt` ファイルである理由は、記事として認識されないようにするため、コンテンツのアップデートを可能にするためです。
 
-### 記事ファイルの作成
+### 記事の作成
 
 プロジェクトの有無に関わらず、以下のコマンドを実行すると、`<uuid>.md` ファイルが作成されます。
 
