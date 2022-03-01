@@ -240,3 +240,40 @@ fn main() {
 ````
 
 ## コードブロック同士を足し算する
+
+ファイルの特定のコメントアウトの範囲同士を結合することができます。
+
+```rust:src/main.rs
+// 1
+fn main() {
+   hello();
+}
+// -1
+```
+
+```rust:src/hello.rs
+// 1
+fn hello() {
+   println!("Hello, world!");
+}
+// -1
+```
+
+上記の 2 つのファイルのコメントアウトの範囲を結合する場合は以下のように記述します。
+
+```md
+`rust`src/main.rs:1 + src/hello.rs:1
+```
+
+コード同士は、記述された順番に上から結合されていきます。
+
+````md
+```rust
+fn main() {
+   hello();
+}
+fn world() {
+   println!("Hello, world!");
+}
+```
+````
