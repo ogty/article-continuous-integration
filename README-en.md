@@ -71,18 +71,18 @@ int main() {
 $ cargo build
 ```
 
-The `/target/debug/cai.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
+The `/target/debug/aci.exe` created by the `cargo build` command should be placed directly under the folder where you maintain your Zenn articles.
 
 ### Create base file
 
 ```bash
-$ cai init <title> <topics> [option]
+$ aci init <title> <topics> [option]
 ```
 
 If `-p` is specified for `[option]`, a folder with the same name as the file name will be created directly under `projects`.
 
 ```bash
-$ cai init -p "This is the title" Topic1 Topic2
+$ aci init -p "This is the title" Topic1 Topic2
 ```
 
 For example, the above command will create `articles/<uuid>.txt` and `projects/<uuid>`.
@@ -113,7 +113,7 @@ If you don't specify any options, only `articles/<uuid>.txt` will be created. Th
 If you run the following command with or without a project, it will create a `<uuid>.md` file. Copying the file name is a pain, but...
 
 ```bash
-$ cai <path>
+$ aci <path>
 ```
 
 ```
@@ -139,7 +139,7 @@ published: false
 It is also possible to run the command to create a new article with just `init` or just `title`.
 
 ```bash
-$ cai init "This is the title"
+$ aci init "This is the title"
 ```
 
 ### Display file name and title
@@ -147,7 +147,7 @@ $ cai init "This is the title"
 To display the file name and title, execute the following command.
 
 ```bash
-$ cai show
+$ aci show
 ```
 
 ## Commands
@@ -171,7 +171,7 @@ It is not necessary to include the extension in the commands or options.
 Let's say you want to write an article called "Hello, world in Rust!"
 
 ```bash
-$ cai init -p "Hello, world! in Rust"
+$ aci init -p "Hello, world! in Rust"
 ```
 
 The folder structure when the above command is executed is as follows.
@@ -235,7 +235,7 @@ published: false
 Execute the following command.
 
 ```bash
-$ cai <uuid>
+$ aci <uuid>
 ```
 
 Then `articles/<uuid>.md` will be created, and it will have the following contents.
@@ -265,27 +265,27 @@ Case where source code in the project is used in README
 Folder Configuration ↓
 
 ```
-└─cai.exe
+└─aci.exe
 ```
 
 Create the base file, but it is faster to use the `touch` command for this.
 
 ```bash
-$ cai init --name README -n
+$ aci init --name README -n
 $ # touch README.txt
 ```
 
-If you want to place `cai.exe` on the desktop or some other location for use in other projects, you can solve this by entering a relative path in the `--name` option. In this case, the path specified in the code block in the base file must also be relative to `cai.exe`.
+If you want to place `aci.exe` on the desktop or some other location for use in other projects, you can solve this by entering a relative path in the `--name` option. In this case, the path specified in the code block in the base file must also be relative to `aci.exe`.
 
 ```bash
-$ cai init --name ./<folder name>/README -n
+$ aci init --name ./<folder name>/README -n
 ```
 
 Folder configuration ↓
 
 ```
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 Create a Python program to display "Hello, world!" and comment it.
@@ -311,13 +311,13 @@ Folder structure ↓
 ```
 ├─main.py
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 Create an article.
 
 ```bash
-$ cai README
+$ aci README
 ```
 
 **`README.md`**
@@ -334,7 +334,7 @@ Folder structure ↓
 ├─main.py
 ├─README.md
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 ## Adding playground URL(Rust only)
