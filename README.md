@@ -93,7 +93,7 @@ $ cai init -p "This is the title" Topic1 Topic2
 title: This is the title
 emoji: 🐒
 type: tech
-topics: [topic1, topic2]
+topics: [Topic1, Topic2]
 published: false
 ---
 ```
@@ -124,7 +124,7 @@ $ cai <path>
 title: This is the title
 emoji: 🐒
 type: tech
-topics: [topic1, topic2]
+topics: [Topic1, Topic2]
 published: false
 ---
 ```
