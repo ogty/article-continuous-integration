@@ -63,18 +63,18 @@ int main() {
 $ cargo build
 ```
 
-`Cargo build` コマンドで作成した `/target/debug/cai.exe` は、記事を管理しているフォルダの直下に置いてください。
+`Cargo build` コマンドで作成した `/target/debug/aci.exe` は、記事を管理しているフォルダの直下に置いてください。
 
 ### ベースファイルの作成
 
 ```bash
-$ cai init <title> <topics> [option]
+$ aci init <title> <topics> [option]
 ```
 
 オプションとして `-p` を指定すると、`projects` の直下にファイル名と同じ名前のフォルダが作成されます。
 
 ```bash
-$ cai init -p "This is the title" Topic1 Topic2
+$ aci init -p "This is the title" Topic1 Topic2
 ```
 
 例えば、上記のコマンドを実行すると、`articles/<uuid>.txt`と`projects/<uuid>`が作成されます。
@@ -106,7 +106,7 @@ published: false
 プロジェクトの有無に関わらず、以下のコマンドを実行すると、`<uuid>.md` ファイルが作成されます。
 
 ```bash
-$ cai <path>
+$ aci <path>
 ```
 
 ```
@@ -132,7 +132,7 @@ published: false
 また、`init`だけ、あるいは`title`だけで新しい記事を作成することもできます。
 
 ```bash
-$ cai init "This is the title"
+$ aci init "This is the title"
 ```
 
 ### ファイル名とタイトルを表示させる
@@ -140,7 +140,7 @@ $ cai init "This is the title"
 ファイル名とタイトルを表示させるには以下のコマンドを実行します。
 
 ```bash
-$ cai show
+$ aci show
 ```
 
 ## コマンド一覧
@@ -164,7 +164,7 @@ $ cai show
 「Rust で Hello, world!」という記事を書く場合をベースにしてみます。
 
 ```bash
-$ cai init -p "RustでHello, world!" Rust
+$ aci init -p "RustでHello, world!" Rust
 ```
 
 上記のコマンドを実行したときのフォルダ構成は以下のようになっています。
@@ -228,7 +228,7 @@ published: false
 以下のコマンドを実行します。
 
 ```bash
-$ cai <uuid>
+$ aci <uuid>
 ```
 
 そうすると`articles/<uuid>.md`が作成され、以下のような内容になっています。
@@ -258,27 +258,27 @@ fn main() {
 フォルダ構成 ↓
 
 ```
-└─cai.exe
+└─aci.exe
 ```
 
 ベースファイルの作成ですが、これは`touch`コマンドを使った方が早いです。
 
 ```bash
-$ cai init --name README -n
+$ aci init --name README -n
 $ # touch README.txt
 ```
 
-もし`cai.exe`をデスクトップなどに配置して他のプロジェクトで使用する場合は、`--name`オプションに相対パスを入力することで解決できます。この場合はベースファイル内のコードブロックで指定しているパスも`cai.exe`からの相対パスにする必要があります。
+もし`aci.exe`をデスクトップなどに配置して他のプロジェクトで使用する場合は、`--name`オプションに相対パスを入力することで解決できます。この場合はベースファイル内のコードブロックで指定しているパスも`aci.exe`からの相対パスにする必要があります。
 
 ```bash
-$ cai init --name ./<folder name>/README -n
+$ aci init --name ./<folder name>/README -n
 ```
 
 フォルダ構成 ↓
 
 ```
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 `Hello, world!`と表示するPythonプログラムを作成し、コメントを記述しておきます。
@@ -304,13 +304,13 @@ print("Hello, world!")
 ```
 ├─main.py
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 記事を作成します。
 
 ```bash
-$ cai README
+$ aci README
 ```
 
 **`README.md`**
@@ -327,7 +327,7 @@ print("Hello, world!")
 ├─main.py
 ├─README.md
 ├─README.txt
-└─cai.exe
+└─aci.exe
 ```
 
 ## Playground URL を追記する(Rust のみ)
