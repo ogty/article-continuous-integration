@@ -13,7 +13,7 @@
 - [例1](https://github.com/ogty/continuous-article-integration#%E4%BE%8B1)
 - [例2](https://github.com/ogty/continuous-article-integration#%E4%BE%8B2)
 - [Playground URL を追記する](https://github.com/ogty/continuous-article-integration#playground-url-%E3%82%92%E8%BF%BD%E8%A8%98%E3%81%99%E3%82%8Brust-%E3%81%AE%E3%81%BF)
-- [コードブロック同士を足す](https://github.com/ogty/article-continuous-integration#%E3%82%B3%E3%83%BC%E3%83%89%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%90%8C%E5%A3%AB%E3%82%92%E8%B6%B3%E3%81%97%E7%AE%97%E3%81%99%E3%82%8B)
+- [コードブロック同士を足す](https://github.com/ogty/article-continuous-integration#%E3%82%B3%E3%83%BC%E3%83%89%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%90%8C%E5%A3%AB%E3%82%92%E8%B6%B3%E3%81%99)
 
 ---
 
