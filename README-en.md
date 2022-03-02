@@ -1,4 +1,4 @@
-<h1 align="center">Continuous Article Integration</h1>
+<h1 align="center">Article Continuous Integration</h1>
 
 A useful CLI tool for managing article content integrated with a project.
 
