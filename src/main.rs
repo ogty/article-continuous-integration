@@ -129,5 +129,7 @@ fn main() {
         } else {
             ci(file_name, true);
         }
+    } else {
+        print_usage();
     }
 }
