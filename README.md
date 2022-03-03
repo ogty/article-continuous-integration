@@ -360,21 +360,21 @@ fn main() {
 **`src/main.rs`**
 
 ```rust
-// 1
+// main
 fn main() {
    hello();
 }
-// -1
+// -main
 ```
 
 **`src/hello.rs`**
 
 ```rust
-// 1
+// hello
 fn hello() {
    println!("Hello, world!");
 }
-// -1
+// -hello
 ```
 
 上記の 2 つのファイルのコメントアウトの範囲を結合する場合は以下のように記述します。
@@ -382,7 +382,7 @@ fn hello() {
 **`*.txt`**
 
 ````txt
-```rust```src/main.rs:1 + src/hello.rs:1
+```rust```src/main.rs:main + src/hello.rs:hello
 ````
 
 コード同士は、記述された順番に上から結合されていきます。
