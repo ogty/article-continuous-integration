@@ -1,3 +1,3 @@
-```rust:./src/main.rs
+```rust:./src/main.rs:sample code
 1
 ```

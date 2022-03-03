@@ -32,7 +32,7 @@ impl Default for ArticleInitializer {
 impl Initializer for ArticleInitializer {
     fn write(&mut self, path: &str) {
         let path: &Path = Path::new(&path);
-        let display: Display = path.display();
+        let for_display: Display = path.display();
         let mut template: String = String::from("---\ntitle: <title>\nemoji: 🐒\ntype: tech\ntopics: [<topics><last>]\npublished: false\n---");
 
         if self.title != String::from("") {
@@ -65,13 +65,10 @@ impl Initializer for ArticleInitializer {
         }
 
         let mut file: File = match File::create(&path) {
-            Err(why) => panic!("couldn't create {}: {}", display, why),
+            Err(why) => panic!("couldn't create {}: {}", for_display, why),
             Ok(file) => file,
         };
 
-        match file.write_all(template.as_bytes()) {
-            Err(why) => panic!("couldn't write to {}: {}", display, why),
-            Ok(_) => (),
-        }
+        if let Err(why) = file.write_all(template.as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
     }
 }

@@ -13,10 +13,7 @@ pub fn write(path: &str, content: String) {
         Ok(file) => file,
     };
 
-    match file.write_all(content.as_bytes()) {
-        Err(why) => panic!("couldn't write to {}: {}", for_display, why),
-        Ok(_) => (),
-    }
+    if let Err(why) = file.write_all(content.as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
 }
 
 
@@ -40,17 +37,14 @@ pub fn write_only(path: &str) {
         Ok(file) => file,
     };
 
-    match file.write_all("".as_bytes()) {
-        Err(why) => panic!("couldn't write to {}: {}", for_display, why),
-        Ok(_) => (),
-    }
+    if let Err(why) = file.write_all("".as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
 }
 
 
 pub fn get_base_file() -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let directory_items: ReadDir = read_dir("./articles")?;
     let mut base_files: Vec<PathBuf> = Vec::new();
-    for item in directory_items.into_iter() {
+    for item in directory_items {
         base_files.push(item?.path());
     }
     Ok(base_files)
