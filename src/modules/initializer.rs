@@ -29,6 +29,7 @@ impl Default for ArticleInitializer {
 }
 
 
+// TODO: I don't like something about it.
 impl Initializer for ArticleInitializer {
     fn write(&mut self, path: &str) {
         let path: &Path = Path::new(&path);
