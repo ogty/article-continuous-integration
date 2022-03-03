@@ -53,7 +53,7 @@ fn print_usage() {
 fn main() {
     let mut args: Vec<String> = env::args().skip(1).collect();
 
-    if args.len() == 0 {
+    if args.is_empty() {
         print_usage();
         return;
     }
@@ -105,7 +105,7 @@ fn main() {
             if maybe_base_file_path.ends_with(".txt") {
                 let content: Vec<String> = modules::ci::read_lines(&maybe_base_file_path);
                 if content.len() > 1 {
-                    println!("{:<40} | {}", maybe_base_file_path.split("\\").last().unwrap(), content[1].replace("title:", ""));
+                    println!("{:<40} | {}", maybe_base_file_path.split('\\').last().unwrap(), content[1].replace("title:", ""));
                 }
             }
         });

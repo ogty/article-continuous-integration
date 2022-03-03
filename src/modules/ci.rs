@@ -56,20 +56,18 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
         let source_code_data: Vec<String> = read_lines(&source_code_path);
         let code_block_number: &String = &article_data[matched_index + 1];
-        let mut count: usize = 0;
         let mut comment_out_start_end: Vec<usize> = Vec::new();
 
         // Get the first and last indices of a comment-out
-        for source_code_line in &source_code_data {
+        for (count, source_code_line) in source_code_data.iter().enumerate() {
             if source_code_line == &format!("{} {}", comment_out_prefix, code_block_number) {
                 comment_out_start_end.push(count);
             } else if source_code_line == &format!("{} -{}", comment_out_prefix, code_block_number) {
                 comment_out_start_end.push(count);
             }
-            count += 1;
         }
 
-        if comment_out_start_end.len() > 0 {
+        if !comment_out_start_end.is_empty() {
             let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
             // If you specify a playground URL
             if splited_code_block_start_line.len() == 3 {
@@ -107,17 +105,15 @@ pub fn ci(path: &str, is_relative_path: bool) {
             };
 
             let source_code_data: Vec<String> = read_lines(&source_code_path);
-            let mut count: usize = 0;
             let mut comment_out_start_end: Vec<usize> = Vec::new();
 
             // Get the first and last indices of a comment-out
-            for source_code_line in &source_code_data {
+            for (count, source_code_line) in source_code_data.iter().enumerate() {
                 if source_code_line == &format!("{} {}", comment_out(&String::from(lang)), code_block_number) {
                     comment_out_start_end.push(count);
                 } else if source_code_line == &format!("{} -{}", comment_out(&String::from(lang)), code_block_number) {
                     comment_out_start_end.push(count);
                 }
-                count += 1;
             }
 
             if !comment_out_start_end.is_empty() {
