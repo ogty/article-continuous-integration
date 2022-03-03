@@ -1,44 +1,15 @@
 use std::env;
-use std::error::Error;
-use std::fs::{ File, ReadDir, read_dir };
-use std::io::prelude::*;
-use std::path::{ Path, Display, PathBuf };
+use std::path::Path;
 
 extern crate uuid;
 use uuid::Uuid;
 
 mod modules;
 use crate::modules::initializer::{ Initializer, ArticleInitializer };
+use crate::modules::file::{ write_only, get_article_base_files };
 
 
-// TODO: I don't like something about it.
-fn write_only(path: &str) {
-    let path: &Path = Path::new(&path);
-    let display: Display = path.display();
-
-    let mut file: File = match File::create(&path) {
-        Err(why) => panic!("couldn't create {}: {}", display, why),
-        Ok(file) => file,
-    };
-
-    match file.write_all("".as_bytes()) {
-        Err(why) => panic!("couldn't write to {}: {}", display, why),
-        Ok(_) => (),
-    }
-}
-
-
-// TODO: I don't like something about it.
-fn get_article_base_files() -> Result<Vec<PathBuf>, Box<dyn Error>> {
-    let dir: ReadDir = read_dir("./articles")?;
-    let mut files: Vec<PathBuf> = Vec::new();
-    for item in dir.into_iter() {
-        files.push(item?.path());
-    }
-    Ok(files)
-}
-
-
+// 1
 // TODO: 
 fn print_usage() {
     eprintln!(r"
@@ -77,6 +48,7 @@ fn print_usage() {
 
     ")
 }
+// -1
 
 
 fn main() {

@@ -1,82 +1,15 @@
-use std::collections::HashMap;
-use std::fs::File;
-use std::io::{prelude::*, self, Lines, BufReader};
-use std::path::{Path, Display};
-
 extern crate itertools;
 use itertools::izip;
 extern crate regex;
-use regex::{Regex, Captures};
+use regex::{ Regex, Captures };
 extern crate urlencoding;
 use urlencoding::encode;
 
-
-fn write(path: &str, content: String) {
-    let path: &Path = Path::new(&path);
-    let display: Display = path.display();
-
-    let mut file: File = match File::create(&path) {
-        Err(why) => panic!("couldn't create {}: {}", display, why),
-        Ok(file) => file,
-    };
-
-    match file.write_all(content.as_bytes()) {
-        Err(why) => panic!("couldn't write to {}: {}", display, why),
-        Ok(_) => (),
-    }
-}
-
-
-pub fn read_lines(path: &str) -> Vec<String> {
-    let mut result: Vec<String> = Vec::new();
-    let file: File = File::open(path).unwrap();
-    let tmp: Lines<BufReader<File>> = io::BufReader::new(file).lines();
-    for line in tmp {
-        result.push(line.unwrap());
-    }
-    return result;
-}
+pub use crate::modules::file::{ write, read_lines };
+pub use crate::modules::comment::comment_out;
 
 
 pub fn ci(path: &str, is_relative_path: bool) {
-    let languages: Vec<&str> = vec![
-        "python", 
-        "julia",
-        "rust",
-        "c",
-        "cpp",
-        "java",
-        "javascript",
-        "typescript",
-        "go",
-        "swift",
-        "php",
-        "cs",
-        "scala",
-        "haskell",
-        "lua",
-    ];
-
-    let single_line_comment_out_prefix: Vec<&str> = vec![
-        "#", 
-        "#",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "//",
-        "--",
-        "--",
-    ];
-
-    let language_comment_map: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefix.iter()).collect();
-
     let mut article_script_path: String = format!("{}.txt", path);
     let mut article_path: String = format!("{}.md", path);
     let mut project_path: String = String::new();
@@ -113,8 +46,8 @@ pub fn ci(path: &str, is_relative_path: bool) {
         let code_block_start_line: String = article_data[matched_index].to_string();
 
         let splited_code_block_start_line: Vec<&str> = code_block_start_line.split(":").collect();
-        let lang = splited_code_block_start_line[0].replace("```", "");
-        let comment_out_prefix: &&&str = language_comment_map.get(&lang.as_str()).unwrap();
+        let lang: String = splited_code_block_start_line[0].replace("```", "");
+        let comment_out_prefix: String = comment_out(&lang);
 
         let source_code_path: String = if is_relative_path {
             splited_code_block_start_line[1].to_string()
@@ -181,9 +114,9 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
             // Get the first and last indices of a comment-out
             for source_code_line in &source_code_data {
-                if source_code_line == &format!("{} {}", language_comment_map.get(&lang).unwrap(), code_block_number) {
+                if source_code_line == &format!("{} {}", comment_out(&String::from(lang)), code_block_number) {
                     comment_out_start_end.push(count);
-                } else if source_code_line == &format!("{} -{}", language_comment_map.get(&lang).unwrap(), code_block_number) {
+                } else if source_code_line == &format!("{} -{}", comment_out(&String::from(lang)), code_block_number) {
                     comment_out_start_end.push(count);
                 }
                 count += 1;
