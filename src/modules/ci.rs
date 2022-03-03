@@ -159,7 +159,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
     // Insert the playground URL
     let indexes_to_add_url_length: usize = indexes_to_add_url.clone().len();
-    let indexes: Vec<usize> = (1..indexes_to_add_url_length).collect::<Vec<usize>>();
+    let indexes: Vec<usize> = (0..indexes_to_add_url_length).collect::<Vec<usize>>();
     for (i, index_to_add_url, playground_url) in izip!(indexes, indexes_to_add_url, for_playground) {
         article_data.insert(index_to_add_url + i , playground_url);
     }
