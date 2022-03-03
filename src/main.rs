@@ -23,17 +23,17 @@ fn print_usage() {
 
     Commands:
     
-            init [title] [topics]
-                            Initialize a new article.
+            init [title] [topics...]
+                            Initialize a new article
     
             make <file name>
-                            Print the path of the current article.
+                            Create articles from base file
 
             show
-                            Show all articles and title.
+                            Displays the name and title of the base file directly under the articles
 
             help
-                            Print this help message.
+                            Print this help message
 
     Options:
     
@@ -41,7 +41,7 @@ fn print_usage() {
                             Create projects simultaneously
 
             -e, --empty
-                            Create an empty base file
+                            Create a blank base file
 
             -n, --name
                             Specify file name
