@@ -4,7 +4,7 @@ use std::path::{ Path, Display };
 
 
 pub fn mkdir(id: &str) {
-    let _result = std::fs::create_dir(format!("./projects/{}", &id));
+    let _ = std::fs::create_dir(format!("./projects/{}", &id));
 }
 
 
@@ -22,7 +22,7 @@ pub struct ArticleInitializer {
 impl Default for ArticleInitializer {
     fn default() -> ArticleInitializer {
         ArticleInitializer {
-            title: String::from(""),
+            title: String::new(),
             topics: Vec::new(),
         }
     }
@@ -33,7 +33,7 @@ impl Initializer for ArticleInitializer {
     fn write(&mut self, path: &str) {
         let path: &Path = Path::new(&path);
         let display: Display = path.display();
-        let mut template: String = String::from("");
+        let mut template: String = String::new();
 
         if self.title != String::from("") {
             let topics_length: usize = self.topics.len();

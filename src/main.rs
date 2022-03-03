@@ -80,6 +80,7 @@ fn print_usage() {
 
 
 fn main() {
+    // TODO: Use skip(1)
     let mut args: Vec<String> = env::args().collect();
 
     if args.len() == 1 {

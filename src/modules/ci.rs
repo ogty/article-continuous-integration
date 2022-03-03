@@ -77,16 +77,13 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
     let language_comment_map: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefix.iter()).collect();
 
-    let mut article_script_path: String = String::from("");
-    let mut article_path: String = String::from("");
-    let mut project_path: String = String::from("");
+    let mut article_script_path: String = format!("{}.txt", path);
+    let mut article_path: String = format!("{}.md", path);
+    let mut project_path: String = String::new();
 
-    if is_relative_path {
-        article_script_path = format!("{}.txt", path);
-        article_path = format!("{}.md", path);
-    } else {
-        article_script_path = format!("./articles/{}.txt", path);
-        article_path = format!("./articles/{}.md", path);
+    if is_relative_path == false {
+        article_script_path = format!("./articles/{}", article_script_path);
+        article_path = format!("./articles/{}", article_path);
         project_path = format!("./projects/{}", path);
     }
 
@@ -154,14 +151,16 @@ pub fn ci(path: &str, is_relative_path: bool) {
         }
     }
 
-    // Source code operations
+    // Code block operations
     let mut calculated_result: Vec<String> = Vec::new();
     for matched_code_block_index in matched_code_block_indexes {
-        let mut tmp_result: Vec<String> = vec![String::from("```rust")];
+        let mut tmp_result: Vec<String> = Vec::new(); 
         let matched_line: String = article_data[matched_code_block_index].to_string();
         let tmp: Captures = re_code_block_operation.captures(&matched_line).unwrap();
         let lang: &str = tmp.name("lang").unwrap().as_str();
         let path: &str = tmp.name("path").unwrap().as_str();
+
+        tmp_result.push(format!("```{}", lang));
         let file_path_and_code_block_number = path.split("+").collect::<Vec<&str>>();
 
         for i in file_path_and_code_block_number.iter().map(|x| x.replace(" ", "")) {
