@@ -68,7 +68,7 @@ $ cargo build
 ### ベースファイルの作成
 
 ```bash
-$ aci init <title> <topics> [option]
+$ aci init [title] [topics] [option]
 ```
 
 オプションとして `-p` を指定すると、`projects` の直下にファイル名と同じ名前のフォルダが作成されます。
@@ -147,9 +147,9 @@ $ aci show
 
 コマンドやオプションで拡張子を含める必要はありません。
 
-- `init <title> <topics> [option]` : ベースファイルの作成
+- `init [title] [topics] [options]` : ベースファイルの作成
 - `show` : `articles` 直下にあるファイル名とタイトルを表示
-- `<file name>` : 記事(`.md`)の作成
+- `<path>` : 記事(`.md`)の作成
 
 ##### `articles`直下に`<file name>.txt`が無い場合は、相対パスとみなされます。
 
