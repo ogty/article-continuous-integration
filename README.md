@@ -106,7 +106,7 @@ published: false
 プロジェクトの有無に関わらず、以下のコマンドを実行すると、`<uuid>.md` ファイルが作成されます。
 
 ```bash
-$ aci <path>
+$ aci make <file name>
 ```
 
 ```
@@ -148,8 +148,8 @@ $ aci show
 コマンドやオプションで拡張子を含める必要はありません。
 
 - `init [title] [topics] [options]` : ベースファイルの作成
+- `make <file name>` : 記事(`.md`)の作成
 - `show` : `articles` 直下にあるファイル名とタイトルを表示
-- `<path>` : 記事(`.md`)の作成
 - `help` : コマンドの使い方を表示
 
 ##### `articles`直下に`<file name>.txt`が無い場合は、相対パスとみなされます。
@@ -210,7 +210,7 @@ fn main() {
 // -1
 ```
 
-`articles/<uuid>.txt`に`main.rs`で表示させたいコードの範囲の番号を書いたコードスニペットを追記します。
+`articles/<uuid>.txt`に`main.rs`で表示させたいコードの範囲の番号を書いたコードブロックを追記します。
 
 ````txt:articles/<uuid>.txt
 ---
@@ -229,7 +229,7 @@ published: false
 以下のコマンドを実行します。
 
 ```bash
-$ aci <uuid>
+$ aci make <uuid>
 ```
 
 そうすると`articles/<uuid>.md`が作成され、以下のような内容になっています。
@@ -311,7 +311,7 @@ print("Hello, world!")
 記事を作成します。
 
 ```bash
-$ aci README
+$ aci make README
 ```
 
 **`README.md`**

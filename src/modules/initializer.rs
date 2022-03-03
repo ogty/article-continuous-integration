@@ -35,7 +35,7 @@ impl Initializer for ArticleInitializer {
         let for_display: Display = path.display();
         let mut template: String = String::from("---\ntitle: <title>\nemoji: 🐒\ntype: tech\ntopics: [<topics><last>]\npublished: false\n---");
 
-        if self.title != String::from("") {
+        if !self.title.is_empty() {
             let topics_length: usize = self.topics.len();
             if topics_length > 0 {
                 if topics_length > 2 {
