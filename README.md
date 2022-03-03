@@ -150,14 +150,15 @@ $ aci show
 - `init [title] [topics] [options]` : ベースファイルの作成
 - `show` : `articles` 直下にあるファイル名とタイトルを表示
 - `<path>` : 記事(`.md`)の作成
+- `help` : コマンドの使い方を表示
 
 ##### `articles`直下に`<file name>.txt`が無い場合は、相対パスとみなされます。
 
 ### オプション
 
-- `-p` : プロジェクトを同時に作成
-- `-n` : 空のベースファイルを作成
-- `--name <file name>` : 任意のファイル名を指定
+- `-p, --project` : プロジェクトを同時に作成
+- `-e, --empty` : 空のベースファイルを作成
+- `-n, --name <file name>` : 任意のファイル名を指定
   
 ## 例1
 
@@ -264,14 +265,14 @@ fn main() {
 ベースファイルの作成ですが、これは`touch`コマンドを使った方が早いです。
 
 ```bash
-$ aci init --name README -n
+$ aci init -e -n README
 $ # touch README.txt
 ```
 
 もし`aci.exe`をデスクトップなどに配置して他のプロジェクトで使用する場合は、`--name`オプションに相対パスを入力することで解決できます。この場合はベースファイル内のコードブロックで指定しているパスも`aci.exe`からの相対パスにする必要があります。
 
 ```bash
-$ aci init --name ./<folder name>/README -n
+$ aci init -e -n ./<folder name>/README
 ```
 
 フォルダ構成 ↓
