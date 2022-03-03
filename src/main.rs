@@ -39,8 +39,53 @@ fn get_article_base_files() -> Result<Vec<PathBuf>, Box<dyn Error>> {
 }
 
 
+// TODO: I don't know how to write command descriptions.
+fn print_usage() {
+    eprintln!(r"
+    Name:
+
+            aci - article continuous integration
+
+    Usage: 
+
+            aci <command> [options]
+
+    Commands:
+    
+            init
+                Initialize a new article.
+    
+            show
+                Show all articles and title.
+
+            path
+                Print the path of the current article.
+
+            help
+                Print this help message.
+
+    Options:
+    
+            -p, --project
+                xxxxxxxxxx
+
+            -e, --empty
+                xxxxxxxxxx
+
+            -n, --name
+                xxxxxxxxxx
+
+    ")
+}
+
+
 fn main() {
     let mut args: Vec<String> = env::args().collect();
+
+    if args.len() == 1 {
+        print_usage();
+        std::process::exit(1);
+    }
 
     // Initialize the article base.
     if args[1] == "init" {
@@ -48,7 +93,7 @@ fn main() {
         let mut id: String = String::new();
 
         // Specify the name of the txt file
-        if args.contains(&String::from("--name")) {
+        if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
             let tmp: usize = args.iter().position(|r| r == &String::from("--name")).unwrap();
             id = args[tmp + 1].clone();
             article_script_path = format!("{}.txt", &id);
@@ -65,10 +110,10 @@ fn main() {
         let mut initializer: ArticleInitializer = ArticleInitializer{ ..Default::default() };
 
         // Create articles for zenn or otherwise
-        if args.contains(&String::from("-n")) {
+        if args.contains(&String::from("-e")) || args.contains(&String::from("--empty")) {
             write_only(&article_script_path);
         } else {
-            if args.contains(&String::from("-p")) {
+            if args.contains(&String::from("-p")) || args.contains(&String::from("--project")) {
                 initializer.title = args[3].to_string();
                 initializer.topics = (&args[4..]).to_vec();
                 initializer.write(&article_script_path);
@@ -91,6 +136,10 @@ fn main() {
                 }
             }
         });
+
+    // Show help message
+    } else if args[1] == "help" {
+        print_usage();
 
     // Create an md file from a selected txt file
     } else {
