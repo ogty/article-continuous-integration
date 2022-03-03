@@ -39,7 +39,7 @@ fn get_article_base_files() -> Result<Vec<PathBuf>, Box<dyn Error>> {
 }
 
 
-// TODO: I don't know how to write command descriptions.
+// TODO: 
 fn print_usage() {
     eprintln!(r"
     Name:
@@ -67,13 +67,13 @@ fn print_usage() {
     Options:
     
             -p, --project
-                xxxxxxxxxx
+                Create projects simultaneously
 
             -e, --empty
-                xxxxxxxxxx
+                Create an empty base file
 
             -n, --name
-                xxxxxxxxxx
+                Specify file name
 
     ")
 }
@@ -117,6 +117,7 @@ fn main() {
         if args.contains(&String::from("-e")) || args.contains(&String::from("--empty")) {
             write_only(&article_script_path);
         } else {
+            // TODO: Do something about the fact that this option has to be placed before init
             if args.contains(&String::from("-p")) || args.contains(&String::from("--project")) {
                 initializer.title = args[3].to_string();
                 initializer.topics = (&args[4..]).to_vec();
