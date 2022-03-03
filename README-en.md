@@ -76,10 +76,10 @@ The `/target/debug/aci.exe` created by the `cargo build` command should be place
 ### Create base file
 
 ```bash
-$ aci init <title> <topics> [option]
+$ aci init [title] [topics] [options]
 ```
 
-If `-p` is specified for `[option]`, a folder with the same name as the file name will be created directly under `projects`.
+If `-p` is specified for `[options]`, a folder with the same name as the file name will be created directly under `projects`.
 
 ```bash
 $ aci init -p "This is the title" Topic1 Topic2
@@ -154,17 +154,18 @@ $ aci show
 
 It is not necessary to include the extension in the commands or options.
 
-- `init <title> <topics> [option]` : Create a base file
+- `init [title] [topics] [options]` : Create a base file
 - `show` : Show the file name and title directly under articles
 - `<file name>` : Create articles (`.md`)
+- `help` : Show help message
 
 ##### If there is no `<file name>.txt` directly under articles, it will be considered as a relative path.
 
 ### Options
 
-- `-p` : Create projects at the same time
-- `-n` : Create an empty base file
-- `--name <file name>` : Specify any file name
+- `-p, --project` : Create projects at the same time
+- `-e, --empty` : Create an empty base file
+- `-n, --name <file name>` : Specify any file name
   
 ## Example 1
 
@@ -271,14 +272,14 @@ Folder Configuration ↓
 Create the base file, but it is faster to use the `touch` command for this.
 
 ```bash
-$ aci init --name README -n
+$ aci init -e -n README
 $ # touch README.txt
 ```
 
 If you want to place `aci.exe` on the desktop or some other location for use in other projects, you can solve this by entering a relative path in the `--name` option. In this case, the path specified in the code block in the base file must also be relative to `aci.exe`.
 
 ```bash
-$ aci init --name ./<folder name>/README -n
+$ aci init -e -n ./<folder name>/README
 ```
 
 Folder configuration ↓
