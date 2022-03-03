@@ -4,11 +4,11 @@ use std::path::Path;
 extern crate uuid;
 use uuid::Uuid;
 
-// 1
 mod modules;
-use crate::modules::initializer::{ Initializer, ArticleInitializer };
+use crate::modules::ci::{ ci, read_lines };
 use crate::modules::file::{ write_only, get_base_file };
-// -1
+use crate::modules::initializer::{ mkdir, Initializer, ArticleInitializer };
+
 
 fn print_usage() {
     eprintln!(r"
@@ -74,7 +74,7 @@ fn main() {
             Uuid::new_v4().to_string()
         };
 
-        let base_file_path = if Path::new("./articles/").exists() {
+        let base_file_path: String = if Path::new("./articles/").exists() {
             format!("./articles/{}.txt", &file_name)
         } else {
             format!("{}.txt", &file_name)
@@ -88,7 +88,7 @@ fn main() {
             write_only(&base_file_path);
         } else {
             if args.contains(&String::from("-p")) || args.contains(&String::from("--project")) {
-                modules::initializer::mkdir(&file_name);
+                mkdir(&file_name);
             }
 
             args.retain(|r| r != &String::from("-p") && r != &String::from("--project"));
@@ -103,7 +103,7 @@ fn main() {
         get_base_file().unwrap().iter().for_each(|path| {
             let maybe_base_file_path: String = format!("{}", path.display());
             if maybe_base_file_path.ends_with(".txt") {
-                let content: Vec<String> = modules::ci::read_lines(&maybe_base_file_path);
+                let content: Vec<String> = read_lines(&maybe_base_file_path);
                 if content.len() > 1 {
                     println!("{:<40} | {}", maybe_base_file_path.split('\\').last().unwrap(), content[1].replace("title:", ""));
                 }
@@ -118,9 +118,9 @@ fn main() {
     } else if command == "make" {
         let file_name: &String = &args[1];
         if Path::new(&format!("./articles/{}.txt", file_name)).exists() {
-            modules::ci::ci(file_name, false);
+            ci(file_name, false);
         } else {
-            modules::ci::ci(file_name, true);
+            ci(file_name, true);
         }
     }
 }

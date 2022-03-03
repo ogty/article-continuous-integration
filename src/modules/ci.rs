@@ -59,8 +59,8 @@ pub fn ci(path: &str, is_relative_path: bool) {
         let mut comment_out_start_end: Vec<usize> = Vec::new();
 
         // Get the first and last indices of a comment-out
-        let start = &format!("{} {}", comment_out_prefix, code_block_number);
-        let end = &format!("{} -{}", comment_out_prefix, code_block_number);
+        let start: &String = &format!("{} {}", comment_out_prefix, code_block_number);
+        let end: &String = &format!("{} -{}", comment_out_prefix, code_block_number);
         for (count, source_code_line) in source_code_data.iter().enumerate() {
             if source_code_line == start || source_code_line == end {
                 comment_out_start_end.push(count);
@@ -69,6 +69,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
         if !comment_out_start_end.is_empty() {
             let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+
             // If you specify a playground URL
             if splited_code_block_start_line.len() == 3 {
                 let cloned_source: String = source.clone();
@@ -108,7 +109,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
             let mut comment_out_start_end: Vec<usize> = Vec::new();
 
             // Get the first and last indices of a comment-out
-            let comment_out = comment_out(&String::from(lang));
+            let comment_out: String = comment_out(&String::from(lang));
             let start: &String = &format!("{} {}", comment_out, code_block_number);
             let end: &String = &format!("{} -{}", comment_out, code_block_number);
 
