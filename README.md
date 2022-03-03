@@ -68,7 +68,7 @@ $ cargo build
 ### ベースファイルの作成
 
 ```bash
-$ aci init [title] [topics] [option]
+$ aci init [title] [topics] [options]
 ```
 
 オプションとして `-p` を指定すると、`projects` の直下にファイル名と同じ名前のフォルダが作成されます。
