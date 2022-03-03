@@ -4,10 +4,11 @@ use std::path::Path;
 extern crate uuid;
 use uuid::Uuid;
 
+// 1
 mod modules;
 use crate::modules::initializer::{ Initializer, ArticleInitializer };
 use crate::modules::file::{ write_only, get_base_file };
-
+// -1
 
 fn print_usage() {
     eprintln!(r"
@@ -54,21 +55,21 @@ fn main() {
 
     if args.len() == 0 {
         print_usage();
-        return ();
+        return;
     }
 
     let command: &str = &args[0];
 
     // Initialize the article base.
     if command == "init" {
-        let file_name = if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
+        let file_name: String = if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
             let name_option_index: usize = args
                 .iter()
                 .position(|r| r == &String::from("-n") || r == &String::from("--name"))
                 .unwrap();
-
+            let cloned_file_name: String = args[name_option_index + 1].clone();
             args.retain(|r| r != &String::from("-n") && r != &String::from("--name"));
-            args[name_option_index + 1].clone()
+            cloned_file_name
         } else {
             Uuid::new_v4().to_string()
         };

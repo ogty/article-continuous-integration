@@ -27,7 +27,7 @@ pub fn read_lines(path: &str) -> Vec<String> {
     for line_content in line_contents {
         result.push(line_content.unwrap());
     }
-    return result;
+    result
 }
 
 
