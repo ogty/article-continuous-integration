@@ -94,7 +94,11 @@ fn main() {
 
         // Specify the name of the txt file
         if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
-            let tmp: usize = args.iter().position(|r| r == &String::from("--name")).unwrap();
+            let tmp: usize = args
+                .iter()
+                .position(|r| r == &String::from("-n") || r == &String::from("--name"))
+                .unwrap();
+
             id = args[tmp + 1].clone();
             article_script_path = format!("{}.txt", &id);
         } else {
