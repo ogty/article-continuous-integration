@@ -59,10 +59,10 @@ pub fn ci(path: &str, is_relative_path: bool) {
         let mut comment_out_start_end: Vec<usize> = Vec::new();
 
         // Get the first and last indices of a comment-out
+        let start = &format!("{} {}", comment_out_prefix, code_block_number);
+        let end = &format!("{} -{}", comment_out_prefix, code_block_number);
         for (count, source_code_line) in source_code_data.iter().enumerate() {
-            if source_code_line == &format!("{} {}", comment_out_prefix, code_block_number) {
-                comment_out_start_end.push(count);
-            } else if source_code_line == &format!("{} -{}", comment_out_prefix, code_block_number) {
+            if source_code_line == start || source_code_line == end {
                 comment_out_start_end.push(count);
             }
         }
@@ -108,10 +108,12 @@ pub fn ci(path: &str, is_relative_path: bool) {
             let mut comment_out_start_end: Vec<usize> = Vec::new();
 
             // Get the first and last indices of a comment-out
+            let comment_out = comment_out(&String::from(lang));
+            let start: &String = &format!("{} {}", comment_out, code_block_number);
+            let end: &String = &format!("{} -{}", comment_out, code_block_number);
+
             for (count, source_code_line) in source_code_data.iter().enumerate() {
-                if source_code_line == &format!("{} {}", comment_out(&String::from(lang)), code_block_number) {
-                    comment_out_start_end.push(count);
-                } else if source_code_line == &format!("{} -{}", comment_out(&String::from(lang)), code_block_number) {
+                if source_code_line == start || source_code_line == end {
                     comment_out_start_end.push(count);
                 }
             }
@@ -142,7 +144,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
     // Get line index for source code operations
     let mut code_block_operations_indexes: Vec<usize> = Vec::new();
-    let cloned_article = article_data.clone();
+    let cloned_article: Vec<String> = article_data.clone();
     for (code_block_operation_count, article_line) in cloned_article.into_iter().enumerate() {
         if re_code_block_operation.is_match(&article_line) {
             code_block_operations_indexes.push(code_block_operation_count);
@@ -156,10 +158,10 @@ pub fn ci(path: &str, is_relative_path: bool) {
     }
 
     // Insert the playground URL
-    let mut index_adjustment: usize = 0;
-    for (index_to_add_url, playground_url) in izip!(indexes_to_add_url, for_playground) {
-        article_data.insert(index_to_add_url + index_adjustment , playground_url);
-        index_adjustment += 1;
+    let indexes_to_add_url_length: usize = indexes_to_add_url.clone().len();
+    let indexes: Vec<usize> = (1..indexes_to_add_url_length).collect::<Vec<usize>>();
+    for (i, index_to_add_url, playground_url) in izip!(indexes, indexes_to_add_url, for_playground) {
+        article_data.insert(index_to_add_url + i , playground_url);
     }
 
     write(&article_path, article_data.join("\n"));
