@@ -22,7 +22,7 @@ pub fn comment_out(language: &String) -> String {
         "css",
     ];
     
-    let single_line_comment_out_prefix: Vec<&str> = vec![
+    let single_line_comment_out_prefixes: Vec<&str> = vec![
         "#", 
         "#",
         "//",
@@ -42,7 +42,7 @@ pub fn comment_out(language: &String) -> String {
         "/*",
     ];
     
-    let language_comment_map: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefix.iter()).collect();
-    let result = language_comment_map.get(&language.as_str()).unwrap();
+    let languages_comment_out: HashMap<_, _> = languages.iter().zip(single_line_comment_out_prefixes.iter()).collect();
+    let result = languages_comment_out.get(&language.as_str()).unwrap();
     return result.to_string()
 }

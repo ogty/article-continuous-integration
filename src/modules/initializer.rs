@@ -29,34 +29,39 @@ impl Default for ArticleInitializer {
 }
 
 
-// TODO: I don't like something about it.
 impl Initializer for ArticleInitializer {
     fn write(&mut self, path: &str) {
         let path: &Path = Path::new(&path);
         let display: Display = path.display();
-        let mut template: String = String::new();
+        let mut template: String = String::from("---\ntitle: <title>\nemoji: 🐒\ntype: tech\ntopics: [<topics><last>]\npublished: false\n---");
 
         if self.title != String::from("") {
             let topics_length: usize = self.topics.len();
             if topics_length > 0 {
                 if topics_length > 2 {
                     let before_last: usize = topics_length - 1;
-                    let topics: String = self.topics[..before_last].join(", ");
-                    template = format!(
-                        "---\ntitle: {}\nemoji: 🐒\ntype: tech\ntopics: [{}{}]\npublished: false\n---", 
-                        self.title, topics, self.topics[before_last]
-                    );
+                    template = template
+                        .replace("<title>", &self.title)
+                        .replace("<topics>", &self.topics[..before_last].join(", "))
+                        .replace("<last>", &self.topics[before_last]);
+
                 } else {
-                    template = format!(
-                        "---\ntitle: {}\nemoji: 🐒\ntype: tech\ntopics: [{}]\npublished: false\n---", 
-                        self.title, self.topics[0]
-                    );
+                    template = template
+                        .replace("<title>", &self.title)
+                        .replace("<topics>", &self.topics[0])
+                        .replace("<last>", "");
                 }
             } else {
-                template = format!("---\ntitle: {}\nemoji: 🐒\ntype: tech\ntopics: []\npublished: false\n---", self.title);
+                template = template
+                    .replace("<title>", &self.title)
+                    .replace("<topics>", "")
+                    .replace("<last>", "");
             }
         } else {
-            template = String::from("---\ntitle: \nemoji: 🐒\ntype: tech\ntopics: []\npublished: false\n---");
+            template = template
+                .replace("<title>", "")
+                .replace("<topics>", "")
+                .replace("<last>", "");
         }
 
         let mut file: File = match File::create(&path) {

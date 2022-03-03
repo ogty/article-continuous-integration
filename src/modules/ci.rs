@@ -5,8 +5,8 @@ use regex::{ Regex, Captures };
 extern crate urlencoding;
 use urlencoding::encode;
 
-pub use crate::modules::file::{ write, read_lines };
 pub use crate::modules::comment::comment_out;
+pub use crate::modules::file::{ write, read_lines };
 
 
 pub fn ci(path: &str, is_relative_path: bool) {
