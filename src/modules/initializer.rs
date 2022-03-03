@@ -1,23 +1,19 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::{ Path, Display };
-
+use std::path::{Display, Path};
 
 pub fn mkdir(id: &str) {
     let _ = std::fs::create_dir(format!("./projects/{}", &id));
 }
 
-
 pub trait Initializer {
     fn write(&mut self, path: &str);
 }
-
 
 pub struct ArticleInitializer {
     pub title: String,
     pub topics: Vec<String>,
 }
-
 
 impl Default for ArticleInitializer {
     fn default() -> ArticleInitializer {
@@ -27,7 +23,6 @@ impl Default for ArticleInitializer {
         }
     }
 }
-
 
 impl Initializer for ArticleInitializer {
     fn write(&mut self, path: &str) {
@@ -44,7 +39,6 @@ impl Initializer for ArticleInitializer {
                         .replace("<title>", &self.title)
                         .replace("<topics>", &self.topics[..before_last].join(", "))
                         .replace("<last>", &self.topics[before_last]);
-
                 } else {
                     template = template
                         .replace("<title>", &self.title)
@@ -69,6 +63,8 @@ impl Initializer for ArticleInitializer {
             Ok(file) => file,
         };
 
-        if let Err(why) = file.write_all(template.as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
+        if let Err(why) = file.write_all(template.as_bytes()) {
+            panic!("couldn't write to {}: {}", for_display, why)
+        }
     }
 }

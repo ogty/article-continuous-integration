@@ -1,13 +1,12 @@
 extern crate itertools;
 use itertools::izip;
 extern crate regex;
-use regex::{ Regex, Captures };
+use regex::{Captures, Regex};
 extern crate urlencoding;
 use urlencoding::encode;
 
 pub use crate::modules::comment::comment_out;
-pub use crate::modules::file::{ write, read_lines };
-
+pub use crate::modules::file::{read_lines, write};
 
 pub fn ci(path: &str, is_relative_path: bool) {
     let mut article_script_path: String = format!("{}.txt", path);
@@ -68,14 +67,16 @@ pub fn ci(path: &str, is_relative_path: bool) {
         }
 
         if !comment_out_start_end.is_empty() {
-            let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+            let source: String = source_code_data
+                [(comment_out_start_end[0] + 1)..comment_out_start_end[1]]
+                .join("\n");
 
             // If you specify a playground URL
             if splited_code_block_start_line.len() == 3 {
                 let cloned_source: String = source.clone();
                 if lang == "rust" {
                     for_playground.push(format!("[{}](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code={})\n", splited_code_block_start_line[2], encode(&cloned_source)));
-                } 
+                }
             }
 
             result.push(source);
@@ -85,7 +86,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
     // Code block operations
     let mut calculated_result: Vec<String> = Vec::new();
     for matched_code_block_index in matched_code_block_indexes {
-        let mut source_code_for_calculate: Vec<String> = Vec::new(); 
+        let mut source_code_for_calculate: Vec<String> = Vec::new();
         let matched_line: String = article_data[matched_code_block_index].to_string();
         let matched: Captures = re_code_block_operation.captures(&matched_line).unwrap();
         let lang: &str = matched.name("lang").unwrap().as_str();
@@ -94,7 +95,10 @@ pub fn ci(path: &str, is_relative_path: bool) {
         source_code_for_calculate.push(format!("```{}", lang));
         let file_path_and_code_block_number: Vec<&str> = path.split('+').collect::<Vec<&str>>();
 
-        for unit in file_path_and_code_block_number.iter().map(|x| x.replace(' ', "")) {
+        for unit in file_path_and_code_block_number
+            .iter()
+            .map(|x| x.replace(' ', ""))
+        {
             let splited_unit: Vec<&str> = unit.split(':').collect::<Vec<&str>>();
             let program_file_path: &str = splited_unit[0];
             let code_block_number: &str = splited_unit[1];
@@ -120,7 +124,9 @@ pub fn ci(path: &str, is_relative_path: bool) {
             }
 
             if !comment_out_start_end.is_empty() {
-                let source: String = source_code_data[(comment_out_start_end[0] + 1)..comment_out_start_end[1]].join("\n");
+                let source: String = source_code_data
+                    [(comment_out_start_end[0] + 1)..comment_out_start_end[1]]
+                    .join("\n");
                 source_code_for_calculate.push(source);
             }
         }
@@ -136,7 +142,8 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
     // Get an index to insert the playground URL
     let mut indexes_to_add_url: Vec<usize> = Vec::new();
-    let re_for_playground: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*):(?P<message>.*)").unwrap();
+    let re_for_playground: Regex =
+        Regex::new(r"```(?P<lang>\w+):(?P<path>.*):(?P<message>.*)").unwrap();
     for (index, article_line) in article_data.iter().enumerate() {
         if re_for_playground.is_match(article_line) {
             indexes_to_add_url.push(index);
@@ -153,7 +160,9 @@ pub fn ci(path: &str, is_relative_path: bool) {
     }
 
     // Delete lines for source code operations and insert calculation results
-    for (code_block_operations_index, source_code) in izip!(code_block_operations_indexes, calculated_result) {
+    for (code_block_operations_index, source_code) in
+        izip!(code_block_operations_indexes, calculated_result)
+    {
         article_data.remove(code_block_operations_index);
         article_data.insert(code_block_operations_index, source_code);
     }
@@ -161,8 +170,9 @@ pub fn ci(path: &str, is_relative_path: bool) {
     // Insert the playground URL
     let indexes_to_add_url_length: usize = indexes_to_add_url.clone().len();
     let indexes: Vec<usize> = (0..indexes_to_add_url_length).collect::<Vec<usize>>();
-    for (i, index_to_add_url, playground_url) in izip!(indexes, indexes_to_add_url, for_playground) {
-        article_data.insert(index_to_add_url + i , playground_url);
+    for (i, index_to_add_url, playground_url) in izip!(indexes, indexes_to_add_url, for_playground)
+    {
+        article_data.insert(index_to_add_url + i, playground_url);
     }
 
     write(&article_path, article_data.join("\n"));

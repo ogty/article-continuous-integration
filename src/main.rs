@@ -5,13 +5,13 @@ extern crate uuid;
 use uuid::Uuid;
 
 mod modules;
-use crate::modules::ci::{ ci, read_lines };
-use crate::modules::file::{ write_only, get_base_file };
-use crate::modules::initializer::{ mkdir, Initializer, ArticleInitializer };
-
+use crate::modules::ci::{ci, read_lines};
+use crate::modules::file::{get_base_file, write_only};
+use crate::modules::initializer::{mkdir, ArticleInitializer, Initializer};
 
 fn print_usage() {
-    eprintln!(r"
+    eprintln!(
+        r"
 
     Name:
 
@@ -46,9 +46,9 @@ fn print_usage() {
             -n, --name
                             Specify file name
 
-    ")
+    "
+    )
 }
-
 
 fn main() {
     let mut args: Vec<String> = env::args().skip(1).collect();
@@ -62,17 +62,18 @@ fn main() {
 
     // Initialize the article base.
     if command == "init" {
-        let file_name: String = if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
-            let name_option_index: usize = args
-                .iter()
-                .position(|r| r == &String::from("-n") || r == &String::from("--name"))
-                .unwrap();
-            let cloned_file_name: String = args[name_option_index + 1].clone();
-            args.retain(|r| r != &String::from("-n") && r != &String::from("--name"));
-            cloned_file_name
-        } else {
-            Uuid::new_v4().to_string()
-        };
+        let file_name: String =
+            if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
+                let name_option_index: usize = args
+                    .iter()
+                    .position(|r| r == &String::from("-n") || r == &String::from("--name"))
+                    .unwrap();
+                let cloned_file_name: String = args[name_option_index + 1].clone();
+                args.retain(|r| r != &String::from("-n") && r != &String::from("--name"));
+                cloned_file_name
+            } else {
+                Uuid::new_v4().to_string()
+            };
 
         let base_file_path: String = if Path::new("./articles/").exists() {
             format!("./articles/{}.txt", &file_name)
@@ -81,7 +82,9 @@ fn main() {
         };
 
         args.push(String::from(""));
-        let mut initializer: ArticleInitializer = ArticleInitializer{ ..Default::default() };
+        let mut initializer: ArticleInitializer = ArticleInitializer {
+            ..Default::default()
+        };
 
         // Create articles for zenn or otherwise
         if args.contains(&String::from("-e")) || args.contains(&String::from("--empty")) {
@@ -105,7 +108,11 @@ fn main() {
             if maybe_base_file_path.ends_with(".txt") {
                 let content: Vec<String> = read_lines(&maybe_base_file_path);
                 if content.len() > 1 {
-                    println!("{:<40} | {}", maybe_base_file_path.split('\\').last().unwrap(), content[1].replace("title:", ""));
+                    println!(
+                        "{:<40} | {}",
+                        maybe_base_file_path.split('\\').last().unwrap(),
+                        content[1].replace("title:", "")
+                    );
                 }
             }
         });

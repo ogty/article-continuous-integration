@@ -1,8 +1,7 @@
 use std::error::Error;
-use std::fs::{ File, ReadDir, read_dir };
-use std::io::{ prelude::*, self, Lines, BufReader };
-use std::path::{ Path, PathBuf, Display };
-
+use std::fs::{read_dir, File, ReadDir};
+use std::io::{self, prelude::*, BufReader, Lines};
+use std::path::{Display, Path, PathBuf};
 
 pub fn write(path: &str, content: String) {
     let path: &Path = Path::new(&path);
@@ -13,9 +12,10 @@ pub fn write(path: &str, content: String) {
         Ok(file) => file,
     };
 
-    if let Err(why) = file.write_all(content.as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
+    if let Err(why) = file.write_all(content.as_bytes()) {
+        panic!("couldn't write to {}: {}", for_display, why)
+    }
 }
-
 
 pub fn read_lines(path: &str) -> Vec<String> {
     let mut result: Vec<String> = Vec::new();
@@ -27,7 +27,6 @@ pub fn read_lines(path: &str) -> Vec<String> {
     result
 }
 
-
 pub fn write_only(path: &str) {
     let path: &Path = Path::new(&path);
     let for_display: Display = path.display();
@@ -37,9 +36,10 @@ pub fn write_only(path: &str) {
         Ok(file) => file,
     };
 
-    if let Err(why) = file.write_all("".as_bytes()) { panic!("couldn't write to {}: {}", for_display, why) }
+    if let Err(why) = file.write_all("".as_bytes()) {
+        panic!("couldn't write to {}: {}", for_display, why)
+    }
 }
-
 
 pub fn get_base_file() -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let directory_items: ReadDir = read_dir("./articles")?;
