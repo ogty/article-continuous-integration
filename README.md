@@ -29,8 +29,10 @@
 - C
 - C#(cs)
 - C++(cpp)
+- CSS
 - Go
 - Haskell
+- HTML
 - Java
 - Javascript
 - Julia
@@ -88,7 +90,7 @@ $ aci init -p "This is the title" Topic1 Topic2
    └─<uuid>
 ```
 
-```txt:<uuid>.txt
+```txt
 ---
 title: This is the title
 emoji: 🐒
@@ -106,7 +108,7 @@ published: false
 プロジェクトの有無に関わらず、以下のコマンドを実行すると、`<uuid>.md` ファイルが作成されます。
 
 ```bash
-$ aci make <file name>
+$ aci make <uuid>
 ```
 
 ```
@@ -119,7 +121,7 @@ $ aci make <file name>
    └─<uuid>
 ```
 
-```md:<uuid>.md
+```md
 ---
 title: This is the title
 emoji: 🐒
@@ -137,7 +139,7 @@ $ aci init "This is the title"
 
 ### ファイル名とタイトルを表示させる
 
-ファイル名とタイトルを表示させるには以下のコマンドを実行します。
+`articles`直下のファイル名とタイトルを表示させるには以下のコマンドを実行します。
 
 ```bash
 $ aci show
@@ -212,7 +214,7 @@ fn main() {
 
 `articles/<uuid>.txt`に`main.rs`で表示させたいコードの範囲の番号を書いたコードブロックを追記します。
 
-````txt:articles/<uuid>.txt
+````txt
 ---
 title: RustでHello, world!
 emoji: 🐒
@@ -234,7 +236,7 @@ $ aci make <uuid>
 
 そうすると`articles/<uuid>.md`が作成され、以下のような内容になっています。
 
-````md:<uuid>.md
+````md
 ---
 title: RustでHello, world!
 emoji: 🐒
@@ -262,14 +264,14 @@ fn main() {
 └─aci.exe
 ```
 
-ベースファイルの作成ですが、これは`touch`コマンドを使った方が早いです。
+ベースファイルの作成ですが、これは`touch`コマンドなどを使った方が早いです。
 
 ```bash
 $ aci init -e -n README
 $ # touch README.txt
 ```
 
-もし`aci.exe`をデスクトップなどに配置して他のプロジェクトで使用する場合は、`--name`オプションに相対パスを入力することで解決できます。この場合はベースファイル内のコードブロックで指定しているパスも`aci.exe`からの相対パスにする必要があります。
+もし`aci.exe`をデスクトップなどに配置して他のプロジェクトで使用する場合は、`-n(--name)`オプションに相対パスを入力することで解決できます。この場合はベースファイル内のコードブロックで指定しているパスも`aci.exe`からの相対パスにする必要があります。
 
 ```bash
 $ aci init -e -n ./<folder name>/README
@@ -335,7 +337,7 @@ print("Hello, world!")
 
 Rust 限定ですが、Playground の URL を追記できます。
 
-````txt:<uuid>.txt
+````txt
 ```rust:src/main.rs:サンプルコード
 1
 ```
@@ -343,7 +345,7 @@ Rust 限定ですが、Playground の URL を追記できます。
 
 上記のように`<言語>:<パス>:<リンク用文字列>`とすることで、そのコードブロック内のプログラムの Playground URL を追記できます。
 
-````md:<uuid>.md
+````md
 [サンプルコード](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
 
 ```rust:src/main.rs:サンプルコード

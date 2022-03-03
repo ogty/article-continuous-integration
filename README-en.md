@@ -35,8 +35,10 @@ We want to provide a sense of unity as content that users can get by managing it
 - C
 - C#(cs)
 - C++(cpp)
+- CSS
 - Go
 - Haskell
+- HTML
 - Java
 - Javascript
 - Julia
@@ -96,7 +98,7 @@ For example, the above command will create `articles/<uuid>.txt` and `projects/<
    └─<uuid>
 ```
 
-```txt:<uuid>.txt
+```txt
 ---
 title: This is the title
 emoji: 🐒
@@ -113,7 +115,7 @@ If you don't specify any options, only `articles/<uuid>.txt` will be created. Th
 If you run the following command with or without a project, it will create a `<uuid>.md` file. Copying the file name is a pain, but...
 
 ```bash
-$ aci <path>
+$ aci make <uuid>
 ```
 
 ```
@@ -155,8 +157,8 @@ $ aci show
 It is not necessary to include the extension in the commands or options.
 
 - `init [title] [topics] [options]` : Create a base file
+- `make <file name>` : Create articles (`.md`)
 - `show` : Show the file name and title directly under articles
-- `<file name>` : Create articles (`.md`)
 - `help` : Show help message
 
 ##### If there is no `<file name>.txt` directly under articles, it will be considered as a relative path.
@@ -166,7 +168,7 @@ It is not necessary to include the extension in the commands or options.
 - `-p, --project` : Create projects at the same time
 - `-e, --empty` : Create an empty base file
 - `-n, --name <file name>` : Specify any file name
-  
+
 ## Example 1
 
 Let's say you want to write an article called "Hello, world in Rust!"
@@ -209,7 +211,7 @@ Folder structure so far ↓
 
 Add a comment to `main.rs`. The `1` part of this comment can be anything, as long as it is the same as in the code block.
 
-```rust:src/main.rs
+```rust
 // 1
 fn main() {
     println!("Hello, world!");
@@ -219,7 +221,7 @@ fn main() {
 
 Add a code snippet to `articles/<uuid>.txt` with the number of the code range you want to display in `main.rs`.
 
-````txt:articles/<uuid>.txt
+````txt
 ---
 title: Hello, world! in Rust
 emoji: 🐒
@@ -241,7 +243,7 @@ $ aci <uuid>
 
 Then `articles/<uuid>.md` will be created, and it will have the following contents.
 
-````md:<uuid>.md
+````md
 ---
 title: Hello, world! in Rust
 emoji: 🐒
@@ -342,7 +344,7 @@ Folder structure ↓
 
 You can add a Playground URL, which is only available in Rust.
 
-````txt:<uuid>.txt
+````txt
 ```rust:src/main.rs:sample code
 1
 ```
@@ -350,7 +352,7 @@ You can add a Playground URL, which is only available in Rust.
 
 You can add the Playground URL of the program in the code block by using `<language>:<path>:<string for link>` as above.
 
-````md:<uuid>.md
+````md
 [sample code](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
 
 ```rust:src/main.rs:sample code
