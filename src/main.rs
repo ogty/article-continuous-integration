@@ -101,7 +101,7 @@ fn main() {
             initializer.write(&base_file_path);
         }
 
-    // Show txt files and titles directly under articles
+    // Show txt files and titles directly under "articles" directory
     } else if command == "show" {
         get_base_file().unwrap().iter().for_each(|path| {
             let maybe_base_file_path: String = format!("{}", path.display());
