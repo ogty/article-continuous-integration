@@ -147,6 +147,8 @@ $ aci show
 
 ## コマンド一覧
 
+    aci <command> [options]
+
 コマンドやオプションで拡張子を含める必要はありません。
 
 - `init [title] [topics] [options]` : ベースファイルの作成
