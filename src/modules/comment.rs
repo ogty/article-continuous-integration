@@ -19,12 +19,13 @@ pub fn comment_out(language: &str) -> String {
         "lua",
         "html",
         "css",
-        "nim"
+        "nim",
+        "lisp"
     ];
 
     let single_line_comment_out_prefixes: Vec<&str> = vec![
         "#", "#", "//", "//", "//", "//", "//", "//", "//", "//", "//", "//", "//", "--", "--",
-        "<!--", "/*", "#"
+        "<!--", "/*", "#", ";"
     ];
 
     let languages_comment_out: HashMap<_, _> = languages
