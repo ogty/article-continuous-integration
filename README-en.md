@@ -154,6 +154,8 @@ $ aci show
 
 ## Commands
 
+    aci <command> [options]
+
 It is not necessary to include the extension in the commands or options.
 
 - `init [title] [topics] [options]` : Create a base file
