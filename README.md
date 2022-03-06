@@ -413,7 +413,7 @@ fn hello() {
 $ ./eq.sh start end README.txt
 ```
 
-`**README.txt**`
+**`README.txt`**
 
 ````txt
 awkコマンド用のコードブロック↓
@@ -435,7 +435,7 @@ fn main() {
 ```
 ````
 
-`**main.rs**`
+**`main.rs`**
 
 ```rs
 // start
@@ -447,7 +447,7 @@ fn main() {
 
 ベースファイルのコードブロック内のパスはベースファイルからの相対パスになります。
 
-`**README.md**`
+**`README.md`**
 
 ````md
 awkコマンド用のコードブロック↓
