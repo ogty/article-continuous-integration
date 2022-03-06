@@ -17,6 +17,7 @@ BEGIN {
     data["lua"] = "--";
     data["makefile"] = "#";
     data["nim"] = "#";
+    data["objectivec"] = "//";
     data["php"] = "//";
     data["powershell"] = "#";
     data["python"] = "#";
