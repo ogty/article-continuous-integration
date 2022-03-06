@@ -4,9 +4,7 @@ BEGIN {
     data["bash"] = "#";
     data["c"] = "//";
     data["c#"] = "//";
-    data["cs"] = "//";
     data["c++"] = "//";
-    data["cpp"] = "//";
     data["css"] = "/*";
     data["dart"] = "//";
     data["go"] = "//";
@@ -14,9 +12,7 @@ BEGIN {
     data["html"] = "<!--";
     data["java"] = "//";
     data["javascript"] = "//";
-    data["js"] = "//";
     data["julia"] = "#";
-    data["jl"] = "#";
     data["lisp"] = ";";
     data["lua"] = "--";
     data["makefile"] = "#";
@@ -25,17 +21,13 @@ BEGIN {
     data["php"] = "//";
     data["powershell"] = "#";
     data["python"] = "#";
-    data["py"] = "#";
     data["r"] = "#";
     data["ruby"] = "#";
-    data["rb"] = "#";
     data["rust"] = "//";
-    data["rs"] = "//";
     data["scala"] = "//";
     data["sh"] = "#";
     data["swift"] = "//";
     data["typescript"] = "//";
-    data["ts"] = "//";
 }
 
 function command_runner(path, start, end, comment_word) {
@@ -61,9 +53,14 @@ count = 0
     sub("```", "", specifiede_range_word);
 
     print "```" language ":" filepath;
-    # TODO: Use arguments(start, end);
-    # TODO: Check if file exists;
-    command_runner(filepath, "start", "end", data[language]);
+    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
+    if (cmd | getline line) {
+        if (line == "true") {
+            command_runner(filepath, start, end, data[language]);
+        } else {
+            print "ERROR"
+        }
+    }
     print "```";
 
     count++;
