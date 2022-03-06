@@ -1,7 +1,31 @@
-function command_runner(path, start, end) {
+BEGIN {
+    data["c"] = "//";
+    data["cs"] = "//";
+    data["cpp"] = "//";
+    data["css"] = "/*";
+    data["go"] = "//";
+    data["haskell"] = "--";
+    data["html"] = "<!--";
+    data["java"] = "//";
+    data["javascript"] = "//";
+    data["julia"] = "#";
+    data["lisp"] = ";";
+    data["lua"] = "--";
+    data["nim"] = "#";
+    data["php"] = "//";
+    data["python"] = "#";
+    data["rust"] = "//";
+    data["scala"] = "//";
+    data["swift"] = "//";
+    data["typescript"] = "//";
+}
+
+function command_runner(path, start, end, comment_word) {
     cmd = "awk /" start "/,/" end "/'{print $0}' " path
-    while (cmd | getline) {
-        print $0
+    while (cmd | getline line) {
+        if (line != comment_word " " start && line != comment_word " " end) {
+            print line
+        }
     }
     close(cmd)
 }
@@ -19,7 +43,7 @@ count = 0
     sub("```", "", specifiede_range_word)
 
     print "```" language ":" filepath
-    command_runner(filepath, "start", "end")
+    command_runner(filepath, "start", "end", data[language])
     print "```"
     count++
 }
