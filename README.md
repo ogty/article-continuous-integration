@@ -20,7 +20,7 @@ We want to provide a sense of unity as content that users can get by managing it
 - [Example 2](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-2)
 - [Adding playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-playground-urlrust-only)
 - [Add code blocks together](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#add-code-blocks-together)
-- [When using Awk](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#when-using-awk)
+- [When using Awk](https://github.com/ogty/article-continuous-integration#when-using-awk)
 
 ---
 
