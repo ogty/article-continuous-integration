@@ -437,7 +437,7 @@ fn main() {
 
 `**main.rs**`
 
-```rust
+```rs
 // start
 fn main() {
     println!("Hello, world!");
