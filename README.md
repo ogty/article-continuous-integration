@@ -8,18 +8,18 @@ We want to provide a sense of unity as content that users can get by managing it
 
 ## Contents
 
-- [Features](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#features)
-- [Suppoted Languages](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#suppoted-languages)
-- [Usage](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#usage)
-  - [Create base file](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#create-base-file)
-  - [Create article](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#create-article)
-  - [Display file name and title](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#display-file-name-and-title)
-- [Commands](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#commands)
-  - [Options](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#options)
-- [Example 1](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-1)
-- [Example 2](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-2)
-- [Adding playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-playground-urlrust-only)
-- [Add code blocks together](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#add-code-blocks-together)
+- [Features](https://github.com/ogty/article-continuous-integration#features)
+- [Suppoted Languages](https://github.com/ogty/article-continuous-integration#suppoted-languages)
+- [Usage](https://github.com/ogty/article-continuous-integration#usage)
+  - [Create base file](https://github.com/ogty/article-continuous-integration#create-base-file)
+  - [Create article](https://github.com/ogty/article-continuous-integration#create-article)
+  - [Display file name and title](https://github.com/ogty/article-continuous-integration#display-file-name-and-title)
+- [Commands](https://github.com/ogty/article-continuous-integration#commands)
+  - [Options](https://github.com/ogty/article-continuous-integration#options)
+- [Example 1](https://github.com/ogty/article-continuous-integration#example-1)
+- [Example 2](https://github.com/ogty/article-continuous-integration#example-2)
+- [Adding playground URL(Rust only)](https://github.com/ogty/article-continuous-integration#adding-playground-urlrust-only)
+- [Add code blocks together](https://github.com/ogty/article-continuous-integration#add-code-blocks-together)
 - [When using Awk](https://github.com/ogty/article-continuous-integration#when-using-awk)
 
 ---
