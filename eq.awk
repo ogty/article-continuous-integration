@@ -62,6 +62,45 @@ count = 0
             print "ERROR"
         }
     }
+    close(cmd);
+    print "```";
+
+    count++;
+}
+
+/```.+\|(.+\..+:.+:.+?){2,}/ {
+    print "";
+    split($0, code_block_for_operation, "|");
+    
+    language = code_block_for_operation[1];
+    targets =  code_block_for_operation[2];
+
+    sub("```", "", language);
+    split(targets, target_list, " ");
+
+    print "```" language
+    for (i = 1; i <= length(target_list); i++) {
+        sub("```", "", target_list[i]);
+        split(target_list[i], target, ":");
+
+        filepath = target[1];
+        start = target[2];
+        end = target[3];
+
+        cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
+        if (cmd | getline line) {
+            if (line == "true") {
+                command_runner(filepath, start, end, data[language]);
+            } else {
+                print "ERROR"
+            }
+        }
+        close(cmd);
+
+        if (i != length(target_list)) {
+            print "";
+        }
+    }
     print "```";
 
     count++;
