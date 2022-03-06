@@ -55,6 +55,18 @@ BEGIN {
     c2p["\""] = "%22";
 }
 
+
+# Counter variable to separate code blocks from the rest of the code
+count = 0;
+
+# Variable for playground URL
+global_filepath = "";
+global_start = "";
+global_end = "";
+global_comment_word = "";
+global_url_word = "";
+
+
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
     cmd = "awk /" start "/,/" end "/'{print $0}' " path;
@@ -65,6 +77,7 @@ function command_runner(path, start, end, comment_word) {
     }
     close(cmd);
 }
+
 
 # Function to retrieve a specific range of source code for a playground URL
 function command_runner_and_playground(path, start, end, comment_word, url_word) {
@@ -83,15 +96,6 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     print ")\n";
 }
 
-# Counter variable to separate code blocks from the rest of the code
-count = 0;
-
-# Variable for playground URL
-global_filepath = "";
-global_start = "";
-global_end = "";
-global_comment_word = "";
-global_url_word = "";
 
 # Code block generation from program loading
 /```.+:.+\..+:.+:.+```/ {
@@ -132,6 +136,7 @@ global_url_word = "";
     count += 1;
 }
 
+
 # Code block operation
 /```.+\|(.+\..+:.+:.+?){2,}/ {
     print "";
@@ -168,6 +173,7 @@ global_url_word = "";
     }
     print "```";
 }
+
 
 # Processing of code other than code blocks and for playground
 {   
