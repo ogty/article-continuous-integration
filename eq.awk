@@ -3,7 +3,7 @@ BEGIN {
     data["bat"] = "rem";
     data["bash"] = "#";
     data["c"] = "//";
-    data["cE"] = "//";
+    data["c#"] = "//";
     data["c++"] = "//";
     data["css"] = "/*";
     data["dart"] = "//";
