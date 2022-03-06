@@ -27,8 +27,8 @@
 ## 対応言語
 
 - C
-- C#(cs)
-- C++(cpp)
+- C#
+- C++
 - CSS
 - Go
 - Haskell
