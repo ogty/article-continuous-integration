@@ -27,21 +27,33 @@
 
 ## 対応言語
 
+- Awk
+- Bash
+- Bat
 - C
 - C#
 - C++
 - CSS
+- Dart
 - Go
 - Haskell
 - HTML
 - Java
-- Javascript
+- JavaScript
 - Julia
+- Lisp
 - Lua
+- Makefile
+- Nim
+- Objective-C
 - PHP
+- PowerShell
 - Python
+- R
+- Ruby
 - Rust
 - Scala
+- ShellScript
 - Swift
 - TypeScript
 
