@@ -32,22 +32,33 @@ We want to provide a sense of unity as content that users can get by managing it
 - [x] Code Block Operation
 
 ## Supported File Formats
-
+- Awk
+- Bash
+- Bat
 - C
 - C#
 - C++
 - CSS
+- Dart
 - Go
 - Haskell
 - HTML
 - Java
-- Javascript
+- JavaScript
 - Julia
+- Lisp
 - Lua
+- Makefile
+- Nim
+- Objective-C
 - PHP
+- PowerShell
 - Python
+- R
+- Ruby
 - Rust
 - Scala
+- ShellScript
 - Swift
 - TypeScript
 
