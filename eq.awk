@@ -1,8 +1,8 @@
 BEGIN {
     # Languages comment-out format
     data["awk"] = "#";
-    data["bat"] = "rem";
     data["bash"] = "#";
+    data["bat"] = "rem";
     data["c"] = "//";
     data["c#"] = "//";
     data["c++"] = "//";
