@@ -5,8 +5,8 @@ END=$2
 FILENAME=$3
 
 if [[ -e $FILENAME ]]
-then 
-    awk "/$START/,/$END/"'{print $0}' $FILENAME
+then
+    awk -v start=\"$START\" -v end=\"$END\" -f ./aci.awk $FILENAME
 else
-    echo "$FILENAME is not defined"
+    echo "File does not exist"
 fi
