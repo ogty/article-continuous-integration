@@ -43,8 +43,12 @@ count = 0
     sub("```", "", specifiede_range_word)
 
     print "```" language ":" filepath
+    # TODO: Use arguments(start, end)
+    # TODO: Check if file exists
     command_runner(filepath, "start", "end", data[language])
     print "```"
+    system
+
     count++
 }
 
