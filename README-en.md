@@ -20,6 +20,7 @@ We want to provide a sense of unity as content that users can get by managing it
 - [Example 2](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#example-2)
 - [Adding playground URL(Rust only)](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#adding-playground-urlrust-only)
 - [Add code blocks together](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#add-code-blocks-together)
+- [When using Awk](https://github.com/ogty/continuous-article-integration/blob/main/README-en.md#when-using-awk)
 
 ---
 
@@ -405,6 +406,107 @@ fn main() {
 }
 fn hello() {
    println!("Hello, world!");
+}
+```
+````
+
+## When using Awk
+
+Running the `awk` command produces the same results as using the `aci` command.
+
+```bash
+$ awk -f ./eq.awk README.txt
+$ # ./eq.sh README.txt
+```
+
+````txt
+```<language>:<path>:<start>:<end>```
+````
+
+If you want to refer to the source code from a code block, do as above.
+
+**`README.txt`**
+
+````txt
+Code block for awk command ↓
+
+```rust:./main.rs:start:end```
+
+Code block for aci command ↓
+
+```rust:./main.rs
+1
+```
+
+General code block ↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+Code block operation for awk commands ↓
+
+```rust|main.rs:start:end hello.rs:start:end```
+````
+
+**`main.rs`**
+
+```rust
+// start
+fn main() {
+    println!("Hello, world!");
+}
+// end
+```
+
+**`hello.rs`**
+
+```rust
+// start
+fn main() {
+    println!("Hello, Rust!");
+}
+// end
+```
+
+The paths in the code blocks in the base file are relative to the base file.
+
+**`README.md`**
+
+````md
+Code block for awk commands ↓
+
+```rust:./main.rs
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+Code block for aci command ↓
+
+```rust:. /main.rs
+1
+```
+
+General code block ↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+Code block operation for awk commands ↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+
+fn main() {
+    println!("Hello, Rust!");
 }
 ```
 ````
