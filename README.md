@@ -410,7 +410,7 @@ fn hello() {
 `awk`コマンドを実行しても`aci`コマンドを使った時とほぼ同様の結果が得られます。
 
 ```bash
-$ ./aci.sh start end README.txt
+$ ./eq.sh start end README.txt
 ```
 
 `**README.txt**`
