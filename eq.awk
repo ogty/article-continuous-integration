@@ -53,12 +53,12 @@ count = 0
     sub("```", "", specifiede_range_word);
 
     print "```" language ":" filepath;
-    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
+    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
     if (cmd | getline line) {
         if (line == "true") {
             command_runner(filepath, start, end, data[language]);
         } else {
-            print "ERROR"
+            print "ERROR";
         }
     }
     print "```";
