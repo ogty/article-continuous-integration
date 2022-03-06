@@ -410,13 +410,12 @@ fn hello() {
 `awk`コマンドを実行しても`aci`コマンドを使った時とほぼ同様の結果が得られます。
 
 ```bash
-$ awk -f eq.awk README.txt
+$ awk -f eq.awk README.txt > README.md
 ```
 
 `**README.txt**`
 
 ````txt
-
 awkコマンド用のコードブロック↓
 
 ```rust:./main.rs```
@@ -447,3 +446,29 @@ fn main() {
 ```
 
 ベースファイルのコードブロック内のパスはベースファイルからの相対パスになります。
+
+`**README.md**`
+
+````md
+awkコマンド用のコードブロック↓
+
+```rust:./main.rs
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+aciコマンド用のコードブロック↓
+
+```rust:./main.rs
+1
+```
+
+一般的なコードブロック↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+````
