@@ -403,3 +403,46 @@ fn hello() {
 }
 ```
 ````
+
+## AWKを使う場合
+
+`awk`コマンドを実行しても`aci`コマンドを使った時とほぼ同様の結果が得られます。
+
+```bash
+$ awk -f eq.awk README.txt
+```
+
+`**README.txt**`
+
+````txt
+
+awkコマンド用のコードブロック↓
+
+```rust:./main.rs```
+
+aciコマンド用のコードブロック↓
+
+```rust:./main.rs
+1
+```
+
+一般的なコードブロック↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+````
+
+`**main.rs**`
+
+```rust
+// start
+fn main() {
+    println!("Hello, world!");
+}
+// end
+```
+
+ベースファイルのコードブロック内のパスはベースファイルからの相対パスになります。
