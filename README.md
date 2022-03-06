@@ -417,11 +417,13 @@ $ # ./eq.sh README.txt
 **`README.txt`**
 
 ````txt
-awkコマンド用のコードブロック↓
-
-````txt
 ```<language>:<path>:<start>:<end>```
 ````
+
+上記のように記述します。
+
+````txt
+awkコマンド用のコードブロック↓
 
 ```rust:./main.rs:start:end```
 
