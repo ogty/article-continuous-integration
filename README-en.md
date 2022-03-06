@@ -33,8 +33,8 @@ We want to provide a sense of unity as content that users can get by managing it
 ## Suppoted Languages
 
 - C
-- C#(cs)
-- C++(cpp)
+- C#
+- C++
 - CSS
 - Go
 - Haskell
@@ -49,8 +49,6 @@ We want to provide a sense of unity as content that users can get by managing it
 - Scala
 - Swift
 - TypeScript
-
-The `()` is the language of the snippet, all in lowercase.
 
 ````md
 ```cpp:main.cpp
