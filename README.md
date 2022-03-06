@@ -410,7 +410,8 @@ fn hello() {
 `awk`コマンドを実行しても`aci`コマンドを使った時とほぼ同様の結果が得られます。
 
 ```bash
-$ ./eq.sh start end README.txt
+$ awk -f ./eq.awk README.txt
+$ # ./eq.sh README.txt
 ```
 
 **`README.txt`**
@@ -418,7 +419,11 @@ $ ./eq.sh start end README.txt
 ````txt
 awkコマンド用のコードブロック↓
 
-```rust:./main.rs```
+````txt
+```<language>:<path>:<start>:<end>```
+````
+
+```rust:./main.rs:start:end```
 
 aciコマンド用のコードブロック↓
 
