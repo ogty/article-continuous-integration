@@ -440,14 +440,28 @@ fn main() {
     println!("Hello, world!");
 }
 ```
+
+awkコマンド用のコードブロック演算↓
+
+```rust|main.rs:start:end hello.rs:start:end```
 ````
 
 **`main.rs`**
 
-```rs
+```rust
 // start
 fn main() {
     println!("Hello, world!");
+}
+// end
+```
+
+**`hello.rs`**
+
+```rust
+// start
+fn main() {
+    println!("Hello, Rust!");
 }
 // end
 ```
@@ -476,6 +490,18 @@ aciコマンド用のコードブロック↓
 ```rust
 fn main() {
     println!("Hello, world!");
+}
+```
+
+awkコマンド用のコードブロック演算↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+
+fn main() {
+    println!("Hello, Rust!");
 }
 ```
 ````
