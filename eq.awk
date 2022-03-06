@@ -1,10 +1,12 @@
-COMMENT_OUT=$1
-FILENAME=$2
+/start/,/end/ {
+    print $0
+}
 
-if [[ -e $FILENAME ]]
-then 
-   echo $FILENAME exists
-   awk "/$COMMENT_OUT 1/,/$COMMENT_OUT -1/"'{print $0}' $FILENAME
-else
-   echo "$FILENAME is not defined"
-fi
+/```.+:.+\..+/,/```/ {
+    print $0
+    split($0, a, ":")
+    language = a[1]
+    filepath = a[2]
+    print "language: " language
+    print "filepath: " filepath
+}
