@@ -1,5 +1,5 @@
-function command_runner(path) {
-    cmd = "awk -f ./process.awk " path
+function command_runner(path, start, end) {
+    cmd = "awk /" start "/,/" end "/'{print $0}' " path
     while (cmd | getline) {
         print $0
     }
@@ -19,7 +19,7 @@ count = 0
     sub("```", "", specifiede_range_word)
 
     print "```" language ":" filepath
-    command_runner(filepath)
+    command_runner(filepath, "start", "end")
     print "```"
     count++
 }
