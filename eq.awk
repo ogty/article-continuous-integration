@@ -34,8 +34,6 @@ BEGIN {
         c2p[sprintf("%c", i)] = sprintf("%%%02X", i);
     }
 
-    c2p[" "] = "%20";
-
     for (i = 48; i < 58; i++) { 
         c2p[sprintf("%c", i)] = sprintf("%c", i);
     }
@@ -48,6 +46,7 @@ BEGIN {
         c2p[sprintf("%c", i)] = sprintf("%c", i);
     }
 
+    c2p[" "] = "%20";
     c2p["-"] = "-";
     c2p["."] = ".";
     c2p["_"] = "_";
@@ -81,7 +80,7 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     print ")\n\n";
 }
 
-count = 0
+count = 0;
 
 /```.+:.+\..+:.+:.+```/ {
     split($0, code_block, ":");
@@ -95,7 +94,7 @@ count = 0
     sub("```", "", end);
 
     print "```" language ":" filepath;
-    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
+    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
     if (cmd | getline line) {
         if (line == "true") {
             if (language == "rust" && length(code_block) == 5) {
@@ -128,7 +127,7 @@ count = 0
     sub("```", "", language);
     split(targets, target_list, " ");
 
-    print "```" language
+    print "```" language;
     for (i = 1; i <= length(target_list); i++) {
         sub("```", "", target_list[i]);
         split(target_list[i], target, ":");
@@ -137,12 +136,12 @@ count = 0
         start = target[2];
         end = target[3];
 
-        cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
+        cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
         if (cmd | getline line) {
             if (line == "true") {
                 command_runner(filepath, start, end, data[language]);
             } else {
-                print "ERROR"
+                print "ERROR";
             }
         }
         close(cmd);
