@@ -1,4 +1,5 @@
 BEGIN {
+    data["awk"] = "#";
     data["c"] = "//";
     data["cs"] = "//";
     data["cpp"] = "//";
@@ -21,39 +22,39 @@ BEGIN {
 }
 
 function command_runner(path, start, end, comment_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path
+    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
     while (cmd | getline line) {
         if (line != comment_word " " start && line != comment_word " " end) {
-            print line
+            print line;
         }
     }
-    close(cmd)
+    close(cmd);
 }
 
 count = 0
 
 /```.+:.+\..+:.+```/ {
-    split($0, code_block, ":")
+    split($0, code_block, ":");
     
-    language = code_block[1]
-    filepath = code_block[2]
-    specifiede_range_word = code_block[3]
+    language = code_block[1];
+    filepath = code_block[2];
+    specifiede_range_word = code_block[3];
 
-    sub("```", "", language)
-    sub("```", "", specifiede_range_word)
+    sub("```", "", language);
+    sub("```", "", specifiede_range_word);
 
-    print "```" language ":" filepath
-    # TODO: Use arguments(start, end)
-    # TODO: Check if file exists
-    command_runner(filepath, "start", "end", data[language])
-    print "```"
+    print "```" language ":" filepath;
+    # TODO: Use arguments(start, end);
+    # TODO: Check if file exists;
+    command_runner(filepath, "start", "end", data[language]);
+    print "```";
 
-    count++
+    count++;
 }
 
 {   
     if (count == 0) {
-        print $0
-        count = 0
+        print $0;
+        count = 0;
     }
 }
