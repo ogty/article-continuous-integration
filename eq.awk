@@ -1,4 +1,5 @@
 BEGIN {
+    # Languages comment-out format
     data["awk"] = "#";
     data["bat"] = "rem";
     data["bash"] = "#";
@@ -29,7 +30,7 @@ BEGIN {
     data["swift"] = "//";
     data["typescript"] = "//";
 
-
+    # URL encoding
     for (i = 0; i < 256; i++) { 
         c2p[sprintf("%c", i)] = sprintf("%%%02X", i);
     }
@@ -54,6 +55,7 @@ BEGIN {
     c2p["\""] = "%22";
 }
 
+# Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
     cmd = "awk /" start "/,/" end "/'{print $0}' " path;
     while (cmd | getline line) {
@@ -64,6 +66,7 @@ function command_runner(path, start, end, comment_word) {
     close(cmd);
 }
 
+# Function to retrieve a specific range of source code for a playground URL
 function command_runner_and_playground(path, start, end, comment_word, url_word) {
     cmd = "awk /" start "/,/" end "/'{print $0}' " path;
 
@@ -77,11 +80,20 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
         }
     }
     close(cmd);
-    print ")\n\n";
+    print ")\n";
 }
 
+# Counter variable to separate code blocks from the rest of the code
 count = 0;
 
+# Variable for playground URL
+global_filepath = "";
+global_start = "";
+global_end = "";
+global_comment_word = "";
+global_url_word = "";
+
+# Code block generation from program loading
 /```.+:.+\..+:.+:.+```/ {
     split($0, code_block, ":");
     
@@ -97,26 +109,30 @@ count = 0;
     cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
     if (cmd | getline line) {
         if (line == "true") {
+            # For playground
             if (language == "rust" && length(code_block) == 5) {
                 sub("```", "", code_block[5]);
-                OFS = "";
-                ORS = "";
-                command_runner_and_playground(filepath, start, end, data[language], code_block[5]);
-                OFS = " ";
-                ORS = "\n";
-            } else {
-                command_runner(filepath, start, end, data[language]);
+                global_filepath = filepath;
+                global_start = start;
+                global_end = end;
+                global_comment_word = data[language];
+                global_url_word = code_block[5];
+                count += 1;
             }
+
+            # Stdout source code
+            command_runner(filepath, start, end, data[language]);
         } else {
-            print "ERROR"
+            print "No such file";
         }
     }
     close(cmd);
     print "```";
 
-    count++;
+    count += 1;
 }
 
+# Code block operation
 /```.+\|(.+\..+:.+:.+?){2,}/ {
     print "";
     split($0, code_block_for_operation, "|");
@@ -127,7 +143,7 @@ count = 0;
     sub("```", "", language);
     split(targets, target_list, " ");
 
-    print "```" language;
+    print "```" language
     for (i = 1; i <= length(target_list); i++) {
         sub("```", "", target_list[i]);
         split(target_list[i], target, ":");
@@ -151,13 +167,25 @@ count = 0;
         }
     }
     print "```";
-
-    count++;
 }
 
+# Processing of code other than code blocks and for playground
 {   
     if (count == 0) {
         print $0;
+        count = 0;
+    } else if (count == 2) {
+        OFS = "";
+        ORS = "";
+        command_runner_and_playground(\
+            global_filepath,
+            global_start,
+            global_end,
+            global_comment_word,
+            global_url_word\
+        );
+        OFS = " ";
+        ORS = "\n";
         count = 0;
     }
 }
