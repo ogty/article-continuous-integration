@@ -6,6 +6,7 @@ BEGIN {
     data["cs"] = "//";
     data["cpp"] = "//";
     data["css"] = "/*";
+    data["dart"] = "//";
     data["go"] = "//";
     data["haskell"] = "--";
     data["html"] = "<!--";
@@ -17,7 +18,10 @@ BEGIN {
     data["makefile"] = "#";
     data["nim"] = "#";
     data["php"] = "//";
+    data["powershell"] = "#";
     data["python"] = "#";
+    data["r"] = "#";
+    data["ruby"] = "#";
     data["rust"] = "//";
     data["scala"] = "//";
     data["sh"] = "#";
