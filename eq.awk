@@ -1,5 +1,6 @@
 BEGIN {
     data["awk"] = "#";
+    data["bash"] = "#";
     data["c"] = "//";
     data["cs"] = "//";
     data["cpp"] = "//";
@@ -12,11 +13,13 @@ BEGIN {
     data["julia"] = "#";
     data["lisp"] = ";";
     data["lua"] = "--";
+    data["makefile"] = "#";
     data["nim"] = "#";
     data["php"] = "//";
     data["python"] = "#";
     data["rust"] = "//";
     data["scala"] = "//";
+    data["sh"] = "#";
     data["swift"] = "//";
     data["typescript"] = "//";
 }
