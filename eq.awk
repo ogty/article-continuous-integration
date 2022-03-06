@@ -148,7 +148,7 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     sub("```", "", language);
     split(targets, target_list, " ");
 
-    print "```" language
+    print "```" language;
     for (i = 1; i <= length(target_list); i++) {
         sub("```", "", target_list[i]);
         split(target_list[i], target, ":");
