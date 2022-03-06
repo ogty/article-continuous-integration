@@ -9,7 +9,7 @@ We want to provide a sense of unity as content that users can get by managing it
 ## Contents
 
 - [Features](https://github.com/ogty/article-continuous-integration#features)
-- [Suppoted Languages](https://github.com/ogty/article-continuous-integration#suppoted-languages)
+- [Suppoted Languages](https://github.com/ogty/article-continuous-integration#suppoted-file-formats)
 - [Usage](https://github.com/ogty/article-continuous-integration#usage)
   - [Create base file](https://github.com/ogty/article-continuous-integration#create-base-file)
   - [Create article](https://github.com/ogty/article-continuous-integration#create-article)
@@ -31,7 +31,7 @@ We want to provide a sense of unity as content that users can get by managing it
 - [x] Add PlayGround URL to code block(Rust only)
 - [x] Code Block Operation
 
-## Suppoted Languages
+## Supported File Formats
 
 - C
 - C#
