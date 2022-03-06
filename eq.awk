@@ -1,5 +1,6 @@
 BEGIN {
     data["awk"] = "#";
+    data["bat"] = "rem";
     data["bash"] = "#";
     data["c"] = "//";
     data["cs"] = "//";
