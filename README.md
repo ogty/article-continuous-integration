@@ -9,7 +9,7 @@ We want to provide a sense of unity as content that users can get by managing it
 ## Contents
 
 - [Features](https://github.com/ogty/article-continuous-integration#features)
-- [Suppoted Languages](https://github.com/ogty/article-continuous-integration#suppoted-file-formats)
+- [Suppoted Languages](https://github.com/ogty/article-continuous-integration#supported-file-formats)
 - [Usage](https://github.com/ogty/article-continuous-integration#usage)
   - [Create base file](https://github.com/ogty/article-continuous-integration#create-base-file)
   - [Create article](https://github.com/ogty/article-continuous-integration#create-article)
