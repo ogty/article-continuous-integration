@@ -28,6 +28,31 @@ BEGIN {
     data["sh"] = "#";
     data["swift"] = "//";
     data["typescript"] = "//";
+
+
+    for (i = 0; i < 256; i++) { 
+        c2p[sprintf("%c", i)] = sprintf("%%%02X", i);
+    }
+
+    c2p[" "] = "%20";
+
+    for (i = 48; i < 58; i++) { 
+        c2p[sprintf("%c", i)] = sprintf("%c", i);
+    }
+
+    for (i = 65; i < 91; i++) {
+        c2p[sprintf("%c", i)] = sprintf("%c", i);
+    }
+
+    for (i = 97; i < 123; i++) {
+        c2p[sprintf("%c", i)] = sprintf("%c", i);
+    }
+
+    c2p["-"] = "-";
+    c2p["."] = ".";
+    c2p["_"] = "_";
+    c2p["~"] = "~";
+    c2p["\""] = "%22";
 }
 
 function command_runner(path, start, end, comment_word) {
@@ -38,6 +63,22 @@ function command_runner(path, start, end, comment_word) {
         }
     }
     close(cmd);
+}
+
+function command_runner_and_playground(path, start, end, comment_word, url_word) {
+    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+
+    print "\n[" url_word "](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=";
+    while (cmd | getline line) {
+        print "%0A";
+        for (i = 1; i <= length(line); i++) {
+            if (line != comment_word " " start && line != comment_word " " end) {
+                print c2p[substr(line, i, 1)];
+            }
+        }
+    }
+    close(cmd);
+    print ")\n\n";
 }
 
 count = 0
@@ -57,7 +98,16 @@ count = 0
     cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\""
     if (cmd | getline line) {
         if (line == "true") {
-            command_runner(filepath, start, end, data[language]);
+            if (language == "rust" && length(code_block) == 5) {
+                sub("```", "", code_block[5]);
+                OFS = "";
+                ORS = "";
+                command_runner_and_playground(filepath, start, end, data[language], code_block[5]);
+                OFS = " ";
+                ORS = "\n";
+            } else {
+                command_runner(filepath, start, end, data[language]);
+            }
         } else {
             print "ERROR"
         }
