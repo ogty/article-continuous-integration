@@ -1,10 +1,14 @@
 BEGIN {
+
+
     data["awk"] = "#";
     data["bat"] = "rem";
     data["bash"] = "#";
     data["c"] = "//";
     data["c#"] = "//";
+    data["cs"] = "//";
     data["c++"] = "//";
+    data["cpp"] = "//";
     data["css"] = "/*";
     data["dart"] = "//";
     data["go"] = "//";
@@ -12,7 +16,9 @@ BEGIN {
     data["html"] = "<!--";
     data["java"] = "//";
     data["javascript"] = "//";
+    data["js"] = "//";
     data["julia"] = "#";
+    data["jl"] = "#";
     data["lisp"] = ";";
     data["lua"] = "--";
     data["makefile"] = "#";
@@ -21,13 +27,17 @@ BEGIN {
     data["php"] = "//";
     data["powershell"] = "#";
     data["python"] = "#";
+    data["py"] = "#";
     data["r"] = "#";
     data["ruby"] = "#";
+    data["rb"] = "#";
     data["rust"] = "//";
+    data["rs"] = "//";
     data["scala"] = "//";
     data["sh"] = "#";
     data["swift"] = "//";
     data["typescript"] = "//";
+    data["ts"] = "//";
 }
 
 function command_runner(path, start, end, comment_word) {
