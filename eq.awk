@@ -48,7 +48,7 @@ function command_runner(path, start, end, comment_word) {
     close(cmd);
 }
 
-count = 0
+count = 0;
 
 /```.+:.+\..+:.+```/ {
     split($0, code_block, ":");
