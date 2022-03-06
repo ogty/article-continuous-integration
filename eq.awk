@@ -6,6 +6,8 @@ BEGIN {
     data["c"] = "//";
     data["c#"] = "//";
     data["c++"] = "//";
+    data["cpp"] = "//";
+    data["cs"] = "//";
     data["css"] = "/*";
     data["dart"] = "//";
     data["go"] = "//";
@@ -13,6 +15,8 @@ BEGIN {
     data["html"] = "<!--";
     data["java"] = "//";
     data["javascript"] = "//";
+    data["jl"] = "#";
+    data["js"] = "//";
     data["julia"] = "#";
     data["lisp"] = ";";
     data["lua"] = "--";
@@ -21,13 +25,17 @@ BEGIN {
     data["objectivec"] = "//";
     data["php"] = "//";
     data["powershell"] = "#";
+    data["py"] = "#";
     data["python"] = "#";
     data["r"] = "#";
+    data["rb"] = "#";
+    data["rs"] = "//";
     data["ruby"] = "#";
     data["rust"] = "//";
     data["scala"] = "//";
     data["sh"] = "#";
     data["swift"] = "//";
+    data["ts"] = "//";
     data["typescript"] = "//";
 
     # URL encoding
