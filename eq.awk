@@ -1,3 +1,23 @@
+# Description:
+#    The output replaces the specific notation described 
+#     in the text file on which the Markdown file is based 
+#     with the source code referenced therein.
+#
+# General Notation:
+#     ```<language>:<file path>:<start>:<end>:[url string]```
+#
+# Operations Notation:
+#     ```<language>|pattern pattern ...```
+#                           ^^^^^^^ 
+#                               <file path>:<start>:<end>
+#
+# Usage:
+#     awk -f main.awk <base file>
+#
+# One-liner:
+#     awk -f main.awk <base file> | <target file>
+
+
 BEGIN {
     # Languages comment-out format
     data["awk"] = "#";
