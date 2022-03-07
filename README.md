@@ -494,7 +494,7 @@ fn main() {
 
 Code block for aci command ↓
 
-```rust:. /main.rs
+```rust:./main.rs
 1
 ```
 
