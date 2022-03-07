@@ -1,7 +1,7 @@
 # Description:
-#    The output replaces the specific notation described 
-#    in the text file on which the Markdown file is based 
-#    with the source code referenced therein.
+#     The output replaces the specific notation described 
+#     in the text file on which the Markdown file is based 
+#     with the source code referenced therein.
 #
 # General Notation:
 #     ```<language>:<file path>:<start>:<end>:[url string]```
