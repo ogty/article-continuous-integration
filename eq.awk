@@ -78,11 +78,13 @@ global_url_word = "";
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
     cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+
     while (cmd | getline line) {
         if (line != comment_word " " start && line != comment_word " " end) {
             print line;
         }
     }
+
     close(cmd);
 }
 
@@ -100,8 +102,9 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
             }
         }
     }
-    close(cmd);
     print ")\n";
+
+    close(cmd);
 }
 
 
@@ -146,12 +149,12 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
 
 
 # Code block operation
-/```.+\|(.+\..+:.+:.+?){2,}/ {
+/```.+\|(.+\..+:.+:.+?){2,}```/ {
     print "";
     split($0, code_block_for_operation, "|");
     
     language = code_block_for_operation[1];
-    targets =  code_block_for_operation[2];
+    targets = code_block_for_operation[2];
 
     sub("```", "", language);
     split(targets, target_list, " ");
