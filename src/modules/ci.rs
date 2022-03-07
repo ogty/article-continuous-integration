@@ -1,208 +1,179 @@
-BEGIN {
-    # Languages comment-out format
-    data["awk"] = "#";
-    data["bash"] = "#";
-    data["bat"] = "rem";
-    data["c"] = "//";
-    data["c#"] = "//";
-    data["c++"] = "//";
-    data["cpp"] = "//";
-    data["cs"] = "//";
-    data["css"] = "/*";
-    data["dart"] = "//";
-    data["go"] = "//";
-    data["haskell"] = "--";
-    data["html"] = "<!--";
-    data["java"] = "//";
-    data["javascript"] = "//";
-    data["jl"] = "#";
-    data["js"] = "//";
-    data["julia"] = "#";
-    data["lisp"] = ";";
-    data["lua"] = "--";
-    data["makefile"] = "#";
-    data["nim"] = "#";
-    data["objectivec"] = "//";
-    data["php"] = "//";
-    data["powershell"] = "#";
-    data["py"] = "#";
-    data["python"] = "#";
-    data["r"] = "#";
-    data["rb"] = "#";
-    data["rs"] = "//";
-    data["ruby"] = "#";
-    data["rust"] = "//";
-    data["scala"] = "//";
-    data["sh"] = "#";
-    data["swift"] = "//";
-    data["ts"] = "//";
-    data["typescript"] = "//";
+extern crate itertools;
+use itertools::izip;
+extern crate regex;
+use regex::{Captures, Regex};
+extern crate urlencoding;
+use urlencoding::encode;
 
-    # URL encoding
-    for (i = 0; i < 256; i++) { 
-        c2p[sprintf("%c", i)] = sprintf("%%%02X", i);
+pub use crate::modules::comment::comment_out;
+pub use crate::modules::file::{read_lines, write};
+
+pub fn ci(path: &str, is_relative_path: bool) {
+    let mut article_script_path: String = format!("{}.txt", path);
+    let mut article_path: String = format!("{}.md", path);
+    let mut project_path: String = String::new();
+
+    if !is_relative_path {
+        article_script_path = format!("./articles/{}", article_script_path);
+        article_path = format!("./articles/{}", article_path);
+        project_path = format!("./projects/{}", path);
     }
 
-    for (i = 48; i < 58; i++) { 
-        c2p[sprintf("%c", i)] = sprintf("%c", i);
-    }
+    // Getting the regular expression and matching index of a code block
+    let re_code_snippet: Regex = Regex::new(r"```(?P<lang>\w+):(?P<path>.*)").unwrap();
+    let re_code_block_operation: Regex = Regex::new(r"```(?P<lang>\w+)```(?P<path>.*)").unwrap();
+    let mut article_data: Vec<String> = read_lines(&article_script_path);
+    let mut matched_indexes: Vec<usize> = Vec::new();
+    let mut matched_code_block_indexes: Vec<usize> = Vec::new();
 
-    for (i = 65; i < 91; i++) {
-        c2p[sprintf("%c", i)] = sprintf("%c", i);
-    }
-
-    for (i = 97; i < 123; i++) {
-        c2p[sprintf("%c", i)] = sprintf("%c", i);
-    }
-
-    c2p[" "] = "%20";
-    c2p["-"] = "-";
-    c2p["."] = ".";
-    c2p["_"] = "_";
-    c2p["~"] = "~";
-    c2p["\""] = "%22";
-}
-
-
-# Counter variable to separate code blocks from the rest of the code
-count = 0;
-
-# Variable for playground URL
-global_filepath = "";
-global_start = "";
-global_end = "";
-global_comment_word = "";
-global_url_word = "";
-
-
-# Function to retrieve a specific range of source code
-function command_runner(path, start, end, comment_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
-
-    while (cmd | getline line) {
-        if (line != comment_word " " start && line != comment_word " " end) {
-            print line;
+    for (article_line_count, article_line) in article_data.iter().enumerate() {
+        if re_code_snippet.is_match(article_line) {
+            matched_indexes.push(article_line_count);
+        } else if re_code_block_operation.is_match(article_line) {
+            matched_code_block_indexes.push(article_line_count);
         }
     }
 
-    close(cmd);
-}
+    let code_block_start_indexes: Vec<usize> = matched_indexes.clone();
 
+    let mut result: Vec<String> = Vec::new();
+    let mut for_playground: Vec<String> = Vec::new();
 
-# Function to retrieve a specific range of source code for a playground URL
-function command_runner_and_playground(path, start, end, comment_word, url_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+    // Get the source code of the file specified by the code block.
+    for matched_index in matched_indexes {
+        let code_block_start_line: String = article_data[matched_index].to_string();
 
-    print "\n[" url_word "](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=";
-    while (cmd | getline line) {
-        print "%0A";
-        for (i = 1; i <= length(line); i++) {
-            if (line != comment_word " " start && line != comment_word " " end) {
-                print c2p[substr(line, i, 1)];
-            }
-        }
-    }
-    print ")\n";
+        let splited_code_block_start_line: Vec<&str> = code_block_start_line.split(':').collect();
+        let lang: String = splited_code_block_start_line[0].replace("```", "");
+        let comment_out_prefix: String = comment_out(&lang);
 
-    close(cmd);
-}
-
-
-# Code block generation from program loading
-/```.+:.+\..+:.+:.+```/ {
-    split($0, code_block, ":");
-    
-    language = code_block[1];
-    filepath = code_block[2];
-    start = code_block[3];
-    end = code_block[4];
-
-    sub("```", "", language);
-    sub("```", "", end);
-
-    print "```" language ":" filepath;
-    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
-    if (cmd | getline line) {
-        if (line == "true") {
-            # For playground
-            if (language == "rust" && length(code_block) == 5) {
-                sub("```", "", code_block[5]);
-                global_filepath = filepath;
-                global_start = start;
-                global_end = end;
-                global_comment_word = data[language];
-                global_url_word = code_block[5];
-                count += 1;
-            }
-
-            # Stdout source code
-            command_runner(filepath, start, end, data[language]);
+        let source_code_path: String = if is_relative_path {
+            splited_code_block_start_line[1].to_string()
         } else {
-            print "No such file";
-        }
-    }
-    close(cmd);
-    print "```";
+            format!("{}/{}", project_path, splited_code_block_start_line[1])
+        };
 
-    count += 1;
-}
+        let source_code_data: Vec<String> = read_lines(&source_code_path);
+        let code_block_number: &String = &article_data[matched_index + 1];
+        let mut comment_out_start_end: Vec<usize> = Vec::new();
 
-
-# Code block operation
-/```.+\|(.+\..+:.+:.+?){2,}```/ {
-    print "";
-    split($0, code_block_for_operation, "|");
-    
-    language = code_block_for_operation[1];
-    targets = code_block_for_operation[2];
-
-    sub("```", "", language);
-    split(targets, target_list, " ");
-
-    print "```" language;
-    for (i = 1; i <= length(target_list); i++) {
-        sub("```", "", target_list[i]);
-        split(target_list[i], target, ":");
-
-        filepath = target[1];
-        start = target[2];
-        end = target[3];
-
-        cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
-        if (cmd | getline line) {
-            if (line == "true") {
-                command_runner(filepath, start, end, data[language]);
-            } else {
-                print "ERROR";
+        // Get the first and last indices of a comment-out
+        let start: &String = &format!("{} {}", comment_out_prefix, code_block_number);
+        let end: &String = &format!("{} -{}", comment_out_prefix, code_block_number);
+        for (count, source_code_line) in source_code_data.iter().enumerate() {
+            if source_code_line == start || source_code_line == end {
+                comment_out_start_end.push(count);
             }
         }
-        close(cmd);
 
-        if (i != length(target_list)) {
-            print "";
+        if !comment_out_start_end.is_empty() {
+            let source: String = source_code_data
+                [(comment_out_start_end[0] + 1)..comment_out_start_end[1]]
+                .join("\n");
+
+            // If you specify a playground URL
+            if splited_code_block_start_line.len() == 3 {
+                let cloned_source: String = source.clone();
+                if lang == "rust" {
+                    for_playground.push(format!("[{}](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code={})\n", splited_code_block_start_line[2], encode(&cloned_source)));
+                }
+            }
+
+            result.push(source);
         }
     }
-    print "```";
-}
 
+    // Code block operations
+    let mut calculated_result: Vec<String> = Vec::new();
+    for matched_code_block_index in matched_code_block_indexes {
+        let mut source_code_for_calculate: Vec<String> = Vec::new();
+        let matched_line: String = article_data[matched_code_block_index].to_string();
+        let matched: Captures = re_code_block_operation.captures(&matched_line).unwrap();
+        let lang: &str = matched.name("lang").unwrap().as_str();
+        let path: &str = matched.name("path").unwrap().as_str();
 
-# Processing of code other than code blocks and for playground
-{   
-    if (count == 0) {
-        print $0;
-        count = 0;
-    } else if (count == 2) {
-        OFS = "";
-        ORS = "";
-        command_runner_and_playground(\
-            global_filepath,
-            global_start,
-            global_end,
-            global_comment_word,
-            global_url_word\
-        );
-        OFS = " ";
-        ORS = "\n";
-        count = 0;
+        source_code_for_calculate.push(format!("```{}", lang));
+        let file_path_and_code_block_number: Vec<&str> = path.split('+').collect::<Vec<&str>>();
+
+        for unit in file_path_and_code_block_number
+            .iter()
+            .map(|x| x.replace(' ', ""))
+        {
+            let splited_unit: Vec<&str> = unit.split(':').collect::<Vec<&str>>();
+            let program_file_path: &str = splited_unit[0];
+            let code_block_number: &str = splited_unit[1];
+
+            let source_code_path: String = if is_relative_path {
+                program_file_path.to_string()
+            } else {
+                format!("{}/{}", project_path, program_file_path)
+            };
+
+            let source_code_data: Vec<String> = read_lines(&source_code_path);
+            let mut comment_out_start_end: Vec<usize> = Vec::new();
+
+            // Get the first and last indices of a comment-out
+            let comment_out: String = comment_out(&String::from(lang));
+            let start: &String = &format!("{} {}", comment_out, code_block_number);
+            let end: &String = &format!("{} -{}", comment_out, code_block_number);
+
+            for (count, source_code_line) in source_code_data.iter().enumerate() {
+                if source_code_line == start || source_code_line == end {
+                    comment_out_start_end.push(count);
+                }
+            }
+
+            if !comment_out_start_end.is_empty() {
+                let source: String = source_code_data
+                    [(comment_out_start_end[0] + 1)..comment_out_start_end[1]]
+                    .join("\n");
+                source_code_for_calculate.push(source);
+            }
+        }
+        source_code_for_calculate.push(String::from("```"));
+        calculated_result.push(source_code_for_calculate.join("\n"));
     }
+
+    // Delete the numbers in the code block and insert the corresponding source code
+    for (code_block_start_index, source_code) in izip!(code_block_start_indexes, result) {
+        article_data.remove(code_block_start_index + 1);
+        article_data.insert(code_block_start_index + 1, source_code);
+    }
+
+    // Get an index to insert the playground URL
+    let mut indexes_to_add_url: Vec<usize> = Vec::new();
+    let re_for_playground: Regex =
+        Regex::new(r"```(?P<lang>\w+):(?P<path>.*):(?P<message>.*)").unwrap();
+    for (index, article_line) in article_data.iter().enumerate() {
+        if re_for_playground.is_match(article_line) {
+            indexes_to_add_url.push(index);
+        }
+    }
+
+    // Get line index for source code operations
+    let mut code_block_operations_indexes: Vec<usize> = Vec::new();
+    let cloned_article: Vec<String> = article_data.clone();
+    for (code_block_operation_count, article_line) in cloned_article.into_iter().enumerate() {
+        if re_code_block_operation.is_match(&article_line) {
+            code_block_operations_indexes.push(code_block_operation_count);
+        }
+    }
+
+    // Delete lines for source code operations and insert calculation results
+    for (code_block_operations_index, source_code) in
+        izip!(code_block_operations_indexes, calculated_result)
+    {
+        article_data.remove(code_block_operations_index);
+        article_data.insert(code_block_operations_index, source_code);
+    }
+
+    // Insert the playground URL
+    let indexes_to_add_url_length: usize = indexes_to_add_url.clone().len();
+    let indexes: Vec<usize> = (0..indexes_to_add_url_length).collect::<Vec<usize>>();
+    for (i, index_to_add_url, playground_url) in izip!(indexes, indexes_to_add_url, for_playground)
+    {
+        article_data.insert(index_to_add_url + i, playground_url);
+    }
+
+    write(&article_path, article_data.join("\n"));
 }
