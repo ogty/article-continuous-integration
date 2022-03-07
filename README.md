@@ -428,7 +428,7 @@ $ # ./eq.sh README.txt
 ```
 
 ````txt
-```<language>:<path>:<start>:<end>```
+```<language>:<path>:<start>:<end>:[url string]```
 ````
 
 If you want to refer to the source code from a code block, do as above.
