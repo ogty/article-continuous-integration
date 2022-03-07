@@ -440,6 +440,10 @@ Code block for awk command ↓
 
 ```rust:./main.rs:start:end```
 
+Add the playground URL ↓
+
+```rust:./main.rs:start:end:sample```
+
 Code block for aci command ↓
 
 ```rust:./main.rs
@@ -491,6 +495,16 @@ fn main() {
     println!("Hello, world!");
 }
 ```
+
+Add the playground URL ↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+[sample](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
 
 Code block for aci command ↓
 
