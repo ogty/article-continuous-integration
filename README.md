@@ -423,8 +423,8 @@ fn hello() {
 Running the `awk` command produces the same results as using the `aci` command.
 
 ```bash
-$ awk -f ./main.awk README.txt
-$ # ./main.sh README.txt
+$ awk -f ./main.awk README.txt > README.md
+$ # ./main.sh README.txt > README.md
 ```
 
 ````txt
