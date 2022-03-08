@@ -422,30 +422,34 @@ fn hello() {
 `awk`コマンドを実行しても`aci`コマンドを使った時と同様の結果が得られます。
 
 ```bash
-$ awk -f ./eq.awk README.txt
-$ # ./eq.sh README.txt
+$ awk -f ./main.awk README.txt > README.md
+$ # ./main.sh README.txt > README.md
 ```
 
-**`README.txt`**
-
 ````txt
-```<language>:<path>:<start>:<end>```
+```<language>:<path>:<start>:<end>:[url string]```
 ````
 
 コードブロックからソースコードを参照したい場合は上記のように記述します。
 
+**`README.txt`**
+
 ````txt
-awkコマンド用のコードブロック↓
+awkコマンド用のコードブロック ↓
 
 ```rust:./main.rs:start:end```
 
-aciコマンド用のコードブロック↓
+Playground URLを追加 ↓
+
+```rust:./main.rs:start:end:sample```
+
+aciコマンド用のコードブロック ↓
 
 ```rust:./main.rs
 1
 ```
 
-一般的なコードブロック↓
+一般的なコードブロック ↓
 
 ```rust
 fn main() {
@@ -483,7 +487,7 @@ fn main() {
 **`README.md`**
 
 ````md
-awkコマンド用のコードブロック↓
+awkコマンド用のコードブロック ↓
 
 ```rust:./main.rs
 fn main() {
@@ -491,13 +495,7 @@ fn main() {
 }
 ```
 
-aciコマンド用のコードブロック↓
-
-```rust:./main.rs
-1
-```
-
-一般的なコードブロック↓
+Playground URLを追加 ↓
 
 ```rust
 fn main() {
@@ -505,7 +503,23 @@ fn main() {
 }
 ```
 
-awkコマンド用のコードブロック演算↓
+[sample](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main%28%29%20%7B%0A%20%20%20%20println%21%28%22Hello%2C%20world%21%22%29%3B%0A%7D)
+
+aciコマンド用のコードブロック ↓
+
+```rust:./main.rs
+1
+```
+
+一般的なコードブロック ↓
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+awkコマンド用のコードブロック演算 ↓
 
 ```rust
 fn main() {
