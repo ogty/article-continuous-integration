@@ -15,7 +15,7 @@
 #     awk -f main.awk <base file>
 #
 # One-liner:
-#     awk -f main.awk <base file> | <target file>
+#     awk -f main.awk <base file> > <target file>
 
 
 BEGIN {
