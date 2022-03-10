@@ -1,5 +1,5 @@
 use std::env;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 extern crate uuid;
 use uuid::Uuid;
@@ -66,10 +66,10 @@ fn main() {
             if args.contains(&String::from("-n")) || args.contains(&String::from("--name")) {
                 let name_option_index: usize = args
                     .iter()
-                    .position(|r| r == &String::from("-n") || r == &String::from("--name"))
+                    .position(|r: &String| r == &String::from("-n") || r == &String::from("--name"))
                     .unwrap();
                 let cloned_file_name: String = args[name_option_index + 1].clone();
-                args.retain(|r| r != &String::from("-n") && r != &String::from("--name"));
+                args.retain(|r: &String| r != &String::from("-n") && r != &String::from("--name"));
                 cloned_file_name
             } else {
                 Uuid::new_v4().to_string()
@@ -94,7 +94,7 @@ fn main() {
                 mkdir(&file_name);
             }
 
-            args.retain(|r| r != &String::from("-p") && r != &String::from("--project"));
+            args.retain(|r: &String| r != &String::from("-p") && r != &String::from("--project"));
 
             initializer.title = args[1].to_string();
             initializer.topics = (&args[2..]).to_vec();
@@ -103,7 +103,7 @@ fn main() {
 
     // Show txt files and titles directly under "articles" directory
     } else if command == "show" {
-        get_base_file().unwrap().iter().for_each(|path| {
+        get_base_file().unwrap().iter().for_each(|path: &PathBuf| {
             let maybe_base_file_path: String = format!("{}", path.display());
             if maybe_base_file_path.ends_with(".txt") {
                 let content: Vec<String> = read_lines(&maybe_base_file_path);

@@ -97,7 +97,7 @@ pub fn ci(path: &str, is_relative_path: bool) {
 
         for unit in file_path_and_code_block_number
             .iter()
-            .map(|x| x.replace(' ', ""))
+            .map(|x: &&str| x.replace(' ', ""))
         {
             let splited_unit: Vec<&str> = unit.split(':').collect::<Vec<&str>>();
             let program_file_path: &str = splited_unit[0];
