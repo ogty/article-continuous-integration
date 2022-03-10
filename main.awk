@@ -129,7 +129,7 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
 
 
 # Code block generation from program loading
-/```.+:.+\..+:.+:.+```/ {
+/```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
     split($0, code_block, ":");
     
     language = code_block[1];
