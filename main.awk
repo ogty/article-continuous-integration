@@ -74,6 +74,7 @@ BEGIN {
     for (i = 97; i < 123; i++) {
         c2p[sprintf("%c", i)] = sprintf("%c", i);
     }
+    
     c2p["-"] = "-";
     c2p["."] = ".";
     c2p["_"] = "_";
