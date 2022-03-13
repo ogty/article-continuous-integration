@@ -204,7 +204,7 @@ $ cd projects/<uuid>
 $ cargo init --name project
 ```
 
-Folder structure so far ↓
+Folder structure ↓
 
 ```
 ├─images
@@ -274,7 +274,7 @@ Now you can push to Github and deploy the article by setting `published: true`.
 
 Case where source code in the project is used in README
 
-Folder Configuration ↓
+Folder structure ↓
 
 ```
 └─aci.exe
@@ -293,7 +293,7 @@ If you want to place `aci.exe` on the desktop or some other location for use in 
 $ aci init -e -n ./<folder name>/README
 ```
 
-Folder configuration ↓
+Folder structure ↓
 
 ```
 ├─README.txt
