@@ -27,6 +27,8 @@
 - [x] Specifying files in code blocks
 - [x] Add PlayGround URL to code block(Rust only)
 - [x] Code Block Operation
+- [ ] Visualization of directories by tree structure
+- [ ] Creating graphs with mermaid
 
 ## Supported File Formats
 - Awk
