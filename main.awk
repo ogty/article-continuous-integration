@@ -150,6 +150,15 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     close(cmd);
 }
 
+# line counter
+function line_counter(cmd) {
+    line_count = 0;
+    while (cmd | getline line) {
+        line_count += 1;
+    }
+    close(cmd);
+    return line_count;
+}
 
 # Code block generation from program loading
 /```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
@@ -228,6 +237,35 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     print "```";
 }
 
+# Visuallization of directories by tree structure
+/```tree:.+```/ {
+    split($0, splited, ":");
+    path = splited[2];
+    sub("```", "", path);
+
+    cmd = sprintf("tree %s", path);
+    line_count = line_counter(cmd);
+
+    print "```";
+    while (cmd | getline line) {
+        if (line_count > 2) {
+            print line;
+            line_count -= 1;
+        }
+    }
+    close(cmd);
+    print "```";
+
+    count += 1;
+}
+
+# Creating graphs with mermaid
+/```mermaid:.+```/ {
+    print "```mermaid";
+    print "```";
+
+    count += 1;
+}
 
 # Processing of code other than code blocks and for playground
 {   
@@ -246,6 +284,8 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
         );
         OFS = " ";
         ORS = "\n";
+        count = 0;
+    } else {
         count = 0;
     }
 }
