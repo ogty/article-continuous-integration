@@ -28,6 +28,7 @@
 - [x] Add PlayGround URL to code block(Rust only)
 - [x] Code Block Operation
 - [x] Visualization of directories by tree structure
+- [x] Create a table of contents from a heading
 - [ ] Creating graphs with mermaid
 - [ ] Expanding data in a file
 
