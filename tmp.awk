@@ -50,7 +50,7 @@ function abs(value) {
     return value < 0 ? -value : value;
 }
 
-/-_\|.+.\|+/ {
+/-_\|.+\|.+/ {
     split($0, information, "|")
     table_of_contents_generator(information[2], information[3])
     count += 1
