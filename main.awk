@@ -369,6 +369,7 @@ function abs(value) {
         count = 0;
     }
 
+    # TODO:?
     if (count_for_table_of_contents_generator != 1) {
         print $0;
     } else {
