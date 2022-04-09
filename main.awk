@@ -166,6 +166,9 @@ function command_runner(path, start, end, comment_word) {
 
 # Function to retrieve a specific range of source code for a playground URL
 function command_runner_and_playground(path, start, end, comment_word, url_word) {
+    OFS = "";
+    ORS = "";
+
     cmd = "awk /" start "/,/" end "/'{print $0}' " path;
 
     print "\n[" url_word "](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=";
@@ -180,6 +183,8 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     print ")\n";
 
     close(cmd);
+    OFS = " ";
+    ORS = "\n";
 }
 
 # line counter
@@ -352,8 +357,6 @@ function abs(value) {
         print $0;
         count = 0;
     } else if (count == 2) {
-        OFS = "";
-        ORS = "";
         command_runner_and_playground(\
             global_filepath,
             global_start,
@@ -361,8 +364,6 @@ function abs(value) {
             global_comment_word,
             global_url_word\
         );
-        OFS = " ";
-        ORS = "\n";
         count = 0;
     } else {
         count = 0;
