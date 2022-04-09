@@ -1,4 +1,5 @@
 # Description:
+#     This is an awk program that creates a table of contents from headings.
 #     Heading 1 is not included in the table of contents 
 #     because it is the only one that should exist.
 #
@@ -13,36 +14,36 @@
 #
 
 BEGIN {
-    count = 0
+    count = 0;
 }
 
 function table_of_contents_generator(file_path, url_prefix) {
-    base_heading_number = 2
-    ORS = ""
-    cmd = "awk '/\#{1,7}/ {print $0}' " file_path
+    base_heading_number = 2;
+    ORS = "";
+    cmd = "awk '/\#{1,7}/ {print $0}' " file_path;
 
     while (cmd | getline line) {
-        split(line, arr, " ")
+        split(line, arr, " ");
 
         if (length(arr[1])) {
-            sharp_length = length(arr[1])
+            sharp_length = length(arr[1]);
             
             if (sharp_length > base_heading_number - 1) {
                 if (sharp_length > base_heading_number) {
-                    sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number
+                    sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number;
                 } else {
-                    sharp_length = 0
+                    sharp_length = 0;
                 }
                 for (i = 0; i < sharp_length; i++) {
-                    print(" ")
+                    print(" ");
                 }
-                print(sprintf("- [%s](%s)\n", arr[2], url_prefix))
+                print(sprintf("- [%s](%s)\n", arr[2], url_prefix));
             }
 
         }
     }
-    close(cmd)
-    ORS = "\n"
+    close(cmd);
+    ORS = "\n";
 }
 
 function abs(value) {
@@ -51,15 +52,15 @@ function abs(value) {
 }
 
 /-_\|.+\|.+/ {
-    split($0, information, "|")
-    table_of_contents_generator(information[2], information[3])
-    count += 1
+    split($0, information, "|");
+    table_of_contents_generator(information[2], information[3]);
+    count += 1;
 }
 
 {
     if (count != 1) {
-        print $0
+        print $0;
     } else {
-        count = 0
+        count = 0;
     }
 }
