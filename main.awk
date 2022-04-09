@@ -25,7 +25,7 @@
 #
 
 #
-# - Create A Table Of Contents From A Heading
+# - Create a table of contents from a heading
 #
 # Description:
 #     This is an awk program that creates a table of contents from headings.
@@ -46,6 +46,26 @@
 # 
 # One-liner:
 #     awk -f main.awk <base-file> > <target-file>
+#
+
+#
+# - Expanding data in a file
+#
+# Description:
+#     Expand the contents of the file in markdown bullet format. 
+#     Two options are available, "<li>" and "<ol>", 
+#     which can be expanded as detail-folding elements with "<details>".
+# 
+# Notation:
+#     -|<type>|<file-path>|[summary-word]
+# 
+# Option:
+#     "summary-word" describes the "<details>" by describing the summary string.
+#     The description in the "<details>" will be written in markdown.
+#
+# Type:
+#     - li
+#     - ol
 #
 
 BEGIN {
@@ -134,10 +154,11 @@ BEGIN {
     c2p["]"] = "%5D";
     c2p["`"] = "%60";
     c2p["\'"] = "%27";
-
-    count_for_table_of_contents_generator = 0;
 }
 
+# The following counter variables are used to avoid including lines that match regular expressions.
+count_for_table_of_contents_generator = 0;
+count_for_expanding_data = 0;
 
 # Counter variable to separate code blocks from the rest of the code
 count = 0;
@@ -187,7 +208,8 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     ORS = "\n";
 }
 
-# line counter
+
+# Line counter
 function line_counter(cmd) {
     line_count = 0;
     while (cmd | getline line) {
@@ -196,6 +218,7 @@ function line_counter(cmd) {
     close(cmd);
     return line_count;
 }
+
 
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
@@ -226,11 +249,48 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
     ORS = "\n";
 }
 
+
+# Functions that return absolute values
 function abs(value) {
     value += 0;
     return value < 0 ? -value : value;
 }
 
+
+function command_runner_for_expanding_data(type, file_path, summary_word) {
+    OFS = "";
+    ORS = "";
+
+    if (summary_word != "") {
+        print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
+    }
+
+    cmd = "awk '{print $0}' " file_path;
+    line_counter = 1;
+
+    while (cmd | getline line) {
+        if (type == "li") {
+            print(sprintf("- %s\n", line));
+        } else if (type == "ol") {
+            print(sprintf("%d. %s\n", line_counter, line));
+        }
+        line_counter += 1;
+    }
+    close(cmd);
+
+    # TODO: I don't like something about it
+    if (summary_word != "") {
+        print("\n</details>\n");
+    } else {
+        print("\n");
+    }
+
+    OFS = " ";
+    ORS = "\n";
+}
+
+
+# Create a table of contents from a heading
 /-_\|.+\|.+/ {
     split($0, information, "|");
     information_length = length(information)
@@ -243,6 +303,7 @@ function abs(value) {
 
     count_for_table_of_contents_generator += 1;
 }
+
 
 # Code block generation from program loading
 /```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
@@ -321,6 +382,7 @@ function abs(value) {
     print "```";
 }
 
+
 # Visuallization of directories by tree structure
 /```tree:.+```/ {
     split($0, splited, ":");
@@ -343,6 +405,7 @@ function abs(value) {
     count += 1;
 }
 
+
 # Creating graphs with mermaid
 /```mermaid:.+```/ {
     print "```mermaid";
@@ -350,6 +413,22 @@ function abs(value) {
 
     count += 1;
 }
+
+
+# Expanding data in a file
+/\-\|.+\|.+/ {
+    split($0, arr, "|");
+    arr_length = length(arr);
+
+    if (arr_length == 3) {
+        command_runner_for_expanding_data(arr[2], arr[3], "");
+    } else if (arr_length == 4) {
+        command_runner_for_expanding_data(arr[2], arr[3], arr[4]);
+    }
+
+    count_for_expanding_data += 1; 
+}
+
 
 # Processing of code other than code blocks and for playground
 {   
@@ -369,10 +448,18 @@ function abs(value) {
         count = 0;
     }
 
+    # Create a table of contents from a heading
     # TODO:?
     if (count_for_table_of_contents_generator != 1) {
         print $0;
     } else {
         count_for_table_of_contents_generator = 0;
+    }
+
+    # Expanding data in a file
+    if (count_for_expanding_data != 1) {
+        print $0;
+    } else {
+        count_for_expanding_data = 0;
     }
 }
