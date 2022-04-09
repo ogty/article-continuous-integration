@@ -29,6 +29,7 @@
 - [x] Code Block Operation
 - [x] Visualization of directories by tree structure
 - [ ] Creating graphs with mermaid
+- [ ] Expanding data in a file
 
 ## Supported File Formats
 - Awk
