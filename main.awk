@@ -32,7 +32,7 @@
 #     Heading 1 is not included in the table of contents 
 #     because it is the only one that should exist.
 #
-# Operations Notation:
+# Notation:
 #     -_|<file-name>|<url-prefix>|[start]|[end]
 #
 # Option:
