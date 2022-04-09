@@ -30,7 +30,7 @@
 - [x] Visualization of directories by tree structure
 - [x] Create a table of contents from a heading
 - [ ] Creating graphs with mermaid
-- [ ] Expanding data in a file
+- [x] Expanding data in a file
 
 ## Supported File Formats
 - Awk
