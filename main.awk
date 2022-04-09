@@ -187,14 +187,14 @@ function command_runner(path, start, end, comment_word) {
 
 # "gsub" as in "gawk". Replace all specific characters with specific characters.
 function string_replacer(string, before, after) {
-    split(string, tmp, before)
-    tmp_length = length(tmp)
+    split(string, tmp, before);
+    tmp_length = length(tmp);
 
     for (i = 0; i < tmp_length; i++) {
-        sub(" ", "-", string)
+        sub(" ", "-", string);
     }
 
-    return string
+    return string;
 }
 
 
@@ -239,7 +239,7 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
     while (cmd | getline line) {
         split(line, arr, " ");
-        sub("\#{1,7} ", "", line)
+        sub("\#{1,7} ", "", line);
 
         for_url_string = string_replacer(line, " ", "-")
 
