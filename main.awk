@@ -222,7 +222,7 @@ function line_counter(cmd) {
 
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
-    cmd = "awk '/\#{1,7}/ {print $0}' " file_path;
+    cmd = "awk '/^\#{1,7}/ {print $0}' " file_path;
 
     while (cmd | getline line) {
         split(line, arr, " ");
