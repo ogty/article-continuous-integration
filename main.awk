@@ -185,6 +185,19 @@ function command_runner(path, start, end, comment_word) {
 }
 
 
+# "gsub" as in "gawk". Replace all specific characters with specific characters.
+function string_replacer(string, before, after) {
+    split(string, tmp, before)
+    tmp_length = length(tmp)
+
+    for (i = 0; i < tmp_length; i++) {
+        sub(" ", "-", string)
+    }
+
+    return string
+}
+
+
 # Function to retrieve a specific range of source code for a playground URL
 function command_runner_and_playground(path, start, end, comment_word, url_word) {
     OFS = "";
@@ -226,6 +239,9 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
     while (cmd | getline line) {
         split(line, arr, " ");
+        sub("\#{1,7} ", "", line)
+
+        for_url_string = string_replacer(line, " ", "-")
 
         if (length(arr[1])) {
             sharp_length = length(arr[1]);
@@ -241,13 +257,14 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
                     print(" ");
                 }
 
-                print(sprintf("- [%s](%s%s)\n", arr[2], url_prefix, arr[2]));
+                print(sprintf("- [%s](%s%s)\n", line, url_prefix, tolower(for_url_string)));
             }
         }
     }
     close(cmd);
     ORS = "\n";
 }
+
 
 
 # Functions that return absolute values
