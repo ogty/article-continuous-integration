@@ -218,7 +218,7 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
                     print(" ");
                 }
 
-                print(sprintf("- [%s](%s)\n", arr[2], url_prefix));
+                print(sprintf("- [%s](%s%s)\n", arr[2], url_prefix, arr[2]));
             }
         }
     }
