@@ -156,10 +156,6 @@ BEGIN {
     c2p["\'"] = "%27";
 }
 
-# The following counter variables are used to avoid including lines that match regular expressions.
-count_for_table_of_contents_generator = 0;
-count_for_expanding_data = 0;
-
 # Counter variable to separate code blocks from the rest of the code
 count = 0;
 
@@ -173,7 +169,7 @@ global_url_word = "";
 
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+    cmd = "awk /" start "/,/" end "/'{print $0}' " path; # そもそも含んでいる前提、コメントアウトの部分まで含まれてしまうから消すしかない
 
     while (cmd | getline line) {
         if (line != comment_word " " start && line != comment_word " " end) {
@@ -318,7 +314,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         table_of_contents_generator(information[2], information[3], information[4], information[5]);
     }
 
-    count_for_table_of_contents_generator += 1;
+    count += 3;
 }
 
 
@@ -357,6 +353,9 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     }
     close(cmd);
     print "```";
+
+    start = ""
+    end = ""
 
     count += 1;
 }
@@ -443,7 +442,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         command_runner_for_expanding_data(arr[2], arr[3], arr[4]);
     }
 
-    count_for_expanding_data += 1; 
+    count += 3; 
 }
 
 
@@ -463,20 +462,5 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         count = 0;
     } else {
         count = 0;
-    }
-
-    # Create a table of contents from a heading
-    # TODO:?
-    if (count_for_table_of_contents_generator != 1) {
-        print $0;
-    } else {
-        count_for_table_of_contents_generator = 0;
-    }
-
-    # Expanding data in a file
-    if (count_for_expanding_data != 1) {
-        print $0;
-    } else {
-        count_for_expanding_data = 0;
     }
 }
