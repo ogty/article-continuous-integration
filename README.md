@@ -29,8 +29,9 @@
 - [x] Code Block Operation
 - [x] Visualization of directories by tree structure
 - [x] Create a table of contents from a heading
-- [ ] Creating graphs with mermaid
 - [x] Expanding data in a file
+- [ ] Preview base file
+- [ ] Creating graphs with mermaid
 
 ## Supported File Formats
 - Awk
