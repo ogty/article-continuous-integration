@@ -93,7 +93,7 @@ BEGIN {
     data["makefile"] = "#";
     data["nim"] = "#";
     data["objectivec"] = "//";
-    data["php"] = "//";
+    data["php"] = "//";         # TODO: "#"
     data["powershell"] = "#";
     data["py"] = "#";
     data["python"] = "#";
