@@ -98,7 +98,7 @@
 #
 #         Reads the contents of the specified file line by line and expands it in list 
 #         format. The "<type>" can be "li" for bulleted or numbered "ol" as in normal HTML. 
-#         "[<summary-word]" to enclose the expanded contents in a list format with 
+#         "[summary-word]" to enclose the expanded contents in a list format with 
 #         "<details>" tags.
 #
 #             -|<type>|<file-path>|[summary-word]
