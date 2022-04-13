@@ -1,71 +1,125 @@
+# ----------------------------------------------------------------------------------------------------------------------
 # 
-# - Specifying files in code blocks
-# - Add PlayGround URL to code block(Rust only)
-# - Code Block Operation
-# - Visualization of directories by tree structure
-#
-# Description:
-#     The output replaces the specific notation described 
-#     in the text file on which the Markdown file is based 
-#     with the source code referenced therein.
-#
-# General Notation:
-#     ```<language>:<file-path>:<start>:<end>:[url-string]```
-#
-# Operations Notation:
-#     ```<language>|pattern pattern ...```
-#                           ^^^^^^^ 
-#                               <file-path>:<start>:<end>
-#
-# Usage:
-#     awk -f main.awk <base-file>
-#
-# One-liner:
-#     awk -f main.awk <base-file> > <target-file>
-#
-
-#
-# - Create a table of contents from a heading
-#
-# Description:
-#     This is an awk program that creates a table of contents from headings.
-#     Heading 1 is not included in the table of contents 
-#     because it is the only one that should exist.
-#
-# Notation:
-#     -_|<file-name>|<url-prefix>|[start]|[end]
-#
-# Option:
-#     Optionally, a range of headings can be specified.
-#     The default for "start" is 2 and for "end" is 7.
-#     If only the "end" is to be changed, the "start" must also be described.
-#     The same is true for the reverse case.
+#              ________   ________   _________   ___   ________   ___        _______                                    
+#             |\   __  \ |\   __  \ |\___   ___\|\  \ |\   ____\ |\  \      |\  ___ \                                   
+#             \ \  \|\  \\ \  \|\  \\|___ \  \_|\ \  \\ \  \___| \ \  \     \ \   __/|                                  
+#              \ \   __  \\ \   _  _\    \ \  \  \ \  \\ \  \     \ \  \     \ \  \_|/__                                
+#               \ \  \ \  \\ \  \\  \|    \ \  \  \ \  \\ \  \____ \ \  \____ \ \  \_|\ \                               
+#                \ \__\ \__\\ \__\\ _\     \ \__\  \ \__\\ \_______\\ \_______\\ \_______\                              
+#                 \|__|\|__| \|__|\|__|     \|__|   \|__| \|_______| \|_______| \|_______|                              
+#  ________   ________   ________    _________   ___   ________    ___  ___   ________   ___  ___   ________            
+# |\   ____\ |\   __  \ |\   ___  \ |\___   ___\|\  \ |\   ___  \ |\  \|\  \ |\   __  \ |\  \|\  \ |\   ____\           
+# \ \  \___| \ \  \|\  \\ \  \\ \  \\|___ \  \_|\ \  \\ \  \\ \  \\ \  \\\  \\ \  \|\  \\ \  \\\  \\ \  \___|_          
+#  \ \  \     \ \  \\\  \\ \  \\ \  \    \ \  \  \ \  \\ \  \\ \  \\ \  \\\  \\ \  \\\  \\ \  \\\  \\ \_____  \         
+#   \ \  \____ \ \  \\\  \\ \  \\ \  \    \ \  \  \ \  \\ \  \\ \  \\ \  \\\  \\ \  \\\  \\ \  \\\  \\|____|\  \        
+#    \ \_______\\ \_______\\ \__\\ \__\    \ \__\  \ \__\\ \__\\ \__\\ \_______\\ \_______\\ \_______\ ____\_\  \       
+#     \|_______| \|_______| \|__| \|__|     \|__|   \|__| \|__| \|__| \|_______| \|_______| \|_______||\_________\      
+#                                                                                                     \|_________|      
+#  ___   ________    _________   _______    ________   ________   ________   _________   ___   ________   ________      
+# |\  \ |\   ___  \ |\___   ___\|\  ___ \  |\   ____\ |\   __  \ |\   __  \ |\___   ___\|\  \ |\   __  \ |\   ___  \    
+# \ \  \\ \  \\ \  \\|___ \  \_|\ \   __/| \ \  \___| \ \  \|\  \\ \  \|\  \\|___ \  \_|\ \  \\ \  \|\  \\ \  \\ \  \   
+#  \ \  \\ \  \\ \  \    \ \  \  \ \  \_|/__\ \  \  ___\ \   _  _\\ \   __  \    \ \  \  \ \  \\ \  \\\  \\ \  \\ \  \  
+#   \ \  \\ \  \\ \  \    \ \  \  \ \  \_|\ \\ \  \|\  \\ \  \\  \|\ \  \ \  \    \ \  \  \ \  \\ \  \\\  \\ \  \\ \  \ 
+#    \ \__\\ \__\\ \__\    \ \__\  \ \_______\\ \_______\\ \__\\ _\ \ \__\ \__\    \ \__\  \ \__\\ \_______\\ \__\\ \__\
+#     \|__| \|__| \|__|     \|__|   \|_______| \|_______| \|__|\|__| \|__|\|__|     \|__|   \|__| \|_______| \|__| \|__|
+#                                                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------
 # 
-# Usage:
-#     awk -f main.awk <base-file>
 # 
-# One-liner:
-#     awk -f main.awk <base-file> > <target-file>
-#
-
-#
-# - Expanding data in a file
-#
-# Description:
-#     Expand the contents of the file in markdown bullet format. 
-#     Two options are available, "<li>" and "<ol>", 
-#     which can be expanded as detail-folding elements with "<details>".
+# DESCRIPTION:
 # 
-# Notation:
-#     -|<type>|<file-path>|[summary-word]
+#     Article Continuous Integration (ACI), as the name implies, is a tool to help with 
+#     the continuous integration of articles. Specifically, it adds several proprietary 
+#     notations to the general Markdown notation. The intended audience for this tool is 
+#     anyone who creates technical articles about programming.
 # 
-# Option:
-#     "summary-word" describes the "<details>" by describing the summary string.
-#     The description in the "<details>" will be written in markdown.
 #
-# Type:
-#     - li
-#     - ol
+#
+# FEATURES:
+# 
+#     The following is a list of features provided by ACI.
+#     
+#        -   Specifying files in code blocks
+#        -   Code block operation
+#        -   Visualization of directories by tree structure
+#        -   Create a table of contents based on heading
+#        -   Expand file contents in list format
+#        -   Append the playground URL of the program
+#
+# 
+#
+# NOTATION:
+#
+#     The content enclosed in "<>" indicates a required field, and "[]" indicates an 
+#     optional field. All "<file-path>" in the following notation are relative paths.
+#
+#
+#     === Specifying files in code blocks
+# 
+#         Expand the source code between "<start>" and "<end>" as a code block. 
+#         "<url-string>" to describe the playground URL of the expanded source code in 
+#         addition to the code block. If the file does not exist, the message 
+#         "No such file" is written in the code block.
+# 
+#             ```<language>:<file-path>:<start>:<end>:[url-string]```
+#
+#
+#     === Code block operation
+#
+#         In addition to the language, a sequence of the above notations can be written 
+#         to join source code together. The merging is done in the order in which they 
+#         are described. "<pattern>" is "<file-path>:<start>:<end>. "<pattern>" is 
+#         aligned with whitespace. There is no limit to the number of joins as long as 
+#         no line breaks are made
+#
+#             ```<language>|<pattern> <pattern>...```
+#
+#
+#     === Visualization of directories by tree structure
+#
+#         Expands the tree structure of the specified directory as code blocks.
+#         "<directory-path>" is also relative, as is "<file-path>".
+#
+#             ```tree:<directory-path>````
+# 
+#
+#     === Create a table of contents based on heading
+#
+#         Expand the table of contents where the following notation is entered: 
+#         "<file-name>" usually describes itself. This is to read your file content 
+#         once. "<url-prefix>" writes the common content described in "[]". "[start]" 
+#         and "[end]" are optional and allow you to specify the size range of the 
+#         heading to be treated as a table of contents. Normally, the range is from 2 to 
+#         7, not including h1(#). Note that if you want to specify 2 to 5, you must also 
+#         specify 2.
+#
+#             -_|<file-name>|<url-prefix>|[start]|[end]
+#
+#
+#     === Expand file contents in list format
+#
+#         Reads the contents of the specified file line by line and expands it in list 
+#         format. The "<type>" can be "li" for bulleted or numbered "ol" as in normal HTML. 
+#         "[<summary-word]" to enclose the expanded contents in a list format with 
+#         "<details>" tags.
+#
+#             -|<type>|<file-path>|[summary-word]
+#
+#
+#
+# USAGE:
+# 
+#     Execute the following command and the output results will be displayed on the 
+#     command line. No new files are created.
+# 
+#         $ awk -f aci.awk <base-file>
+# 
+#     To write from the base file to a new file, execute the following command.
+#
+#         $ awk -f aci.awk <base-file> > <target-file>
+# 
+#     It may be better to define it globally as its own command.
+#
 #
 
 BEGIN {
