@@ -239,7 +239,7 @@ function string_replacer(string, before, after) {
     tmp_length = length(tmp);
 
     for (i = 0; i < tmp_length; i++) {
-        sub(" ", "-", string);
+        sub(before, after, string);
     }
 
     return string;
