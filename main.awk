@@ -153,7 +153,7 @@ BEGIN {
     c2p["["] = "%5B";
     c2p["]"] = "%5D";
     c2p["`"] = "%60";
-    c2p["\'"] = "%27";
+    c2p["'"] = "%27";
 }
 
 # Counter variable to separate code blocks from the rest of the code
@@ -231,11 +231,11 @@ function line_counter(cmd) {
 
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
-    cmd = "awk '/^\#{1,7}/ {print $0}' " file_path;
+    cmd = "awk '/^#{1,7}/ {print $0}' " file_path;
 
     while (cmd | getline line) {
         split(line, arr, " ");
-        sub("\#{1,7} ", "", line);
+        sub("#{1,7} ", "", line);
 
         for_url_string = string_replacer(line, " ", "-")
 
@@ -279,15 +279,15 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     }
 
     cmd = "awk '{print $0}' " file_path;
-    line_counter = 1;
+    line_count = 1;
 
     while (cmd | getline line) {
         if (type == "li") {
             print(sprintf("- %s\n", line));
         } else if (type == "ol") {
-            print(sprintf("%d. %s\n", line_counter, line));
+            print(sprintf("%d. %s\n", line_count, line));
         }
-        line_counter += 1;
+        line_count += 1;
     }
     close(cmd);
 
