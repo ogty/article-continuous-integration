@@ -145,7 +145,7 @@ BEGIN {
     data["makefile"] = "#";
     data["nim"] = "#";
     data["objectivec"] = "//";
-    data["php"] = "//";         # TODO: "#"
+    data["php"] = "//";
     data["powershell"] = "#";
     data["py"] = "#";
     data["python"] = "#";
