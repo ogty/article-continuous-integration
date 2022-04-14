@@ -221,7 +221,7 @@ global_url_word = "";
 
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path; # そもそも含んでいる前提、コメントアウトの部分まで含まれてしまうから消すしかない
+    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
 
     while (cmd | getline line) {
         if (line != comment_word " " start && line != comment_word " " end) {
