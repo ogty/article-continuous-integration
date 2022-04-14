@@ -236,9 +236,8 @@ function command_runner(path, start, end, comment_word) {
 # "gsub" as in "gawk". Replace all specific characters with specific characters.
 function string_replacer(string, before, after) {
     split(string, tmp, before);
-    tmp_length = length(tmp);
 
-    for (i = 0; i < tmp_length; i++) {
+    for (i = 0; i < length(tmp); i++) {
         sub(before, after, string);
     }
 
