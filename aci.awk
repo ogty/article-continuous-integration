@@ -286,10 +286,46 @@ function line_counter(cmd) {
 
 
 # Function to generate a table of contents
+# 
+# | prefix | number of sharp | indents | 
+# | ------ | --------------- | ------- |
+# | ##     | 2               | 0       |
+# | ###    | 3               | 2       |
+# | ####   | 4               | 4       |
+# | #####  | 5               | 6       |
+# | ###### | 6               | 8       |
+#
+# Equation:
+# 
+#         (|1 - x| - 1) + (x - y)
+#
+#     x: Number of sharp(#)
+#     y: Number of standard headings
+#
+#
+# Example:
+# 
+#     y = 2
+#
+#     Example1: ## h2
+#      
+#         (|1 - 2| - 1) + (2 - 2) = (|-1| - 1) + 0
+#                                 = (1 - 1) + 0
+#                                 = 0 + 0
+#                                 = 0
+#
+#     Example2: ## h4
+#
+#         (|1 - 4| - 1) + (4 - 2) = (|-3| - 1) + 2
+#                                 = (3 - 1) + 2
+#                                 = 2 + 2
+#                                 = 4
+#
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
 
     cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", file_path);
+    base_value_correction = (abs(1 - (start_heading_number + 1)) - 1) + (start_heading_number + 1) - 2;
 
     # Output lines matching heading(#)
     while (cmd | getline line) {
@@ -298,17 +334,13 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
         for_url_string = string_replacer(line, " ", "-");
 
-        if (length(arr[1])) {
+        if (length(arr[1]) > 1) {
             sharp_length = length(arr[1]);
             
             if (start_heading_number - 1 < sharp_length && sharp_length < end_heading_number + 1) {
-                if (sharp_length > start_heading_number) {
-                    sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number;
-                } else {
-                    sharp_length = 0;
-                }
+                sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number;
                 
-                for (i = 0; i < sharp_length; i++) {
+                for (i = 0; i < sharp_length - base_value_correction; i++) {
                     print(" ");
                 }
 
@@ -320,7 +352,6 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
     ORS = "\n";
 }
-
 
 
 # Functions that return absolute values
