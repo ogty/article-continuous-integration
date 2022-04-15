@@ -26,8 +26,11 @@ fn print_usage() {
             init [title] [topics...]
                             Initialize a new article
     
-            make <file name>
+            make <file-name>
                             Create articles from base file
+
+            preview <file-name>
+                            Preview the article
 
             show
                             Displays the name and title of the base file directly under the articles
