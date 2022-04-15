@@ -88,7 +88,7 @@
 #         once. "<url-prefix>" writes the common content described in "[]". 
 #         "[heading-start]" and "[heading-end]" are optional and allow you to specify 
 #         the size range of the heading to be treated as a table of contents. Normally, 
-#         the range is from 2 to 7, not including h1(#). Note that if you want to specify 
+#         the range is from 2 to 6, not including h1(#). Note that if you want to specify 
 #         2 to 5, you must also specify 2.
 #
 #             -_|<file-name>|<url-prefix>|[heading-start]|[heading-end]
@@ -289,12 +289,12 @@ function line_counter(cmd) {
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
 
-    cmd = sprintf("awk '/^#{1,7}/ {print $0}' %s", file_path);
+    cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", file_path);
 
     # Output lines matching heading(#)
     while (cmd | getline line) {
         split(line, arr, " ");
-        sub("#{1,7} ", "", line);
+        sub("#{1,6} ", "", line);
 
         for_url_string = string_replacer(line, " ", "-");
 
@@ -372,7 +372,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     information_length = length(information);
 
     if (information_length == 3) {
-        table_of_contents_generator(information[2], information[3], 2, 7);
+        table_of_contents_generator(information[2], information[3], 2, 6);
     } else if (information_length == 5) {
         table_of_contents_generator(information[2], information[3], information[4], information[5]);
     }
