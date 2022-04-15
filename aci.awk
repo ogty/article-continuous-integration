@@ -58,6 +58,8 @@
 #         "<url-string>" to describe the playground URL of the expanded source code in 
 #         addition to the code block. If the file does not exist, the message 
 #         "No such file" is written in the code block.
+#         If you want the entire contents of the program to be expanded into a code block, 
+#         enter white space(" ") in the "<start>" and "<end>" sections.
 # 
 #             ```<language>:<file-path>:<start>:<end>:[url-string]```
 #
@@ -221,12 +223,19 @@ global_url_word = "";
 
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
-    cmd = sprintf("awk /%s/,/%s/'{print $0}' %s", start, end, path);
-    comment_out_start = sprintf("%s %s", comment_word, start);
-    comment_out_end = sprintf("%s %s", comment_word, end);
+    if (start != " " && end != " ") {
+        cmd = sprintf("awk /%s/,/%s/'{print $0}' %s", start, end, path);
+        comment_out_start = sprintf("%s %s", comment_word, start);
+        comment_out_end = sprintf("%s %s", comment_word, end);
 
-    while (cmd | getline line) {
-        if (line != comment_out_start && line != comment_out_end) {
+        while (cmd | getline line) {
+            if (line != comment_out_start && line != comment_out_end) {
+                print(line);
+            }
+        }
+    } else {
+        cmd = sprintf("awk '{print $0}' %s", path)
+        while (cmd | getline line) {
             print(line);
         }
     }
