@@ -296,7 +296,7 @@ function line_counter(cmd) {
 
 # Function to generate a table of contents
 # 
-# | prefix | number of sharp | indents | 
+# | Prefix | Number of sharp | Indents | 
 # | ------ | --------------- | ------- |
 # | ##     | 2               | 0       |
 # | ###    | 3               | 2       |
