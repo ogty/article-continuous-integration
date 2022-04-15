@@ -85,13 +85,13 @@
 #
 #         Expand the table of contents where the following notation is entered: 
 #         "<file-name>" usually describes itself. This is to read your file content 
-#         once. "<url-prefix>" writes the common content described in "[]". "[start]" 
-#         and "[end]" are optional and allow you to specify the size range of the 
-#         heading to be treated as a table of contents. Normally, the range is from 2 to 
-#         7, not including h1(#). Note that if you want to specify 2 to 5, you must also 
-#         specify 2.
+#         once. "<url-prefix>" writes the common content described in "[]". 
+#         "[heading-start]" and "[heading-end]" are optional and allow you to specify 
+#         the size range of the heading to be treated as a table of contents. Normally, 
+#         the range is from 2 to 7, not including h1(#). Note that if you want to specify 
+#         2 to 5, you must also specify 2.
 #
-#             -_|<file-name>|<url-prefix>|[start]|[end]
+#             -_|<file-name>|<url-prefix>|[heading-start]|[heading-end]
 #
 #
 #     === Expand file contents in list format
@@ -212,7 +212,7 @@ BEGIN {
 count = 0;
 
 # Variable for playground URL
-global_filepath = "";
+global_file_path = "";
 global_start = "";
 global_end = "";
 global_comment_word = "";
@@ -221,11 +221,13 @@ global_url_word = "";
 
 # Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+    cmd = sprintf("awk /%s/,/%s/'{print $0}' %s", start, end, path);
+    comment_out_start = sprintf("%s %s", comment_word, start);
+    comment_out_end = sprintf("%s %s", comment_word, end);
 
     while (cmd | getline line) {
-        if (line != comment_word " " start && line != comment_word " " end) {
-            print line;
+        if (line != comment_out_start && line != comment_out_end) {
+            print(line);
         }
     }
 
@@ -233,7 +235,8 @@ function command_runner(path, start, end, comment_word) {
 }
 
 
-# "gsub" as in "gawk". Replace all specific characters with specific characters.
+# gsub with return value
+# Replace all "before" with "after"
 function string_replacer(string, before, after) {
     split(string, tmp, before);
 
@@ -250,20 +253,22 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
     OFS = "";
     ORS = "";
 
-    cmd = "awk /" start "/,/" end "/'{print $0}' " path;
+    cmd = sprintf("awk /%s/,/%s/'{print $0}' %s", start, end, path);
+    comment_out_start = sprintf("%s %s", comment_word, start);
+    comment_out_end = sprintf("%s %s", comment_word, end);
 
-    print "\n[" url_word "](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=";
+    print(sprintf("\n[%s](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=", url_word));
     while (cmd | getline line) {
-        print "%0A";
+        print("%0A");
         for (i = 1; i <= length(line); i++) {
-            if (line != comment_word " " start && line != comment_word " " end) {
-                print c2p[substr(line, i, 1)];
+            if (line != comment_out_start && line != comment_out_end) {
+                print(c2p[substr(line, i, 1)]);
             }
         }
     }
-    print ")\n";
-
+    print(")\n");
     close(cmd);
+
     OFS = " ";
     ORS = "\n";
 }
@@ -280,15 +285,18 @@ function line_counter(cmd) {
 }
 
 
+# Function to generate a table of contents
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
-    cmd = "awk '/^#{1,7}/ {print $0}' " file_path;
 
+    cmd = sprintf("awk '/^#{1,7}/ {print $0}' %s", file_path);
+
+    # Output lines matching heading(#)
     while (cmd | getline line) {
         split(line, arr, " ");
         sub("#{1,7} ", "", line);
 
-        for_url_string = string_replacer(line, " ", "-")
+        for_url_string = string_replacer(line, " ", "-");
 
         if (length(arr[1])) {
             sharp_length = length(arr[1]);
@@ -309,6 +317,7 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
         }
     }
     close(cmd);
+
     ORS = "\n";
 }
 
@@ -325,13 +334,15 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     OFS = "";
     ORS = "";
 
+    cmd = sprintf("awk '{print $0}' %s", file_path);
+    line_count = 1;
+    
+    # If "summary_word" is entered, output the "<details>" and the start tag of the "<summary>"
     if (summary_word != "") {
         print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
     }
 
-    cmd = "awk '{print $0}' " file_path;
-    line_count = 1;
-
+    # Output with the specified type, regardless of whether or not "summary_word" is entered.
     while (cmd | getline line) {
         if (type == "li") {
             print(sprintf("- %s\n", line));
@@ -342,7 +353,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     }
     close(cmd);
 
-    # TODO: I don't like something about it
+    # Output the end tag of "<details>" when "summary_word" is entered
     if (summary_word != "") {
         print("\n</details>\n");
     } else {
@@ -355,9 +366,10 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 
 # Create a table of contents from a heading
+# Notation: -_|<target-file>|<url-string>|[heading-start]|[heading-end]
 /-_\|.+\|.+/ {
     split($0, information, "|");
-    information_length = length(information)
+    information_length = length(information);
 
     if (information_length == 3) {
         table_of_contents_generator(information[2], information[3], 2, 7);
@@ -370,25 +382,26 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 
 # Code block generation from program loading
+# Notation: ```<language>:<file-path>:<start>:<end>```
 /```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
     split($0, code_block, ":");
     
     language = code_block[1];
-    filepath = code_block[2];
+    file_path = code_block[2];
     start = code_block[3];
     end = code_block[4];
+    cmd = sprintf("bash -c \"if [[ -e %s ]]; then echo true; else echo false; fi;\"", file_path);
 
     sub("```", "", language);
     sub("```", "", end);
 
-    print "```" language ":" filepath;
-    cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
+    print(sprintf("```%s:%s", language, file_path));
     if (cmd | getline line) {
         if (line == "true") {
             # For playground
             if (language == "rust" && length(code_block) == 5) {
                 sub("```", "", code_block[5]);
-                global_filepath = filepath;
+                global_file_path = file_path;
                 global_start = start;
                 global_end = end;
                 global_comment_word = data[language];
@@ -397,24 +410,25 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
             }
 
             # Stdout source code
-            command_runner(filepath, start, end, data[language]);
+            command_runner(file_path, start, end, data[language]);
         } else {
-            print "No such file";
+            print("No such file");
         }
     }
     close(cmd);
-    print "```";
+    print("```");
 
-    start = ""
-    end = ""
+    start = "";
+    end = "";
 
     count += 1;
 }
 
 
 # Code block operation
+# Notation: ```<language>|<pattern> <pattern>...```
 /```.+\|(.+\..+:.+:.+?){2,}```/ {
-    print "";
+    print("");
     split($0, code_block_for_operation, "|");
     
     language = code_block_for_operation[1];
@@ -423,66 +437,69 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     sub("```", "", language);
     split(targets, target_list, " ");
 
-    print "```" language;
+    print(sprintf("```%s", language));
     for (i = 1; i <= length(target_list); i++) {
         sub("```", "", target_list[i]);
         split(target_list[i], target, ":");
 
-        filepath = target[1];
+        file_path = target[1];
         start = target[2];
         end = target[3];
+        cmd = sprintf("bash -c \"if [[ -e %s ]]; then echo true; else echo false; fi;\"", file_path);
 
-        cmd = "bash -c \"if [[ -e " filepath " ]]; then echo true; else echo false; fi;\"";
         if (cmd | getline line) {
             if (line == "true") {
-                command_runner(filepath, start, end, data[language]);
+                command_runner(file_path, start, end, data[language]);
             } else {
-                print "ERROR";
+                print("ERROR");
             }
         }
         close(cmd);
 
         if (i != length(target_list)) {
-            print "";
+            print("");
         }
     }
-    print "```";
+    print("```");
 }
 
 
 # Visuallization of directories by tree structure
+# Notation: ```tree:<directory-path>```
 /```tree:.+```/ {
     split($0, splited, ":");
-    path = splited[2];
-    sub("```", "", path);
+    path = string_replacer(splited[2], "```", "");
 
     cmd = sprintf("tree %s", path);
     line_count = line_counter(cmd);
 
-    print "```";
+    print("```");
     while (cmd | getline line) {
         if (line_count > 2) {
-            print line;
+            print(line);
             line_count -= 1;
         }
     }
     close(cmd);
-    print "```";
+    print("```");
 
     count += 1;
 }
 
 
+# TODO
 # Creating graphs with mermaid
+# Notation: ---
 /```mermaid:.+```/ {
-    print "```mermaid";
-    print "```";
+    print("```mermaid");
+    print("```");
 
     count += 1;
 }
 
 
 # Expanding data in a file
+# Notation: -|<type>|<file-path>|[summary-word]
 /\-\|.+\|.+/ {
     split($0, arr, "|");
     arr_length = length(arr);
@@ -500,11 +517,11 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 # Processing of code other than code blocks and for playground
 {   
     if (count == 0) {
-        print $0;
+        print($0);
         count = 0;
     } else if (count == 2) {
         command_runner_and_playground(\
-            global_filepath,
+            global_file_path,
             global_start,
             global_end,
             global_comment_word,
