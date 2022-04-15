@@ -550,6 +550,8 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         command_runner_for_expanding_data(arr[2], arr[3], arr[4]);
     }
 
+    # To avoid duplication, do not output the matched part
+    # Numbers greater than 3 can accomplish this
     count += 3; 
 }
 
