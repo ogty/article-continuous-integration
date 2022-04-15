@@ -61,7 +61,7 @@
 #         If you want the entire contents of the program to be expanded into a code block, 
 #         enter white space(" ") in the "<start>" and "<end>" sections.
 # 
-#             ```<language>:<file-path>:<start>:<end>:[url-string]```
+#             ```<language>:<file-path>:<start>:<end>[:url-string]```
 #
 #
 #     === Code block operation
@@ -93,7 +93,7 @@
 #         the range is from 2 to 6, not including h1(#). Note that if you want to specify 
 #         2 to 5, you must also specify 2.
 #
-#             -_|<file-name>|<url-prefix>|[heading-start]|[heading-end]
+#             -_|<file-name>|<url-prefix>[|heading-start[|heading-end]]
 #
 #
 #     === Expand file contents in list format
@@ -103,7 +103,7 @@
 #         "[summary-word]" to enclose the expanded contents in a list format with 
 #         "<details>" tags.
 #
-#             -|<type>|<file-path>|[summary-word]
+#             -|<type>|<file-path>[|summary-word]
 #
 #
 #
