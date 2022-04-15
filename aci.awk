@@ -244,19 +244,6 @@ function command_runner(path, start, end, comment_word) {
 }
 
 
-# gsub with return value
-# Replace all "before" with "after"
-function string_replacer(string, before, after) {
-    split(string, tmp, before);
-
-    for (i = 0; i < length(tmp); i++) {
-        sub(before, after, string);
-    }
-
-    return string;
-}
-
-
 # Function to retrieve a specific range of source code for a playground URL
 function command_runner_and_playground(path, start, end, comment_word, url_word) {
     OFS = "";
@@ -341,7 +328,7 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
         split(line, arr, " ");
         sub("#{1,6} ", "", line);
 
-        for_url_string = string_replacer(line, " ", "-");
+        for_url_string = gensub(" ", "-", "g", line);
 
         if (length(arr[1]) > 1) {
             sharp_length = length(arr[1]);
@@ -510,7 +497,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 # Notation: ```tree:<directory-path>```
 /```tree:.+```/ {
     split($0, splited, ":");
-    path = string_replacer(splited[2], "```", "");
+    path = gensub("```", "", "g", splited[2]);
 
     cmd = sprintf("tree %s", path);
     line_count = line_counter(cmd);
