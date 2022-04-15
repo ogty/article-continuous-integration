@@ -441,11 +441,13 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
             # For playground
             if (language == "rust" && length(code_block) == 5) {
                 sub("```", "", code_block[5]);
+                
                 global_file_path = file_path;
                 global_start = start;
                 global_end = end;
                 global_comment_word = data[language];
                 global_url_word = code_block[5];
+                
                 count += 1;
             }
 
