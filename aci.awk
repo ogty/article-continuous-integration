@@ -323,12 +323,12 @@ function line_counter(cmd) {
 #                                 = 0 + 0
 #                                 = 0
 #
-#     Example2: ## h4
+#     Example2: ##### h5
 #
-#         (|1 - 4| - 1) + (4 - 2) = (|-3| - 1) + 2
-#                                 = (3 - 1) + 2
-#                                 = 2 + 2
-#                                 = 4
+#         (|1 - 5| - 1) + (5 - 2) = (|-4| - 1) + 3
+#                                 = (4 - 1) + 3
+#                                 = 3 + 3
+#                                 = 6
 #
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     ORS = "";
