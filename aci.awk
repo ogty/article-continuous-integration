@@ -362,31 +362,35 @@ function abs(value) {
 function command_runner_for_expanding_data(type, file_path, summary_word) {
     OFS = "";
     ORS = "";
-
-    cmd = sprintf("awk '{print $0}' %s", file_path);
-    line_count = 1;
     
-    # If "summary_word" is entered, output the "<details>" and the start tag of the "<summary>"
-    if (summary_word != "") {
-        print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
-    }
+    if (type == "li" || type == "ol") {
+        cmd = sprintf("awk '{print $0}' %s", file_path);
+        line_count = 1;
 
-    # Output with the specified type, regardless of whether or not "summary_word" is entered.
-    while (cmd | getline line) {
-        if (type == "li") {
-            print(sprintf("- %s\n", line));
-        } else if (type == "ol") {
-            print(sprintf("%d. %s\n", line_count, line));
+        if (summary_word != "") {
+            print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
         }
-        line_count += 1;
-    }
-    close(cmd);
 
-    # Output the end tag of "<details>" when "summary_word" is entered
-    if (summary_word != "") {
-        print("\n</details>\n");
+        while (cmd | getline line) {
+            switch (type) {
+                case "li":
+                    print(sprintf("- %s\n", line));
+                    break;
+                case "ol":
+                    print(sprintf("%d. %s\n", line_count, line));
+                    line_count += 1;
+                    break;
+            }
+        }
+        close(cmd);
+
+        # Output the end tag of "<details>" when "summary_word" is entered
+        if (summary_word != "") {
+            print("\n</details>\n");
+        }
     } else {
-        print("\n");
+        print("ERROR: Type does not match\n\n");
+        next;
     }
 
     OFS = " ";
@@ -395,18 +399,19 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 
 # Create a table of contents from a heading
-# Notation: -_|<target-file>|<url-string>|[heading-start]|[heading-end]
+# Notation: -_|<target-file>|<url-string>[|heading-start[|heading-end]]
 /-_\|.+\|.+/ {
     split($0, information, "|");
     information_length = length(information);
 
-    if (information_length == 3) {
+    # Implementation to be tolerant of the presence of "|" at the end of lines
+    if (information_length == 3 || information_length == 4) {
         table_of_contents_generator(information[2], information[3], 2, 6);
-    } else if (information_length == 5) {
+    } else if (information_length == 5 || information_length == 6) {
         table_of_contents_generator(information[2], information[3], information[4], information[5]);
     }
 
-    count += 3;
+    next;
 }
 
 
@@ -443,7 +448,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
             # Stdout source code
             command_runner(file_path, start, end, data[language]);
         } else {
-            print("No such file");
+            print("ERROR: No such file");
         }
     }
     close(cmd);
@@ -451,15 +456,29 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
     start = "";
     end = "";
-
     count += 1;
+
+    switch (count) {
+        case 1:
+            count = 0;
+            next;
+        case 2:
+            command_runner_and_playground(\
+                global_file_path,
+                global_start,
+                global_end,
+                global_comment_word,
+                global_url_word\
+            );
+            count = 0;
+            next;
+    }
 }
 
 
 # Code block operation
 # Notation: ```<language>|<pattern> <pattern>...```
 /```.+\|(.+\..+:.+:.+?){2,}```/ {
-    print("");
     split($0, code_block_for_operation, "|");
     
     language = code_block_for_operation[1];
@@ -482,7 +501,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
             if (line == "true") {
                 command_runner(file_path, start, end, data[language]);
             } else {
-                print("ERROR");
+                print("ERROR: File does not exist");
             }
         }
         close(cmd);
@@ -492,6 +511,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         }
     }
     print("```");
+    next;
 }
 
 
@@ -514,43 +534,27 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     close(cmd);
     print("```");
 
-    count += 1;
+    next;
 }
 
 
 # Expanding data in a file
-# Notation: -|<type>|<file-path>|[summary-word]
+# Notation: -|<type>|<file-path>[|summary-word]
 /\-\|.+\|.+/ {
     split($0, arr, "|");
     arr_length = length(arr);
 
     if (arr_length == 3) {
+        # If you put "|" at the end of a line, it is not enclosed in "<details>"
         command_runner_for_expanding_data(arr[2], arr[3], "");
     } else if (arr_length == 4) {
         command_runner_for_expanding_data(arr[2], arr[3], arr[4]);
     }
 
-    # To avoid duplication, do not output the matched part
-    # Numbers greater than 3 can accomplish this
-    count += 3; 
+    next;
 }
 
 
-# Processing of code other than code blocks and for playground
 {   
-    if (count == 0) {
-        print($0);
-        count = 0;
-    } else if (count == 2) {
-        command_runner_and_playground(\
-            global_file_path,
-            global_start,
-            global_end,
-            global_comment_word,
-            global_url_word\
-        );
-        count = 0;
-    } else {
-        count = 0;
-    }
+    print $0;
 }
