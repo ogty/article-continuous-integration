@@ -146,6 +146,7 @@ BEGIN {
     data["lisp"] = ";";
     data["lua"] = "--";
     data["makefile"] = "#";
+    data["mk"] = "#";
     data["nim"] = "#";
     data["objectivec"] = "//";
     data["php"] = "//";
