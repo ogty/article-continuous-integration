@@ -516,17 +516,6 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 }
 
 
-# TODO
-# Creating graphs with mermaid
-# Notation: ---
-/```mermaid:.+```/ {
-    print("```mermaid");
-    print("```");
-
-    count += 1;
-}
-
-
 # Expanding data in a file
 # Notation: -|<type>|<file-path>|[summary-word]
 /\-\|.+\|.+/ {
