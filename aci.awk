@@ -134,6 +134,7 @@ BEGIN {
     data["cs"] = "//";
     data["css"] = "/*";
     data["dart"] = "//";
+    data["dot"] = "//";
     data["go"] = "//";
     data["haskell"] = "--";
     data["html"] = "<!--";
