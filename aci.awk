@@ -212,19 +212,11 @@ BEGIN {
     c2p["'"] = "%27";
 }
 
-# Counter variable to separate code blocks from the rest of the code
-count = 0;
 
-# Variable for playground URL
-global_file_path = "";
-global_start = "";
-global_end = "";
-global_comment_word = "";
-global_url_word = "";
-
-
-# Function to retrieve a specific range of source code
 function command_runner(path, start, end, comment_word) {
+    # Function that reads a program file and outputs the code between specified ranges; 
+    # if start and end are blank, the entire source code is output as is
+
     if (start != " " && end != " ") {
         cmd = sprintf("awk /%s/,/%s/'{print $0}' %s", start, end, path);
         comment_out_start = sprintf("%s %s", comment_word, start);
@@ -236,6 +228,9 @@ function command_runner(path, start, end, comment_word) {
             }
         }
     } else {
+        # For when you want to expand the entire contents of a file into code blocks
+        # Example: ```python:./main.py: : ```
+        #     This is achieved by writing a whitespace in the "<start>" and "<end>" sections.
         cmd = sprintf("awk '{print $0}' %s", path)
         while (cmd | getline line) {
             print(line);
@@ -246,8 +241,8 @@ function command_runner(path, start, end, comment_word) {
 }
 
 
-# Function to retrieve a specific range of source code for a playground URL
-function command_runner_and_playground(path, start, end, comment_word, url_word) {
+function command_runner_for_playground(path, start, end, comment_word, url_word) {
+    # Extension of normal command_runner to output playground url
     OFS = "";
     ORS = "";
 
@@ -272,8 +267,8 @@ function command_runner_and_playground(path, start, end, comment_word, url_word)
 }
 
 
-# Line counter
 function line_counter(cmd) {
+    # Function to count the number of lines in a file and return the value
     line_count = 0;
     while (cmd | getline line) {
         line_count += 1;
@@ -283,7 +278,6 @@ function line_counter(cmd) {
 }
 
 
-# Function to generate a table of contents
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     #
     # | Prefix | Number of sharp | Indents | 
@@ -320,28 +314,34 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
     #                                 = 3 + 3
     #                                 = 6
     #
+
     ORS = "";
 
     cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", file_path);
+
+    # Define the number for relative comparison when the standard is 2
     base_value_correction = (abs(1 - (start_heading_number + 1)) - 1) + (start_heading_number + 1) - 2;
 
     # Output lines matching heading(#)
     while (cmd | getline line) {
-        split(line, arr, " ");
-        sub("#{1,6} ", "", line);
+        split(line, arr, " ");    # "arr[1]" has a minimum of 2 and a maximum of 6 consecutive "#"
+        sub("#{1,6} ", "", line); # Example: "### h3" ---> "h3"
 
-        for_url_string = gensub(" ", "-", "g", line);
+        for_url_string = gensub(" ", "-", "g", line); # Convert " " to "-" to expand the headline string as-is as a url
 
+        # Heading 1 is the title, so it is not included in the table of contents
         if (length(arr[1]) > 1) {
             sharp_length = length(arr[1]);
             
             if (start_heading_number - 1 < sharp_length && sharp_length < end_heading_number + 1) {
                 sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number;
                 
+                # Indentation output
                 for (i = 0; i < sharp_length - base_value_correction; i++) {
                     print(" ");
                 }
 
+                # Output link string in list format
                 print(sprintf("- [%s](%s%s)\n", line, url_prefix, tolower(for_url_string)));
             }
         }
@@ -352,8 +352,8 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 }
 
 
-# Functions that return absolute values
 function abs(value) {
+    # Functions that return absolute values
     value += 0;
     return value < 0 ? -value : value;
 }
@@ -363,9 +363,10 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     OFS = "";
     ORS = "";
     
+    # To generate an error if the type is wrong
     if (type == "li" || type == "ol") {
         cmd = sprintf("awk '{print $0}' %s", file_path);
-        line_count = 1;
+        line_count = 1; # Counter variable for "ol"
 
         if (summary_word != "") {
             print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
@@ -419,6 +420,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 /```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
     split($0, code_block, ":");
     
+    count = 0;
     language = code_block[1];
     file_path = code_block[2];
     start = code_block[3];
@@ -455,23 +457,19 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
     start = "";
     end = "";
-    count += 1;
 
-    switch (count) {
-        case 1:
-            count = 0;
-            next;
-        case 2:
-            command_runner_and_playground(\
-                global_file_path,
-                global_start,
-                global_end,
-                global_comment_word,
-                global_url_word\
-            );
-            count = 0;
-            next;
+    # If the counter variable count is greater than 1, that is, if it is a notation for a playground url
+    if (count) {
+        command_runner_for_playground(\
+            global_file_path,
+            global_start,
+            global_end,
+            global_comment_word,
+            global_url_word\
+        );
     }
+
+    next;
 }
 
 
