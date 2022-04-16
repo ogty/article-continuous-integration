@@ -390,7 +390,6 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
         }
     } else {
         print("ERROR: Type does not match\n\n");
-        next;
     }
 
     OFS = " ";
