@@ -158,6 +158,7 @@ BEGIN {
     data["rust"] = "//";
     data["scala"] = "//";
     data["sh"] = "#";
+    data["shell"] = "#";
     data["swift"] = "//";
     data["ts"] = "//";
     data["typescript"] = "//";
