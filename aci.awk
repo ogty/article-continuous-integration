@@ -59,7 +59,7 @@
 #         addition to the code block. If the file does not exist, the message 
 #         "No such file" is written in the code block.
 #         If you want the entire contents of the program to be expanded into a code block, 
-#         enter white space(" ") in the "<start>" and "<end>" sections.
+#         enter a whitespace(" ") in the "<start>" and "<end>" sections.
 # 
 #             ```<language>:<file-path>:<start>:<end>[:url-string]```
 #
