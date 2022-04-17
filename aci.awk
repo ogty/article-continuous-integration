@@ -126,7 +126,6 @@ BEGIN {
     # Languages comment-out format
     # Due to the nature of awk records, comment-out prefixes across multiple lines are not 
     # used, but single-line comment-out prefixes are used.
-
     data["awk"] = "#";
     data["bash"] = "#";
     data["bat"] = "rem";
