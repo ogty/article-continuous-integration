@@ -34,6 +34,11 @@
 - [ ] Preview base file
 
 ## Supported File Formats
+
+The same file formats supported by Github are supported as well(WIP). 
+However, only formats that can be confirmed to be commented out are used. 
+As an example, `.txt` files are not covered by this tool.
+
 - Awk
 - Bash
 - Bat
