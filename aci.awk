@@ -281,19 +281,19 @@ function line_counter(cmd) {
 
 function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
     #
-    # | Prefix | Number of sharp | Indents | 
-    # | ------ | --------------- | ------- |
-    # | ##     | 2               | 0       |
-    # | ###    | 3               | 2       |
-    # | ####   | 4               | 4       |
-    # | #####  | 5               | 6       |
-    # | ###### | 6               | 8       |
+    # | Prefix | Number of hash sign | Indents | 
+    # | ------ | ------------------- | ------- |
+    # | ##     | 2                   | 0       |
+    # | ###    | 3                   | 2       |
+    # | ####   | 4                   | 4       |
+    # | #####  | 5                   | 6       |
+    # | ###### | 6                   | 8       |
     #
     # Equation:
     # 
     #         (|1 - x| - 1) + (x - y)
     #
-    #     x: Number of sharp(#)
+    #     x: Number of hash sign(#)
     #     y: Number of standard headings
     #
     #
@@ -332,13 +332,13 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
         # Heading 1 is the title, so it is not included in the table of contents
         if (length(arr[1]) > 1) {
-            sharp_length = length(arr[1]);
+            hash_sign_length = length(arr[1]);
             
-            if (start_heading_number - 1 < sharp_length && sharp_length < end_heading_number + 1) {
-                sharp_length = (abs(1 - sharp_length) - 1) + sharp_length - base_heading_number;
+            if (start_heading_number - 1 < hash_sign_length && hash_sign_length < end_heading_number + 1) {
+                hash_sign_length = (abs(1 - hash_sign_length) - 1) + hash_sign_length - base_heading_number;
                 
                 # Indentation output
-                for (i = 0; i < sharp_length - base_value_correction; i++) {
+                for (i = 0; i < hash_sign_length - base_value_correction; i++) {
                     print(" ");
                 }
 
