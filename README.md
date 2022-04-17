@@ -30,6 +30,7 @@
 - [x] Visualization of directories by tree structure
 - [x] Create a table of contents from a heading
 - [x] Expanding data in a file
+- [x] Supports many file formats
 - [ ] Preview base file
 
 ## Supported File Formats
