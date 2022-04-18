@@ -386,6 +386,27 @@ BEGIN {
     data["xpm"] = "//";
     data["zsh-theme"] = "#";
     data["zsh"] = "#";
+    data["bsl"] = "//";
+    data["os"] = "//";
+    data["4dm"] = "//";
+    data["asddls"] = "--";
+    data["abnf"] = ";";
+    data["asc"] = "//";
+    data["ash"] = "//";
+    data["aidl"] = "//";
+    data["al"] = "#";
+    data["ampl"] = "#";
+    data["g4"] = "//";
+    data["asl"] = "//";
+    data["dsl"] = "//";
+    data["asn"] = "--";
+    data["asn1"] = "--";
+    data["asax"] = "<!--";
+    data["ascx"] = "<!--";
+    data["ashx"] = "<!--";
+    data["asmx"] = "<!--";
+    data["aspx"] = "<!--";
+    data["axd"] = "<!--";
 
     # URL encoding
     for (i = 0; i < 256; i++) { 
