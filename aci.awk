@@ -159,7 +159,6 @@ BEGIN {
     data["as"] = "//";
     data["asax"] = "<!--";
     data["asc"] = "//";
-    data["asc"] = "//";
     data["ascx"] = "<!--";
     data["asddls"] = "--";
     data["ash"] = "//";
@@ -186,15 +185,12 @@ BEGIN {
     data["axs"] = "//";
     data["bal"] = "#";
     data["bas"] = "rem";
-    data["bas"] = "rem";
     data["bat"] = "rem";
     data["bats"] = "#";
     data["be"] = "#";
     data["bf"] = "//";
-    data["bf"] = "//";
     data["bicep"] = "//";
     data["bison"] = "/*";
-    data["blade"] = "<!--";
     data["blade"] = "<!--";
     data["bmx"] = "rem";
     data["boo"] = "#";
@@ -207,7 +203,6 @@ BEGIN {
     data["bzl"] = "#";
     data["c"] = "//";
     data["c#"] = "//";
-    data["c++"] = "//";
     data["c++"] = "//";
     data["cabal"] = "--";
     data["cairo"] = "#";
@@ -231,7 +226,6 @@ BEGIN {
     data["clixml"] = "<!--";
     data["clp"] = ";";
     data["cls"] = "//";
-    data["cls"] = "//";
     data["clw"] = "!";
     data["cmake"] = "#";
     data["cmd"] = "rem";
@@ -244,7 +238,6 @@ BEGIN {
     data["cproject"] = "<!--";
     data["cpy"] = "*";
     data["cql"] = "#";
-    data["cs"] = "//";
     data["cs"] = "//";
     data["cscfg"] = "<!--";
     data["csdef"] = "<!--";
@@ -274,8 +267,6 @@ BEGIN {
     data["env"] = "#";
     data["eye"] = "#";
     data["fcgi"] = "--";
-    data["fcgi"] = "--";
-    data["fcgi"] = "--";
     data["fea"] = "#";
     data["fish"] = "#";
     data["g4"] = "//";
@@ -285,8 +276,6 @@ BEGIN {
     data["go"] = "//";
     data["god"] = "#";
     data["h"] = "//";
-    data["h"] = "//";
-    data["h"] = "//";
     data["h++"] = "//";
     data["haskell"] = "--";
     data["hats"] = "//";
@@ -295,13 +284,8 @@ BEGIN {
     data["html"] = "<!--";
     data["hxx"] = "//";
     data["i"] = ";";
-    data["i"] = ";";
     data["idc"] = "//";
     data["ihlp"] = "//";
-    data["inc"] = "#";
-    data["inc"] = "#";
-    data["inc"] = "#";
-    data["inc"] = "#";
     data["inc"] = "#";
     data["inl"] = "//";
     data["ino"] = "//";
@@ -418,7 +402,6 @@ BEGIN {
     data["qmd"] = "<!--";
     data["qml"] = "//";
     data["qs"] = "//";
-    data["qs"] = "//";
     data["r"] = "#";
     data["r2"] = ";";
     data["r3"] = ";";
@@ -432,7 +415,6 @@ BEGIN {
     data["rbuild"] = "#";
     data["rbw"] = "#";
     data["rbx"] = "#";
-    data["re"] = "//";
     data["re"] = "//";
     data["reb"] = ";";
     data["rebol"] = ";";
@@ -466,10 +448,7 @@ BEGIN {
     data["sass"] = "//";
     data["sbt"] = "//";
     data["sc"] = "//";
-    data["sc"] = "//";
-    data["sc"] = "<!--";
     data["scad"] = "//";
-    data["scala"] = "//";
     data["scala"] = "//";
     data["scaml"] = "//";
     data["sce"] = "//";
@@ -489,7 +468,6 @@ BEGIN {
     data["sld"] = ";";
     data["slim"] = "//";
     data["sls"] = "#";
-    data["sls"] = "#";
     data["smali"] = "#";
     data["smt"] = ";";
     data["smt2"] = ";";
@@ -498,11 +476,9 @@ BEGIN {
     data["sp"] = "//";
     data["sparql"] = "#";
     data["spec"] = "#";
-    data["spec"] = "#";
     data["sps"] = ";";
     data["sqf"] = "//";
     data["sql"] = "#";
-    data["srt"] = ";";
     data["srt"] = ";";
     data["ss"] = ";";
     data["sss"] = "//";
