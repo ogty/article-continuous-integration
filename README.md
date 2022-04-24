@@ -31,6 +31,7 @@
 - [x] Create a table of contents from a heading
 - [x] Expanding data in a file
 - [x] Supports many file formats
+- [x] Execution of commands in base file
 - [ ] Preview base file
 - [ ] Test the project
 
