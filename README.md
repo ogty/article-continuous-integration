@@ -32,6 +32,7 @@
 - [x] Expanding data in a file
 - [x] Supports many file formats
 - [ ] Preview base file
+- [ ] Test the project
 
 ## Supported File Formats
 
