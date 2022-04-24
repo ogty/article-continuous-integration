@@ -106,6 +106,17 @@
 #             -|<type>|<file-path>[|summary-word]
 #
 #
+#     === Execution of commands in base file
+#
+#         Outputs the execution result of the described command as it is. The described 
+#         command outputs the same operation results as if the user had entered the command 
+#         manually and executed it. Therefore, an error may occur depending on the 
+#         authorization. Depending on other proprietary notation methods, this method may be 
+#         easier to understand in some cases.
+#
+#             ! <command>
+#
+#
 #
 # USAGE:
 # 
@@ -127,6 +138,7 @@ BEGIN {
     # Due to the nature of awk records, comment-out prefixes across multiple lines are not 
     # used, but single-line comment-out prefixes are used.
     data["bash"] = "#";
+    data["dockerfile"] = "#";
     data["4dm"] = "//";
     data["6pl"] = "#";
     data["6pm"] = "#";
@@ -960,6 +972,16 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     next;
 }
 
+# Execution of commands in base file
+/^!\s.+/ {
+    # TODO: use substr
+    sub("! ", "", $0);
+    cmd = $0;
+    while (cmd | getline line) {
+        print(line);
+    }
+    close(cmd);
+}
 
 # Expanding data in a file
 # Notation: -|<type>|<file-path>[|summary-word]
