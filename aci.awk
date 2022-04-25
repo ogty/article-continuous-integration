@@ -601,6 +601,28 @@ BEGIN {
     data["zs"] = "//";
     data["zsh"] = "#";
     data["zsh-theme"] = "#";
+    data["glsl"] = "//";
+    data["fp"] = "//";
+    data["frag"] = "//";
+    data["frg"] = "//";
+    data["fs"] = "//";
+    data["fsh"] = "//";
+    data["fshader"] = "//";
+    data["geo"] = "//";
+    data["geom"] = "//";
+    data["glslf"] = "//";
+    data["glslv"] = "//";
+    data["gs"] = "//";
+    data["gshader"] = "//";
+    data["rchit"] = "//";
+    data["rmiss"] = "//";
+    data["shader"] = "//";
+    data["tesc"] = "//";
+    data["tese"] = "//";
+    data["vert"] = "//";
+    data["vrx"] = "//";
+    data["vsh"] = "//";
+    data["vshader"] = "//";
 
     # URL encoding
     for (i = 0; i < 256; i++) { 
