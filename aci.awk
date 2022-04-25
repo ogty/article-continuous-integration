@@ -855,7 +855,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Code block generation from program loading
 # Notation: ```<language>:<file-path>:<start>:<end>```
-/```.+:.+\..+:.+:.+```/ && !/```.+\|.+```/ {
+/```.+:.+:.+:.+```/ && !/```.+\|.+```/ {
     split($0, code_block, ":");
     
     count = 0;
@@ -868,7 +868,13 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     sub("```", "", language);
     sub("```", "", end);
 
-    print(sprintf("```%s:%s", language, file_path));
+    # For files that do not require an extension
+    if (language == " ") {
+        print(sprintf("```%s", file_path));
+    } else {
+        print(sprintf("```%s:%s", language, file_path));
+    }
+
     if (cmd | getline line) {
         if (line == "true") {
             # For playground
@@ -972,6 +978,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     next;
 }
 
+
 # Execution of commands in base file
 /^!\s.+/ {
     # TODO: use substr
@@ -982,6 +989,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     }
     close(cmd);
 }
+
 
 # Expanding data in a file
 # Notation: -|<type>|<file-path>[|summary-word]
