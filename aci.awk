@@ -2132,9 +2132,10 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
     OFS = "";
     ORS = "";
     
+    cmd = sprintf("awk '{print $0}' %s", file_path);
+    
     # To generate an error if the type is wrong
     if (type == "li" || type == "ol") {
-        cmd = sprintf("awk '{print $0}' %s", file_path);
         line_count = 1; # Counter variable for "ol"
 
         if (summary_word != "") {
@@ -2159,7 +2160,18 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
             print("\n</details>\n");
         }
     } else {
-        print("ERROR: Type does not match\n\n");
+        if (summary_word != "") {
+            print(sprintf("<details>\n  <summary>%s</summary>\n\n", summary_word));
+        }
+
+        while (cmd | getline line) {
+            print(sprintf("%s %s\n", type, line));
+        }
+        close(cmd);
+
+        if (summary_word != "") {
+            print("\n</details>\n");
+        }
     }
 
     OFS = " ";
@@ -2169,7 +2181,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Create a table of contents from a heading
 # Notation: -_|<target-file>|<url-string>[|heading-start[|heading-end]]
-/-_\|.+\|.+/ {
+/^-_\|.+\|.+/ {
     split($0, information, "|");
     information_length = length(information);
 
@@ -2186,7 +2198,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Code block generation from program loading
 # Notation: ```<language>:<file-path>:<start>:<end>```
-/```.+:.+:.+:.+```/ && !/```.+\|.+```/ {
+/^```.+:.+:.+:.+```/ && !/^```.+\|.+```/ {
     split($0, code_block, ":");
     
     count = 0;
@@ -2250,7 +2262,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Code block operation
 # Notation: ```<language>|<pattern> <pattern>...```
-/```.+\|(.+\..+:.+:.+?){2,}```/ {
+/^```.+\|(.+\..+:.+:.+?){2,}```/ {
     split($0, code_block_for_operation, "|");
     
     language = code_block_for_operation[1];
@@ -2289,7 +2301,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Visuallization of directories by tree structure
 # Notation: ```tree:<directory-path>```
-/```tree:.+```/ {
+/^```tree:.+```/ {
     split($0, splited, ":");
     path = gensub("```", "", "g", splited[2]);
 
@@ -2324,7 +2336,7 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 # Expanding data in a file
 # Notation: -|<type>|<file-path>[|summary-word]
-/\-\|.+\|.+/ {
+/^\-\|.+\|.+/ {
     split($0, arr, "|");
     arr_length = length(arr);
 
