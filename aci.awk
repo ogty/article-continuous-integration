@@ -750,11 +750,11 @@ BEGIN {
     data["lidr"] = "";
     data["ligo"] = "";
     data["linq"] = "//";
-    data["liquid"] = "";
+    data["liquid"] = "<!--";
     data["lisp"] = ";";
-    data["litcoffee"] = "";
+    data["litcoffee"] = "<!--";
     data["ll"] = "";
-    data["lmi"] = "";
+    data["lmi"] = "#";
     data["login"] = "";
     data["logtalk"] = "";
     data["lol"] = "";
