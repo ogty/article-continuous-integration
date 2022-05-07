@@ -85,15 +85,13 @@
 #
 #     === Create a table of contents based on heading
 #
-#         Expand the table of contents where the following notation is entered: 
-#         "<file-name>" usually describes itself. This is to read your file content 
-#         once. "<url-prefix>" writes the common content described in "[]". 
-#         "[heading-start]" and "[heading-end]" are optional and allow you to specify 
-#         the size range of the heading to be treated as a table of contents. Normally, 
-#         the range is from 2 to 6, not including h1(#). Note that if you want to specify 
-#         2 to 5, you must also specify 2.
+#         This is to read your file content once. "<url-prefix>" writes the common 
+#         content described in "[]". "[heading-start]" and "[heading-end]" are optional 
+#         and allow you to specify the size range of the heading to be treated as a table 
+#         of contents. Normally, the range is from 2 to 6, not including h1(#). Note that 
+#         if you want to specify 2 to 5, you must also specify 2.
 #
-#             -_|<file-name>|<url-prefix>[|heading-start[|heading-end]]
+#             -_|<url-prefix>[|heading-start[|heading-end]]
 #
 #
 #     === Expand file contents in list format
@@ -1573,7 +1571,7 @@ function line_counter(cmd) {
 }
 
 
-function table_of_contents_generator(file_path, url_prefix, start_heading_number, end_heading_number) {
+function table_of_contents_generator(url_prefix, start_heading_number, end_heading_number) {
     #
     # | Prefix | Number of hash sign | Indents | 
     # | ------ | ------------------- | ------- |
@@ -1612,7 +1610,7 @@ function table_of_contents_generator(file_path, url_prefix, start_heading_number
 
     ORS = "";
 
-    cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", file_path);
+    cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", FILENAME);
 
     # Define the number for relative comparison when the standard is 2
     base_value_correction = (abs(1 - (start_heading_number + 1)) - 1) + (start_heading_number + 1) - 2;
@@ -1706,16 +1704,16 @@ function command_runner_for_expanding_data(type, file_path, summary_word) {
 
 
 # Create a table of contents from a heading
-# Notation: -_|<target-file>|<url-string>[|heading-start[|heading-end]]
-/^-_\|.+\|.+/ {
+# Notation: -_|<url-string>[|heading-start[|heading-end]]
+/^-_\|.+/ {
     split($0, information, "|");
     information_length = length(information);
 
     # Implementation to be tolerant of the presence of "|" at the end of lines
-    if (information_length == 3 || information_length == 4) {
-        table_of_contents_generator(information[2], information[3], 2, 6);
-    } else if (information_length == 5 || information_length == 6) {
-        table_of_contents_generator(information[2], information[3], information[4], information[5]);
+    if (information_length == 2 || information_length == 3) {
+        table_of_contents_generator(information[2], 2, 6);
+    } else if (information_length == 4 || information_length == 5) {
+        table_of_contents_generator(information[2], information[3], information[4]);
     }
 
     next;
