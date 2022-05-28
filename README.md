@@ -41,36 +41,41 @@ The same file formats supported by Github are supported as well(WIP).
 However, only formats that can be confirmed to be commented out are used. 
 As an example, `.txt` files are not covered by this tool.
 
-- Awk
-- Bash
-- Bat
-- C
-- C#
-- C++
-- CSS
-- Dart
-- Go
-- Haskell
-- HTML
-- Java
-- JavaScript
-- Julia
-- Lisp
-- Lua
-- Makefile
-- Nim
-- Objective-C
-- PHP
-- PowerShell
-- Python
-- R
-- Ruby
-- Rust
-- Scala
-- ShellScript
-- Swift
-- TypeScript
-- ...
+<p align="left">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" width="10%" />
+  <img src="https://api.iconify.design/logos-perl.svg" width="10%" />
+</p>
+
+<p align="right">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/scala/scala-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/swift/swift-original.svg" width="10%" />
+  <img src="https://www.vectorlogo.zone/logos/apple_objectivec/apple_objectivec-icon.svg" width="10%" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Clojure_logo.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-plain.svg" width="10%" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Haskell-Logo.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/coffeescript/coffeescript-original-wordmark.svg" width="10%" />
+</p>
+
+<p align="left">
+  <img src="https://www.vectorlogo.zone/logos/elixir-lang/elixir-lang-icon.svg" width="10%" />
+  <img src="https://www.vectorlogo.zone/logos/erlang/erlang-official.svg" width="10%" />
+  <img src="https://www.vectorlogo.zone/logos/nim-lang/nim-lang-icon.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original-wordmark.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" width="10%" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original-wordmark.svg" width="10%" />
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" width="10%" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/backbonejs/backbonejs-original-wordmark.svg" width="10%" />
+</p>
 
 ````md
 ```cpp:main.cpp
