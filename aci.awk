@@ -1572,42 +1572,6 @@ function line_counter(cmd) {
 
 
 function table_of_contents_generator(url_prefix, start_heading_number, end_heading_number) {
-    #
-    # | Prefix | Number of hash sign | Indents | 
-    # | ------ | ------------------- | ------- |
-    # | ##     | 2                   | 0       |
-    # | ###    | 3                   | 2       |
-    # | ####   | 4                   | 4       |
-    # | #####  | 5                   | 6       |
-    # | ###### | 6                   | 8       |
-    #
-    # Equation:
-    # 
-    #         (|1 - x| - 1) + (x - y)
-    #
-    #     x: Number of hash sign(#)
-    #     y: Number of standard headings
-    #
-    #
-    # Example:
-    # 
-    #     y = 2
-    #
-    #     Example1: ## h2
-    #      
-    #         (|1 - 2| - 1) + (2 - 2) = (|-1| - 1) + 0
-    #                                 = (1 - 1) + 0
-    #                                 = 0 + 0
-    #                                 = 0
-    #
-    #     Example2: ##### h5
-    #
-    #         (|1 - 5| - 1) + (5 - 2) = (|-4| - 1) + 3
-    #                                 = (4 - 1) + 3
-    #                                 = 3 + 3
-    #                                 = 6
-    #
-
     ORS = "";
 
     cmd = sprintf("awk '/^#{1,6}/ {print $0}' %s", FILENAME);
