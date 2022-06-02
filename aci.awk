@@ -110,7 +110,8 @@
 #         It is possible to describe and create merged cells in much the same way as in normal 
 #         notation, which is not possible in Markdown notation. The notation is very simple: 
 #         just enclose the normal notation with "<---" and "<--->". To join a cell with the cell 
-#         above, the cell must be blank only.
+#         above, the cell must be blank only. The output is in HTML format, and a file 
+#         "table-content-<table-number>.txt" is created on the same level.
 #
 #             <---...<--->
 #
