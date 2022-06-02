@@ -32,6 +32,7 @@
 - [x] Expanding data in a file
 - [x] Supports many file formats
 - [x] Execution of commands in base file
+- [x] Creating joinable tables
 - [ ] Preview base file
 - [ ] Test the project
 
