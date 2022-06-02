@@ -22,7 +22,6 @@ function table_recode_reader(line) {
         }
     }
 
-    # i: index of column
     system(sprintf("echo '\t</tr>' >> %s", file_name_for_temporary_table));
     for (index_of_column = 2; index_of_column < length(array); index_of_column += 1) {
         # TODO: Remove surrounding whitespace
