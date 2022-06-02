@@ -28,7 +28,7 @@ function table_recode_reader(line) {
 
     # Row creation and output
     system(sprintf("echo ' </tr>' >> %s", file_name_for_temporary_table));
-    #                     ^ Whitespace for style available
+    # --------------------^ Whitespace for style available
     for (index_of_column = 2; index_of_column < length(array); index_of_column += 1) {
         # TODO: Remove surrounding whitespace
         column_word = sprintf("%s", gensub(/\s+/, "", "g", array[index_of_column]));
@@ -36,7 +36,7 @@ function table_recode_reader(line) {
         if (column_word != "") { # If there is a string
             if (only_whitespace[index_of_column] > 0) {
                 system(sprintf("echo '  <td rowspan=\"%d\">%s</td>' >> %s", \
-                    #                 ^^ Whitespace for style available
+                    # ----------------^^ Whitespace for style available
                     only_whitespace[index_of_column] + 1, \
                     column_word, \
                     file_name_for_temporary_table \
@@ -44,14 +44,14 @@ function table_recode_reader(line) {
                 only_whitespace[index_of_column] = 0;
             } else {
                 system(sprintf("echo '  <td>%s</td>' >> %s", column_word, file_name_for_temporary_table));
-                #                     ^^ Whitespace for style available
+                # --------------------^^ Whitespace for style available
             }
         } else { # If there were only whitespace.
             only_whitespace[index_of_column] += 1;
         }
     }
     system(sprintf("echo ' <tr>' >> %s", file_name_for_temporary_table));
-    #                     ^ Whitespace for style available
+    # --------------------^ Whitespace for style available
 
     generate_associative_array_counter += 1;
 }
