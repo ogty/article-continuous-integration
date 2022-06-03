@@ -33,6 +33,7 @@
 - [x] Supports many file formats
 - [x] Execution of commands in base file
 - [x] Creating joinable tables
+- [ ] Image and reference formulas written in Latex
 - [ ] Preview base file
 - [ ] Test the project
 
