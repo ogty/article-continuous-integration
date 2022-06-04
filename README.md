@@ -92,7 +92,8 @@ int main() {
 ```
 ````
 
-##### To add a language, you just need to rewrite the program a little.
+> **Note**  
+> To add a language, you just need to rewrite the program a little.
 
 ## Usage
 
