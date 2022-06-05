@@ -23,19 +23,19 @@
 
 ## Features
 
-- [x] Create new articles and projects
-- [x] Specifying files in code blocks
-- [x] Add PlayGround URL to code block(Rust only)
-- [x] Code Block Operation
-- [x] Visualization of directories by tree structure
-- [x] Create a table of contents from a heading
-- [x] Expanding data in a file
-- [x] Supports many file formats
-- [x] Execution of commands in base file
-- [x] Creating joinable tables
-- [ ] Image and reference formulas written in Latex
-- [ ] Preview base file
-- [ ] Test the project
+✅ Create new articles and projects  
+✅ Specifying files in code blocks  
+✅ Add PlayGround URL to code block(Rust only)  
+✅ Code Block Operation  
+✅ Visualization of directories by tree structure  
+✅ Create a table of contents from a heading  
+✅ Expanding data in a file  
+✅ Supports many file formats  
+✅ Execution of commands in base file  
+✅ Creating joinable tables  
+🟩 Image and reference formulas written in Latex  
+🟩 Preview base file  
+🟩 Test the project  
 
 ## Supported File Formats
 
